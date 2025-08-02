@@ -121,7 +121,7 @@
                 
                 // Process the data
                 excelData = jsonData.map(row => {
-                    const hawb = row['HAWB NO.'] || row['HAWB NO.'] || '';
+                    const hawb = row['HAWB NO.'] || row['no'] || '';
                     const px = hawb.toString().slice(-3);
                     return {
                         px: px,
