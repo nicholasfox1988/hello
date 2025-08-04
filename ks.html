@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海运数据</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        #searchInput {
+            padding: 8px;
+            /* flex-grow: 1; */
+            width: 100px;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .file-input {
+            margin-bottom: 100px;
+        }
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="resultsCount"></div>
+    <div id="tableContainer">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>px</th>
+                    <th>Delivery</th>
+                    <th>CTNS</th>
+                    <th>CONSIGNEE NAME</th>
+                    <th>NO.</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+    <h1>请输入px号码:</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="3个数字">
+        <button onclick="searchData()">Search</button>
+    </div>
+    <br><br>
+
+    <div class="file-input">
+        <p>海运数据</p>
+        <input type="file" id="fileInput" accept=".xlsx, .xls">
+    </div>
+    
+    <script>
+        let excelData = [];
+        
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            console.log(file);
+            if (!file)  return;
+   
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                
+                // Get the last sheet
+                const lastSheetName = workbook.SheetNames[workbook.SheetNames.length-1];
+                const worksheet = workbook.Sheets[lastSheetName];
+                
+                // Convert to JSON
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                
+                jsonData.map(row =>{
+                    if (!row.Delivery){
+                        row.Delivery="不处理";
+                    }
+                });
+                jsonData.sort((a,b)=>{
+                    const nameA = a['Delivery'].toUpperCase(); // 忽略大小写
+                    const nameB = b['Delivery'].toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                
+                // Process the data
+                excelData = jsonData.map(row => {
+                    const hawb = row['no'] || row['HAWB NO.'] || '';
+                    const px = hawb.toString().slice(-3);
+                    return {                        
+                        px: px,
+                        delivery: row['Delivery'] || '' ,
+                        ctns: row['CTNS'] || '',
+                        consignee: row['CONSIGNEE NAME'] || '',
+                        hawb: hawb
+                    };
+                }).filter(row => row.hawb); // Filter out rows without HAWB
+                // console.log(excelData);
+                // Display all data initially
+                // displayData(excelData);
+                downLoad(excelData,file.name);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+        
+        function displayData(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="no-results">No data found</td></tr>';
+                document.getElementById('resultsCount').innerHTML = '';
+                return;
+            }
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.px}</td>
+                    <td>${row.delivery}</td>
+                    <td>${row.ctns}</td>
+                    <td>${row.consignee}</td>
+                    <td>${row.hawb}</td>                    
+                `;
+                tableBody.appendChild(tr);
+            });
+            
+            document.getElementById('resultsCount').innerHTML = `Showing ${data.length} of ${excelData.length} records`;
+        }
+        
+        function searchData() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (!searchTerm) {
+                displayData(excelData);
+                return;
+            }
+            
+            const filteredData = excelData.filter(row => 
+                row.px.includes(searchTerm)
+            );
+            document.getElementById('searchInput').value="";
+            
+            displayData(filteredData);
+        }
+        
+        // Allow search on Enter key
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchData();
+            }
+        });
+        function downLoad(excelData,fileName){
+            if (window.confirm("是否要保存？")) {
+                const workbook1 = XLSX.utils.book_new();
+
+                // 将 JSON 数据转换为工作表
+                const worksheet1 = XLSX.utils.json_to_sheet(excelData);
+
+                // 将工作表添加到工作簿
+                XLSX.utils.book_append_sheet(workbook1, worksheet1, "Sheet1");
+
+                // 保存工作簿为 Excel 文件
+                XLSX.writeFile(workbook1, "done_"+fileName);
+            } else {
+                // 用户点击了取消，执行取消操作
+                console.log("用户点击了取消");
+                // 这里可以添加取消保存的代码
+            }
+            
+        }
+    </script>
+</body>
+</html>
