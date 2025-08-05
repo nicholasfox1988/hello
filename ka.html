@@ -121,7 +121,7 @@
                 console.log(jsonData);
 
                 jsonData.map(row =>{
-                    if (!row.Delivery){
+                    if (!row.Delivery && row.Payment===null){
                         row.Delivery="不处理";
                     }
                 });
