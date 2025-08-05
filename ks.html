@@ -122,7 +122,7 @@
                 const jsonData = XLSX.utils.sheet_to_json(worksheet);
                 
                 jsonData.map(row =>{
-                    if (!row.Delivery){
+                    if (!row.Delivery || !row.Payment){
                         row.Delivery="不处理";
                     }
                 });
