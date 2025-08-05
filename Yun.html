@@ -120,7 +120,7 @@
                 const savesheet1 =XLSX.utils.json_to_sheet(save1);
                 XLSX.utils.book_append_sheet(savebook, savesheet1, "hold");
 
-                const save2= jsonData.filter(row => row.type==='K' && row.pic<7)
+                const save2= jsonData.filter(row => row.type==='K' && row.pic<7 && row.vol<1)
                                     .sort((a,b)=> a.pic-b.pic);
                 const savesheet2 =XLSX.utils.json_to_sheet(save2);
                 XLSX.utils.book_append_sheet(savebook, savesheet2, "张哥要的");
@@ -168,4 +168,5 @@
         };                
     </script>
 </body>
+
 </html>
