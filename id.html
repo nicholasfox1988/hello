@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID查询与发音</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    input {
+      padding: 10px;
+      width: 200px;
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e9f7ef;
+      border-radius: 4px;
+      display: none;
+    }
+    .speak-btn {
+      background-color: #2196F3;
+      margin-left: 10px;
+    }
+    .speak-btn:hover {
+      background-color: #0b7dda;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>个人ID查询系统</h1>
+    <div>
+      <input 
+        v-model="inputId" 
+        @keyup.enter="queryName" 
+        placeholder="请输入个人ID"
+        type="number"
+      >
+      <button @click="queryName">查询</button>
+    </div>
+    
+    <div class="result" :style="{display: showResult ? 'block' : 'none'}">
+      <h3>查询结果</h3>
+      <p>ID: {{ currentId }}</p>
+      <p>姓名: {{ currentName }}</p>
+      <button class="speak-btn" @click="speakName">发音</button>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+    
+    createApp({
+      setup() {
+        // 模拟数据库
+        const nameDatabase = {
+          '1001': '张三',
+          '1002': '李四',
+          '1003': '王五',
+          '1004': '赵六',
+          '1005': '钱七'
+        };
+        
+        const inputId = ref('');
+        const currentId = ref('');
+        const currentName = ref('');
+        const showResult = ref(false);
+        
+        function queryName() {
+          if (!inputId.value) {
+            alert('请输入ID');
+            return;
+          }
+          
+          currentId.value = inputId.value;
+          currentName.value = nameDatabase[inputId.value] || '未找到该ID对应的姓名';
+          showResult.value = true;
+        }
+        
+        function speakName() {
+          if (!currentName.value) return;
+          
+          // 使用Web Speech API发音
+          const utterance = new SpeechSynthesisUtterance(currentName.value);
+          utterance.lang = 'zh-CN'; // 设置为中文
+          speechSynthesis.speak(utterance);
+        }
+        
+        return {
+          inputId,
+          currentId,
+          currentName,
+          showResult,
+          queryName,
+          speakName
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
