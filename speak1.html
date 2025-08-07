@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PX号码查询系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #2575fc, #6a11cb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px dashed #3498db;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-section:hover {
+            background: #e3f2fd;
+            border-color: #1e88e5;
+        }
+        
+        .file-label {
+            display: block;
+            padding: 15px 25px;
+            background: #3498db;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 15px auto;
+            width: fit-content;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+        }
+        
+        .file-label:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(52, 152, 219, 0.4);
+        }
+        
+        #excelFile {
+            display: none;
+        }
+        
+        .search-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: 2px solid #3498db;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-input:focus {
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-btn {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .search-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(46, 204, 113, 0.4);
+        }
+        
+        .speak-btn {
+            background: #9b59b6;
+            color: white;
+        }
+        
+        .speak-btn:hover {
+            background: #8e44ad;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(155, 89, 182, 0.4);
+        }
+        
+        .result-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .result-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .result-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            color: #2c3e50;
+            text-align: right;
+            max-width: 60%;
+        }
+        
+        .delivery-value {
+            font-weight: 700;
+            color: #27ae60;
+            font-size: 1.2rem;
+        }
+        
+        .data-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .px-cell {
+            font-weight: 700;
+            color: #e74c3c;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #ecf0f1;
+            font-size: 0.9rem;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .search-section {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PX号码查询系统</h1>
+            <p class="subtitle">上传Excel文件，提取姓名、号码、图片和配送信息，通过PX号码（号码后三位）查询配送信息并发音</p>
+        </header>
+        
+        <div class="upload-section">
+            <label for="excelFile" class="file-label">选择Excel文件</label>
+            <input type="file" id="excelFile" accept=".xlsx, .xls">
+            <p>支持 .xlsx 和 .xls 格式文件</p>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>正在处理数据，请稍候...</p>
+        </div>
+        
+        <div class="search-section">
+            <input type="text" id="pxNumber" class="search-input" placeholder="输入PX号码（后三位数字）">
+            <button class="btn search-btn" onclick="queryPX()">查询配送信息</button>
+            <button class="btn speak-btn" onclick="speakResult()">发音配送信息</button>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h2 class="result-title">查询结果</h2>
+            <div class="result-content" id="resultContent">
+                <!-- 结果卡片将通过JS动态添加 -->
+            </div>
+        </div>
+        
+        <div class="data-section">
+            <h2>数据预览（前20条）</h2>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>号码</th>
+                        <th>图片</th>
+                        <th>PX号码</th>
+                        <th>配送信息</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- 表格数据将通过JS动态添加 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Excel数据处理系统 &copy; 2023 | 支持查询PX号码并发音配送信息</p>
+    </footer>
+
+    <script>
+        let processedData = [];
+        let currentResult = '';
+        
+        // 文件上传处理
+        document.getElementById('excelFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            document.getElementById('loading').style.display = 'block';
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    // 获取第一个工作表
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    
+                    // 将工作表转换为JSON
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    // 处理数据 - 提取第1列（索引0）、第2列（索引1）、第3列（索引2）和最后一列（索引7）
+                    // 跳过第一行（标题）
+                    processedData = [];
+                    for (let i = 1; i < jsonData.length; i++) {
+                        const row = jsonData[i];
+                        if (row.length < 8) continue;
+                        
+                        const name = row[0] || '';
+                        const no = row[1] ? String(row[1]) : '';
+                        const pic = row[2] || '';
+                        const delivery = row[7] || '';
+                        
+                        // 生成PX号码（号码后三位）
+                        const px = no.length >= 3 ? no.slice(-3) : no;
+                        
+                        processedData.push({
+                            name,
+                            no,
+                            pic,
+                            delivery,
+                            px
+                        });
+                    }
+                    
+                    // 显示数据预览
+                    displayDataPreview();
+                    document.getElementById('resultSection').style.display = 'block';
+                    document.getElementById('loading').style.display = 'none';
+                    
+                } catch (error) {
+                    console.error('处理Excel文件时出错:', error);
+                    alert('处理Excel文件时出错: ' + error.message);
+                    document.getElementById('loading').style.display = 'none';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+        
+        // 显示数据预览
+        function displayDataPreview() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            // 只显示前20条数据作为预览
+            const previewData = processedData.slice(0, 20);
+            
+            previewData.forEach(item => {
+                const tr = document.createElement('tr');
+                
+                tr.innerHTML = `
+                    <td>${item.name || ''}</td>
+                    <td>${item.no || ''}</td>
+                    <td>${item.pic || ''}</td>
+                    <td class="px-cell">${item.px || ''}</td>
+                    <td>${item.delivery || ''}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+        
+        // 查询PX号码
+        function queryPX() {
+            const pxNumber = document.getElementById('pxNumber').value.trim();
+            if (!pxNumber) {
+                alert('请输入PX号码');
+                return;
+            }
+            
+            if (processedData.length === 0) {
+                alert('请先上传Excel文件');
+                return;
+            }
+            
+            // 查找匹配的记录
+            const foundItems = processedData.filter(item => item.px === pxNumber);
+            
+            const resultContent = document.getElementById('resultContent');
+            resultContent.innerHTML = '';
+            
+            if (foundItems.length > 0) {
+                foundItems.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    
+                    card.innerHTML = `
+                        <div class="card-header">${item.name || '未提供姓名'}</div>
+                        <div class="card-body">
+                            <div class="info-row">
+                                <span class="info-label">号码：</span>
+                                <span class="info-value">${item.no || '无'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">图片：</span>
+                                <span class="info-value">${item.pic || '无'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">PX号码：</span>
+                                <span class="info-value px-cell">${item.px || '无'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">配送信息：</span>
+                                <span class="info-value delivery-value">${item.delivery || '无配送信息'}</span>
+                            </div>
+                        </div>
+                    `;
+                    resultContent.appendChild(card);
+                });
+                
+                // 设置当前结果用于发音
+                currentResult = foundItems.map(item => 
+                    `姓名：${item.name || '未知'}, 配送方式：${item.delivery || '无信息'}`
+                ).join('; ');
+                
+            } else {
+                resultContent.innerHTML = '<p style="text-align:center;padding:20px;">未找到匹配的配送信息</p>';
+                currentResult = '';
+            }
+            
+            document.getElementById('resultSection').style.display = 'block';
+        }
+        
+        // 发音结果
+        function speakResult() {
+            if (!currentResult) {
+                alert('没有可发音的内容');
+                return;
+            }
+            
+            // 使用Web Speech API发音
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(currentResult);
+                utterance.lang = 'zh-CN'; // 设置为中文
+                utterance.rate = 1.0; // 语速
+                utterance.pitch = 1.0; // 音高
+                utterance.volume = 1.0; // 音量
+                
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('您的浏览器不支持语音合成功能');
+            }
+        }
+        
+        // 示例数据 - 用于演示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建示例数据用于页面展示
+            const sampleData = [
+                { name: "Christine Jeon", no: "20019520", pic: "2", delivery: "CP", px: "520" },
+                { name: "Tommi Entertainment Ltd.", no: "20019426", pic: "2", delivery: "CP", px: "426" },
+                { name: "Young Kim", no: "20019534", pic: "1", delivery: "CP", px: "534" },
+                { name: "Hara Kang", no: "20019510", pic: "13", delivery: "Jay", px: "510" },
+                { name: "Rachel Kim", no: "20019492", pic: "1", delivery: "CP", px: "492" }
+            ];
+            
+            const tableBody = document.getElementById('tableBody');
+            sampleData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.no}</td>
+                    <td>${item.pic}</td>
+                    <td class="px-cell">${item.px}</td>
+                    <td>${item.delivery}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        });
+    </script>
+</body>
+</html>
