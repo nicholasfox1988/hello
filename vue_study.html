@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <p>{{ title }}</p>
+        <p>{{ content }}</p>
+        <p>{{ output() }}</p>
+        <p>{{ comoutput }}</p>
+        <p v-text="htmlContent"></p>
+        <p v-html="htmlContent"></p>
+        <p v-for="item in 3">这是内容</p>
+        <p v-for="(item,key,index) in arr">{{item}},{{key}},{{index}}</p>
+        <p v-for="(item,key,index) in obj">{{item}},{{key}},{{index}}</p>
+        <p v-if="true">if的内容</p>
+        <p v-show="bool">show的内容</p>
+        <p title="abc">这是abc</p>
+        <p v-bind:title="title">这是abc</p>
+        <p :title="title">操作同上</p>
+        <button v-on:click="output">按钮</button>
+        <button @click="output">按钮</button>
+        <input type="text" v-model="inputValue">
+        <p v-text="inputValue"></p>
+        <input type="text" v-model.trim="inputValue">
+
+    </div>
+
+    <script src="./vue/vue.min.js"></script>
+    <script>
+        const vm= new Vue({
+            el: '#box',
+            data (){
+                return{
+                    title:"这是标题",
+                    content:"这是内容",
+                    htmlContent:'这是一个<span>span</span>标签',
+                    arr:[1,2,3,4,5,6],
+                    obj:{a:10,b:20,c:30},
+                    bool:true,
+                    inputValue:'默认内容'
+                }
+            },
+            methods:{
+                output(){
+                    console.log('这是output方法');
+                    return "标题:"+this.title+"内容:"+this.content;
+                }
+            },
+            computed:{
+                comoutput(){
+                    return "标题:"+this.title+"内容:"+this.content;
+                }
+            },
+            watch:{
+                title (newValue,oldValue){
+                    console.log(newValue,oldValue);
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
