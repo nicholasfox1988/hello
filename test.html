@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>读取Excel列名</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .file-input {
+            margin: 20px 0;
+            text-align: center;
+        }
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .column-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .column-list li {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .column-list li:last-child {
+            border-bottom: none;
+        }
+        .error {
+            color: #d9534f;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>读取Excel文件列名</h1>
+        
+        <div class="file-input">
+            <input type="file" id="fileInput" accept=".xlsx, .xls">
+        </div>
+        
+        <div id="result" class="result" style="display: none;">
+            <h3>列名列表:</h3>
+            <ul id="columnList" class="column-list"></ul>
+        </div>
+        
+        <div id="error" class="error"></div>
+    </div>
+
+    <!-- 引入 SheetJS (xlsx) 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <script>
+        let excelData = [];
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // 清除之前的结果和错误信息
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('columnList').innerHTML = '';
+            document.getElementById('error').textContent = '';
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    // 读取文件内容
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    // 获取第一个工作表
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    
+                    // 将工作表转换为JSON
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    if (jsonData.length === 0) {
+                        throw new Error('Excel文件为空');
+                    }
+                    
+                    // console.log(jsonData);
+                    // 获取第一行作为列名
+                    const headers = jsonData[0];
+                    console.log(typeof headers[1]);
+
+                    const jsonData1 =jsonData.filter(row => row[headers[1]]);
+                    console.log(jsonData);
+                    console.log(jsonData1);
+
+                    excelData = jsonData1.map(row => {
+                        const no = row[headers[1]];
+                        const px = no.toString().slice(-3);
+                        return {                        
+                            px: px,
+                            delivery: row[headers[7]] ,
+                            ctns: row[headers[2]],
+                            consignee: row[headers[0]],
+                            no: no
+                        };
+                    }); // Filter out rows without HAWB
+                
+                console.log(excelData);
+
+                    // 显示结果
+                    const columnList = document.getElementById('columnList');
+                    headers.forEach(header => {
+                        const li = document.createElement('li');
+                        li.textContent = header;
+                        columnList.appendChild(li);
+                    });
+                    
+                    document.getElementById('result').style.display = 'block';
+                } catch (error) {
+                    document.getElementById('error').textContent = '错误: ' + error.message;
+                }
+            };
+            
+            reader.onerror = function() {
+                document.getElementById('error').textContent = '读取文件时发生错误';
+            };
+            
+            // 以ArrayBuffer形式读取文件
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+</html>

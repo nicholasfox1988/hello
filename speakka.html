@@ -138,7 +138,7 @@
                 // console.log(worksheet);
                 // Convert to JSON
                 const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                // console.log(jsonData);
+                console.log(jsonData);
 
                 jsonData.map(row =>{
                     if (!row.Delivery || !row.Payment){
