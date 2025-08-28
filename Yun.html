@@ -148,24 +148,19 @@
 
         });
 
-        function downLoad(excelData,fileName){
-            if (window.confirm("是否要保存？")) {
-                const workbook1 = XLSX.utils.book_new();
-
-                // 将 JSON 数据转换为工作表
-                const worksheet1 = XLSX.utils.json_to_sheet(excelData);
-
-                // 将工作表添加到工作簿
-                XLSX.utils.book_append_sheet(workbook1, worksheet1, "Sheet1");
-
-                // 保存工作簿为 Excel 文件
-                XLSX.writeFile(workbook1, "done_"+fileName);
-            } else {
-                // 用户点击了取消，执行取消操作
-                console.log("用户点击了取消");
-                // 这里可以添加取消保存的代码
+        const save4= jsonData.filter(row => row.type==='C' || row.type==='S' && !row.fo.includes('AION')).sort((a,b)=>{
+            const nameA = a['pic']; // 忽略大小写
+            const nameB = b['pic'];
+            if (nameA < nameB) {
+                return -1;
             }
-        };                
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        });
+        const savesheet4 =XLSX.utils.json_to_sheet(save4);
+        XLSX.utils.book_append_sheet(savebook, savesheet4, "C&S");
     </script>
 </body>
 
