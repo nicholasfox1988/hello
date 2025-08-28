@@ -92,11 +92,7 @@
                 const worksheet = workbook.Sheets[lastSheetName];
                 const savebook = XLSX.utils.book_new();
                 
-<<<<<<< HEAD:Yun.html
-
-=======
                 
->>>>>>> bead9e26be470966816f66db9fe4851b9a45e670:yun.html
                 // Convert to JSON
                 const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
                 const jsonData= jsonData1.map(row => {
@@ -109,7 +105,6 @@
                         vol: row.volume
                     };
                 });
-                
                 
                 const save1= jsonData.filter(row => row.fo.includes('AION') || row.hold).sort((a,b)=>{
                     const nameA = a['fo'].toUpperCase(); // 忽略大小写
@@ -168,5 +163,4 @@
         XLSX.utils.book_append_sheet(savebook, savesheet4, "C&S");
     </script>
 </body>
-
 </html>
