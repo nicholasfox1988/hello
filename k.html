@@ -36,6 +36,8 @@
         <input type="file" id="fileInput" accept=".xlsx">
     </div>
     <script>
+        let excelData = [];
+        let currentResult= '';
         const vm1= new Vue({
             el: '#showing',
             data(){
@@ -45,9 +47,6 @@
                 }
             }
         });
-
-        let excelData = [];
-        let currentResult= '';
         
         document.getElementById('fileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -107,14 +106,32 @@
             reader.readAsArrayBuffer(file);
         });
 
+        function downLoad(excelData,fileName){
+            if (window.confirm("是否要保存？")) {
+                const workbook1 = XLSX.utils.book_new();
+
+                // 将 JSON 数据转换为工作表
+                const worksheet1 = XLSX.utils.json_to_sheet(excelData);
+
+                // 将工作表添加到工作簿
+                XLSX.utils.book_append_sheet(workbook1, worksheet1, "Sheet1");
+
+                // 保存工作簿为 Excel 文件
+                XLSX.writeFile(workbook1, "done_"+fileName);
+            } else {
+                // 用户点击了取消，执行取消操作
+                console.log("用户点击了取消");
+                // 这里可以添加取消保存的代码
+            }
+        };
+        
         function searchData() {
             const searchTerm = vm1.inputValue.trim();
             // console.log(searchTerm);
             // console.log(excelData);
             if (!searchTerm) {
                 return;
-            }
-            
+            }           
             const filteredData = excelData.filter(row => 
                 row.px.includes(searchTerm)
             );
@@ -128,12 +145,6 @@
                 vm1.htmlContent="找不到";
             }
         };
-
-        document.getElementById('searchInput').addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                searchData();
-            }
-        });
 
         function speakResult() {
             if (!currentResult) {
@@ -155,24 +166,11 @@
             }
         }
 
-        function downLoad(excelData,fileName){
-            if (window.confirm("是否要保存？")) {
-                const workbook1 = XLSX.utils.book_new();
-
-                // 将 JSON 数据转换为工作表
-                const worksheet1 = XLSX.utils.json_to_sheet(excelData);
-
-                // 将工作表添加到工作簿
-                XLSX.utils.book_append_sheet(workbook1, worksheet1, "Sheet1");
-
-                // 保存工作簿为 Excel 文件
-                XLSX.writeFile(workbook1, "done_"+fileName);
-            } else {
-                // 用户点击了取消，执行取消操作
-                console.log("用户点击了取消");
-                // 这里可以添加取消保存的代码
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchData();
             }
-        };
+        });
     </script>
 </body>
 </html>

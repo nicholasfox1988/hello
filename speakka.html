@@ -87,6 +87,7 @@
         <!-- 输入px查询 -->
         <input type="text" id="searchInput" placeholder="3个数字">
         <button onclick="searchData()">Search</button>
+        <p v-html="total">这里显示数据</p>
     </div>
 
     <div class="file-input">
@@ -112,13 +113,15 @@
     <script>
         let excelData = [];
         let currentResult= '';
+        let sumColumn;
 
         const vm1= new Vue({
             el: '#showing',
             data(){
                 return{
                     htmlContent:"这里显示查询结果",
-                    inputValue:""
+                    inputValue:"",
+                    total:""
                 }
             }
         });
@@ -133,21 +136,38 @@
                 const workbook = XLSX.read(data, { type: 'array' });
                 
                 // Get the last sheet
-                const lastSheetName = workbook.SheetNames[0];
+                const lastSheetName = workbook.SheetNames[workbook.SheetNames.length-1];
                 const worksheet = workbook.Sheets[lastSheetName];
-                // console.log(worksheet);
+                
                 // Convert to JSON
-                const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                console.log(jsonData);
+                const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
+                const jsonData2 = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                const headers = jsonData2[0];
+                // console.log(headers);
 
-                jsonData.map(row =>{
+                jsonData1.map(row =>{
                     if (!row.Delivery || !row.Payment){
                         row.Delivery="不处理";
                     }
                 });
-                jsonData.sort((a,b)=>{
-                    const nameA = a['Delivery'].toUpperCase(); // 忽略大小写
-                    const nameB = b['Delivery'].toUpperCase();
+
+                // console.log(jsonData1);
+                // Process the data
+                excelData = jsonData1.map(row => {
+                    const no = row[headers[1]];
+                    const px = no.toString().slice(-3);
+                    return {                        
+                        px: px,
+                        delivery: row[headers[7]] ,
+                        ctns: row[headers[2]],
+                        consignee: row[headers[0]],
+                        no: no
+                    };
+                }).filter(row => row.no);
+
+                excelData.sort((a,b)=>{
+                    const nameA = a['delivery'].toUpperCase(); // 忽略大小写
+                    const nameB = b['delivery'].toUpperCase();
                     if (nameA < nameB) {
                         return -1;
                     }
@@ -157,21 +177,11 @@
                     return 0;
                 });
 
-                // Process the data
-                excelData = jsonData.map(row => {
-                    const hawb = row['no'] || row['Shipment No.'] || '';
-                    const px = hawb.toString().slice(-3);
-                    return {                        
-                        px: px,
-                        delivery: row['Delivery'] || '' ,
-                        ctns: row['Quantity'] || '',
-                        consignee: row['Name'] || '',
-                        hawb: hawb
-                    };
-                }).filter(row => row.hawb); // Filter out rows without HAWB
-                
+                sumColumn = summarizeByColumn(excelData,'delivery');
+                console.log(sumColumn);
                 // console.log(excelData);
                 // Display all data initially
+                vm1.total=JSON.stringify(sumColumn);
                 displayData(excelData);
             };
             reader.readAsArrayBuffer(file);
@@ -193,14 +203,20 @@
                     <td>${row.delivery}</td>
                     <td>${row.ctns}</td>
                     <td>${row.consignee}</td>
-                    <td>${row.hawb}</td>                    
+                    <td>${row.no}</td>                    
                 `;
                 tableBody.appendChild(tr);
-            });
-            
-
+            });            
         }
         
+        function summarizeByColumn(list, key) {
+            return list.reduce((acc, item) => {
+            const value = item[key];
+            acc[value] = (acc[value] || 0) + 1;
+            return acc;
+            }, {});
+        }
+
         function searchData() {
             const searchTerm = document.getElementById('searchInput').value.trim();
             const filteredData = excelData.filter(row => 
