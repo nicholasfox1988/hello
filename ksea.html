@@ -27,7 +27,7 @@
         <br>
         <!-- 输入px查询 -->
         <input type="text" id="searchInput" placeholder="3个数字" v-model.trim="inputValue">
-        <button onclick="searchData()">Search</button>
+        <button onclick="speakResult()">重复发音</button>
     </div>
     <br>
     <div id="upload">
@@ -66,13 +66,6 @@
                 const jsonData2 = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
                 const headers = jsonData2[0];
                 // console.log(headers);
-
-                jsonData1.map(row =>{
-                    if (!row.Delivery || !row.Payment){
-                        row.Delivery="不处理";
-                    }
-                });
-
                 // console.log(jsonData1);
                 // Process the data
                 excelData = jsonData1.map(row => {
@@ -83,9 +76,14 @@
                         delivery: row[headers[7]] ,
                         ctns: row[headers[2]],
                         consignee: row[headers[0]],
-                        no: no
+                        no: no,
+                        date:row[headers[8]] 
                     };
                 }).filter(row => row.no);
+
+                excelData.map(row => {
+                    if (!row.delivery || !row.date) row.delivery="不处理";
+                });
 
                 excelData.sort((a,b)=>{
                     const nameA = a['delivery'].toUpperCase(); // 忽略大小写
