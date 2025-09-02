@@ -168,7 +168,7 @@ pay:row[headers[6]],
                 }).filter(row => row.no);
 
                 excelData.map(row => {
-                    if (!row.delivery || !row.pay) row.delivery="不处理";
+                    if (!row.delivery && !row.pay) row.delivery="不处理";
                 });
 
                 excelData.sort((a,b)=>{
