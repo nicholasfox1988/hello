@@ -161,13 +161,14 @@
                         delivery: row[headers[7]] ,
                         ctns: row[headers[2]],
                         consignee: row[headers[0]],
+pay:row[headers[6]],
                         no: no,
                         date:row[headers[8]] 
                     };
                 }).filter(row => row.no);
 
                 excelData.map(row => {
-                    if (!row.delivery || !row.date) row.delivery="不处理";
+                    if (!row.delivery || !row.pay) row.delivery="不处理";
                 });
 
                 excelData.sort((a,b)=>{
