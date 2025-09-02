@@ -1,3 +1,7 @@
+进入目录
+```dos
+cd ../hello
+```
 上传
 ```dos
 git add .

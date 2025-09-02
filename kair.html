@@ -113,7 +113,7 @@
     <script>
         let excelData = [];
         let currentResult= '';
-        let sumColumn;
+        let resultObj= {"bis":0,"cp":0,"pick up":0,"no deal":0};
 
         const vm1= new Vue({
             el: '#showing',
@@ -161,14 +161,14 @@
                         delivery: row[headers[7]] ,
                         ctns: row[headers[2]],
                         consignee: row[headers[0]],
-pay:row[headers[6]],
+                        // pay:row[headers[6]],
                         no: no,
                         date:row[headers[8]] 
                     };
                 }).filter(row => row.no);
 
                 excelData.map(row => {
-                    if (!row.delivery && !row.pay) row.delivery="不处理";
+                    if (!row.delivery && !row.date) row.delivery="不处理";
                 });
 
                 excelData.sort((a,b)=>{
@@ -183,11 +183,13 @@ pay:row[headers[6]],
                     return 0;
                 });
 
-                sumColumn = summarizeByColumn(excelData,'delivery');
-                console.log(sumColumn);
+                resultObj['bis']= excelData.filter(row => row.delivery.toUpperCase()==='BIS').reduce((sum,row)=> sum + row['ctns'],0);
+                resultObj['cp']= excelData.filter(row => row.delivery.toUpperCase()==='CP').reduce((sum,row)=> sum + row['ctns'],0);
+                resultObj['pick up']= excelData.filter(row => row.delivery.toUpperCase()==='PICK UP').reduce((sum,row)=> sum + row['ctns'],0);
+                resultObj['no deal']= excelData.filter(row => row.delivery.toUpperCase()==='不处理').reduce((sum,row)=> sum + row['ctns'],0);
                 // console.log(excelData);
                 // Display all data initially
-                vm1.total=JSON.stringify(sumColumn);
+                vm1.total=JSON.stringify(resultObj);
                 displayData(excelData);
             };
             reader.readAsArrayBuffer(file);
@@ -213,14 +215,6 @@ pay:row[headers[6]],
                 `;
                 tableBody.appendChild(tr);
             });            
-        }
-        
-        function summarizeByColumn(list, key) {
-            return list.reduce((acc, item) => {
-            const value = item[key];
-            acc[value] = (acc[value] || 0) + 1;
-            return acc;
-            }, {});
         }
 
         function searchData() {
