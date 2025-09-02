@@ -189,7 +189,7 @@
                 resultObj['no deal']= excelData.filter(row => row.delivery.toUpperCase()==='不处理').reduce((sum,row)=> sum + row['ctns'],0);
                 // console.log(excelData);
                 // Display all data initially
-                vm1.total=JSON.stringify(resultObj);
+                vm1.total=`bis:${resultObj['bis']}<br>cp:${resultObj['cp']}<br>pick up:${resultObj['pick up']}<br>不处理:${resultObj['no deal']}`;
                 displayData(excelData);
             };
             reader.readAsArrayBuffer(file);
