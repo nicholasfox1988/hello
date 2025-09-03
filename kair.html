@@ -143,14 +143,7 @@
                 const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
                 const jsonData2 = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
                 const headers = jsonData2[0];
-                // console.log(headers);
-
-                jsonData1.map(row =>{
-                    if (!row.Delivery || !row.Payment){
-                        row.Delivery="不处理";
-                    }
-                });
-
+                // console.log(headers);                
                 // console.log(jsonData1);
                 // Process the data
                 excelData = jsonData1.map(row => {
@@ -168,7 +161,7 @@
                 }).filter(row => row.no);
 
                 excelData.map(row => {
-                    if (!row.delivery && !row.date) row.delivery="不处理";
+                    if (!row.delivery || !row.date) row.delivery="不处理";
                 });
 
                 excelData.sort((a,b)=>{
