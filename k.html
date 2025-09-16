@@ -3,11 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>韩国海运数据：</title>
-    <script src="./vue/vue.min.js"></script>
+    <title>空运数据</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="./vue/vue.min.js"></script>
     <style>
-        div{
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        #searchInput {
+            padding: 8px;
+            /* flex-grow: 1; */
+            width: 100px;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .file-input {
+            margin-bottom: 20px;
+        }
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        #showing{
             padding: 20px;
             width: 50%;
             border: solid;
@@ -15,43 +76,60 @@
             border-radius: 30px;
             margin: auto;
         }
-        #searchInput{
-            width: 50%;
-        }
     </style>
 </head>
 <body>
+
     <div id="showing">
         <!-- 数据显示区 -->
-        <p v-html="htmlContent"></p>
+        <p v-html="htmlContent">这里显示数据</p>
         <br>
         <!-- 输入px查询 -->
-        <input type="text" id="searchInput" placeholder="3个数字" v-model.trim="inputValue">
-        <button onclick="searchData()">Search</button>
+        <input type="text" id="searchInput" placeholder="3个数字">
+        <button onclick="speakResult()">重复发音</button>
+        <p v-html="total">这里显示数据</p>
     </div>
-    <br>
-    <div id="upload">
-        <!-- 选择要上传的数据 -->
-        <p>韩国海运数据：</p>
-        <input type="file" id="fileInput" accept=".xlsx">
+
+    <div class="file-input">
+        <p>空运数据</p>
+        <input type="file" id="fileInput" accept=".xlsx, .xls">
+    </div>
+    <div id="tableContainer">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>px</th>
+                    <th>Delivery</th>
+                    <th>Quantity</th>
+                    <th>NAME</th>
+                    <th>Shipment NO.</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
     </div>
     <script>
         let excelData = [];
         let currentResult= '';
+        let resultObj= {"bis":0,"cp":0,"pick up":0,"no deal":0};
+
         const vm1= new Vue({
             el: '#showing',
             data(){
                 return{
                     htmlContent:"这里显示查询结果",
-                    inputValue:""
+                    inputValue:"",
+                    total:""
                 }
             }
         });
         
         document.getElementById('fileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
-            if (!file)  return;
-
+            if (!file) return;
+            
             const reader = new FileReader();
             reader.onload = function(e) {
                 const data = new Uint8Array(e.target.result);
@@ -65,14 +143,7 @@
                 const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
                 const jsonData2 = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
                 const headers = jsonData2[0];
-                // console.log(headers);
-
-                jsonData1.map(row =>{
-                    if (!row.Delivery || !row.Payment){
-                        row.Delivery="不处理";
-                    }
-                });
-
+                // console.log(headers);                
                 // console.log(jsonData1);
                 // Process the data
                 excelData = jsonData1.map(row => {
@@ -83,9 +154,15 @@
                         delivery: row[headers[7]] ,
                         ctns: row[headers[2]],
                         consignee: row[headers[0]],
-                        no: no
+                        // pay:row[headers[6]],
+                        no: no,
+                        date:row[headers[8]] 
                     };
                 }).filter(row => row.no);
+
+                excelData.map(row => {
+                    if (!row.delivery || !row.date) row.delivery="不处理";
+                });
 
                 excelData.sort((a,b)=>{
                     const nameA = a['delivery'].toUpperCase(); // 忽略大小写
@@ -98,13 +175,41 @@
                     }
                     return 0;
                 });
+
+                resultObj['bis']= excelData.filter(row => row.delivery.toUpperCase()==='BIS').reduce((sum,row)=> sum + row['ctns'],0);
+                resultObj['cp']= excelData.filter(row => row.delivery.toUpperCase()==='CP').reduce((sum,row)=> sum + row['ctns'],0);
+                resultObj['pick up']= excelData.filter(row => row.delivery.toUpperCase()==='PICK UP').reduce((sum,row)=> sum + row['ctns'],0);
+                resultObj['no deal']= excelData.filter(row => row.delivery.toUpperCase()==='不处理').reduce((sum,row)=> sum + row['ctns'],0);
                 // console.log(excelData);
                 // Display all data initially
-                // displayData(excelData);
+                vm1.total=`bis:${resultObj['bis']}<br>cp:${resultObj['cp']}<br>pick up:${resultObj['pick up']}<br>不处理:${resultObj['no deal']}`;
+                displayData(excelData);
                 downLoad(excelData,file.name);
             };
             reader.readAsArrayBuffer(file);
         });
+        
+        function displayData(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="no-results">No data found</td></tr>';
+                return;
+            }
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.px}</td>
+                    <td>${row.delivery}</td>
+                    <td>${row.ctns}</td>
+                    <td>${row.consignee}</td>
+                    <td>${row.no}</td>                    
+                `;
+                tableBody.appendChild(tr);
+            });            
+        }
 
         function downLoad(excelData,fileName){
             if (window.confirm("是否要保存？")) {
@@ -123,29 +228,26 @@
                 console.log("用户点击了取消");
                 // 这里可以添加取消保存的代码
             }
-        };
-        
+        }
+
         function searchData() {
-            const searchTerm = vm1.inputValue.trim();
-            // console.log(searchTerm);
-            // console.log(excelData);
-            if (!searchTerm) {
-                return;
-            }           
+            const searchTerm = document.getElementById('searchInput').value.trim();
             const filteredData = excelData.filter(row => 
                 row.px.includes(searchTerm)
             );
-            console.log(filteredData);
-            vm1.inputValue="";
-            if(filteredData.length!==0){
-                vm1.htmlContent=filteredData[0].px +"<br>     "+ filteredData[0].delivery;
-                currentResult= filteredData[0].delivery;
+            if(filteredData.length===0){
+                vm1.htmlContent="找不到";
+                document.getElementById('searchInput').value='';
+                currentResult="找不到";
                 speakResult();
             }else{
-                vm1.htmlContent="找不到";
-            }
-        };
-
+                vm1.htmlContent=filteredData[0].delivery+'<br><br>'+filteredData[0].px;    
+                currentResult=filteredData[0].delivery;
+                document.getElementById('searchInput').value='';
+                speakResult();
+            };
+        }
+        
         function speakResult() {
             if (!currentResult) {
                 alert('没有可发音的内容');
@@ -164,8 +266,10 @@
             } else {
                 alert('您的浏览器不支持语音合成功能');
             }
+
         }
 
+        // Allow search on Enter key
         document.getElementById('searchInput').addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
                 searchData();
