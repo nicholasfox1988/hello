@@ -113,7 +113,7 @@
     <script>
         let excelData = [];
         let currentResult= '';
-        let resultObj= {"bis":0,"cp":0,"pick up":0,"no deal":0};
+        // let resultObj= {"bis":0,"cp":0,"pick up":0,"no deal":0};
 
         const vm1= new Vue({
             el: '#showing',
@@ -121,7 +121,7 @@
                 return{
                     htmlContent:"这里显示查询结果",
                     inputValue:"",
-                    total:""
+                    total:{}
                 }
             }
         });
@@ -176,13 +176,17 @@
                     return 0;
                 });
 
-                resultObj['bis']= excelData.filter(row => row.delivery.toUpperCase()==='BIS').reduce((sum,row)=> sum + row['ctns'],0);
-                resultObj['cp']= excelData.filter(row => row.delivery.toUpperCase()==='CP').reduce((sum,row)=> sum + row['ctns'],0);
-                resultObj['pick up']= excelData.filter(row => row.delivery.toUpperCase()==='PICK UP').reduce((sum,row)=> sum + row['ctns'],0);
-                resultObj['no deal']= excelData.filter(row => row.delivery.toUpperCase()==='不处理').reduce((sum,row)=> sum + row['ctns'],0);
+                let orderSummary=excelData.reduce((acc,row)=>{
+                    const {delivery,ctns} =row;
+                    if (!acc[delivery]) acc[delivery]=0;
+                    acc[delivery]+= ctns;
+                    return acc;
+                },{});
+                // resultObj['bis']= excelData.filter(row => row.delivery.toUpperCase()==='BIS').reduce((sum,row)=> sum + row['ctns'],0);
+
                 // console.log(excelData);
                 // Display all data initially
-                vm1.total=`bis:${resultObj['bis']}<br>cp:${resultObj['cp']}<br>pick up:${resultObj['pick up']}<br>不处理:${resultObj['no deal']}`;
+                vm1.total=orderSummary;
                 displayData(excelData);
                 downLoad(excelData,file.name);
             };
