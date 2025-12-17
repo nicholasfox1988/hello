@@ -122,10 +122,13 @@
                 const savesheet1 =XLSX.utils.json_to_sheet(save1);
                 XLSX.utils.book_append_sheet(savebook, savesheet1, "hold");
 
-                const save2= jsonData.filter(row => row.type==='K' && row.pic<7 && row.vol<1)
-                                    .sort((a,b)=> a.pic-b.pic);
+                const save2= jsonData.filter(row => row.type==='K').sort((a,b)=> a.pic-b.pic);
                 const savesheet2 =XLSX.utils.json_to_sheet(save2);
                 XLSX.utils.book_append_sheet(savebook, savesheet2, "张哥要的");
+
+                const save5= jsonData.filter(row => row.type==='K').sort((a,b)=> a.account_no-b.account_no);
+                const savesheet5 =XLSX.utils.json_to_sheet(save5);
+                XLSX.utils.book_append_sheet(savebook, savesheet5, "自提");
 
                 const save3= jsonData.filter(row => row.fo.includes('AION') || row.pic>=7 || row.hold
                     || row.vol>=1).sort((a,b)=>{
