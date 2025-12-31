@@ -160,7 +160,7 @@
                 XLSX.utils.book_append_sheet(savebook, savesheet4, "CS");            
 
                 // 保存工作簿为 Excel 文件
-                if(window.confirm('要保存吗？')) XLSX.writeFile(savebook, "done_"+file.name.slice(7,12));
+                if(window.confirm('要保存吗？')) XLSX.writeFile(savebook, "done_"+file.name.slice(7,12)+".xlsx");
             }
             reader.readAsArrayBuffer(file);
         });       
