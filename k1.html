@@ -245,7 +245,7 @@
                 currentResult="找不到";
                 speakResult();
             }else{
-                vm1.htmlContent=filteredData[0].delivery+'<br><br>'+filteredData[0].px;    
+                vm1.htmlContent=filteredData[0].delivery+'<br><br>'+filteredData[0].px+'<br><br>'+filteredData[0].ctns+'<br><br>'+filteredData[0].consignee;    
                 currentResult=filteredData[0].delivery;
                 document.getElementById('searchInput').value='';
                 speakResult();
