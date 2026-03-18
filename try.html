@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <!-- 核心视口设置 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
     <style>
         /* 重置和基础 */
         * {
@@ -70,16 +70,24 @@
 </head>
 <body>
     <div class="responsive-container">
-        <h1 style="font-size: clamp(1.8rem, 6vw, 3rem);">自适应页面</h1>
+        <h1 style="font-size: clamp(1.8rem, 6vw, 3rem);">nodejs学习路程</h1>
         
         <div class="auto-grid">
-            <div class="card">
-                < img src="https://picsum.photos/400/200" alt="示例图">
-                <h2>卡片标题</h2>
-                <p>这段文字会在手机上变小一点，平板上适中，电脑上保持可读大小。</p >
-            </div>
-            <!-- 更多卡片... -->
+            <pre><code class="language-javascript">
+            const http =require('http');
+
+            const server = http.createServer((req,res)=>{
+                res.setHeader('content-type','text/html;charset=utf-8');  //中文乱码解决
+                res.end('你好');
+            });
+
+            server.listen(9000,()=>{
+                console.log('sever is running');
+            });
+            </code></pre>
         </div>
     </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </body>
 </html>
