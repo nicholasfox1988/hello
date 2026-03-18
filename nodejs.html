@@ -4,45 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
 </head>
 <body>
-    <p>demo01.js <br />
-    运行这段代码 node demo01.js,  ctrl+c 停止服务器
-    ```javascript
-    const http =require('http');</p>
-    <p>const server = http.createServer((req,res)=&gt;{
-    res.setHeader('content-type','text/html;charset=utf-8');  //中文乱码解决
-    res.end('你好');
-    });</p>
-    <p>server.listen(9000,()=&gt;{
-    console.log('sever is running');
-    });
-    ```</p>
-    <p>01.html<br />
-    写一个html表单 模拟post提交，因为地址栏都是get提交
-    ```html
-    <form action="http://127.0.0.1:9000" method="post">
-        <input type="text" name="name">
-        <input type="password" name="password">
-        <input type="submit" value="submit">
-    </form>
-    ```
-    <p>demo03.js
-    获取请求头的操作req
-    ```javascript
-    const http =require('http');</p>
-    <p>const server = http.createServer((req,res)=&gt;{
-    res.setHeader('content-type','text/html;charset=utf-8');  //中文乱码解决
-    console.log(req.method);
-    console.log(req.url);
-    console.log(req.httpVersion);
-    console.log(req.headers);
-    console.log(req.headers.host);
-    res.end('你好');
-    });</p>
-    <p>server.listen(9000,()=&gt;{
-    console.log('sever is running');
-    });
-    ```</p>
+    <pre><code class="language-javascript">
+        const http =require('http');
+
+        const server = http.createServer((req,res)=>{
+            res.setHeader('content-type','text/html;charset=utf-8');  //中文乱码解决
+            res.end('你好');
+        });
+
+        server.listen(9000,()=>{
+            console.log('sever is running');
+        });
+    </code></pre>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </body>
 </html>
