@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- 核心视口设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        /* 重置和基础 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            padding: 16px;
+        }
+        
+        /* 自适应容器 */
+        .responsive-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* 自动适配的网格 */
+        .auto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        /* 卡片自动伸缩 */
+        .card {
+            background: #f5f7fa;
+            border-radius: 16px;
+            padding: clamp(16px, 4vw, 24px);  /* 内边距自适应 */
+        }
+        
+        .card h2 {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card p {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        /* 图片始终不溢出 */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+        
+        /* 手机端小调整 */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+            .auto-grid {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="responsive-container">
+        <h1 style="font-size: clamp(1.8rem, 6vw, 3rem);">自适应页面</h1>
+        
+        <div class="auto-grid">
+            <div class="card">
+                < img src="https://picsum.photos/400/200" alt="示例图">
+                <h2>卡片标题</h2>
+                <p>这段文字会在手机上变小一点，平板上适中，电脑上保持可读大小。</p >
+            </div>
+            <!-- 更多卡片... -->
+        </div>
+    </div>
+</body>
+</html>
