@@ -310,3 +310,44 @@ for (let key in obj){
     }, 1000)
   </script>
 ```
+
+**事件监听**
+```js
+  元素.document.addEventListener('动作',()=>{ })
+```
+
+```js
+ <div class="div1">
+    <h1>名字随机抽取</h1>
+    <span>名字：</span>
+    <div class="div2">这里显示</div>
+    <button class="start">开始</button>
+    <button class="end">结束</button>
+  </div>
+  <script>
+    let arr1 = ['abc', 'def', 'hij', 'klm']
+    let random = 0
+    let num = 0
+    let h1 = document.querySelector('h1')
+    let div2 = document.querySelector('.div2')
+    let start = document.querySelector('.start')
+    let end = document.querySelector('.end')
+    console.log(arr1)
+
+    start.addEventListener('click', () => {
+      num = setInterval(() => {
+        random = parseInt(Math.random() * arr1.length)
+        div2.innerHTML = arr1[random]
+      }, 50)
+    })
+
+    end.addEventListener('click', () => {
+      clearInterval(num)
+      arr1.splice(random, 1)
+      console.log(arr1)
+      if (arr1.length === 0) {
+        arr1 = ['abc', 'def', 'hij', 'klm']
+      }
+    })
+  </script>
+```
