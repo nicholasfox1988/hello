@@ -311,10 +311,19 @@ for (let key in obj){
   </script>
 ```
 
-**事件监听**
+# 事件监听
 ```js
   元素.document.addEventListener('动作',()=>{ })
 ```
+- **动作包含如下：**
+  - click
+  - mouseenter
+  - mouseleave
+  - focus
+  - blur
+  - keydown
+  - keyup
+  - input
 
 ```js
  <div class="div1">

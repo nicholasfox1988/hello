@@ -343,6 +343,56 @@ for (let key in obj){
     }, 1000)
   &lt;/script&gt;
 </code></pre>
+<h1 id="-">事件监听</h1>
+<pre><code class="lang-js">  元素.document.addEventListener(&#39;动作&#39;,()=&gt;{ })
+</code></pre>
+<ul>
+<li><strong>动作包含如下：</strong><ul>
+<li>click</li>
+<li>mouseenter</li>
+<li>mouseleave</li>
+<li>focus</li>
+<li>blur</li>
+<li>keydown</li>
+<li>keyup</li>
+<li>input</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-js"> &lt;div class=&quot;div1&quot;&gt;
+    &lt;h1&gt;名字随机抽取&lt;/h1&gt;
+    &lt;span&gt;名字：&lt;/span&gt;
+    &lt;div class=&quot;div2&quot;&gt;这里显示&lt;/div&gt;
+    &lt;button class=&quot;start&quot;&gt;开始&lt;/button&gt;
+    &lt;button class=&quot;end&quot;&gt;结束&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    let arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
+    let random = 0
+    let num = 0
+    let h1 = document.querySelector(&#39;h1&#39;)
+    let div2 = document.querySelector(&#39;.div2&#39;)
+    let start = document.querySelector(&#39;.start&#39;)
+    let end = document.querySelector(&#39;.end&#39;)
+    console.log(arr1)
+
+    start.addEventListener(&#39;click&#39;, () =&gt; {
+      num = setInterval(() =&gt; {
+        random = parseInt(Math.random() * arr1.length)
+        div2.innerHTML = arr1[random]
+      }, 50)
+    })
+
+    end.addEventListener(&#39;click&#39;, () =&gt; {
+      clearInterval(num)
+      arr1.splice(random, 1)
+      console.log(arr1)
+      if (arr1.length === 0) {
+        arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
+      }
+    })
+  &lt;/script&gt;
+</code></pre>
 
           	</article>
         </div>
