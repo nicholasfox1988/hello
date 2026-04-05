@@ -72,7 +72,7 @@
 # 数据类型
 ```js
 number      整数，小数，正数，负数
-string      '' , "" , ``
+string      '' , "" , ``, str.trim()去头位空格
 boolean     true , false:('',0,undefined,null,false,NaN)
 undefined   只申明，却不赋值
 null        申明了，赋值为空
@@ -419,4 +419,76 @@ for (let key in obj){
       span.innerHTML = `${input.value.length}/20字`
     })
   </script>
+```
+
+```html
+  <input type="text">
+  <button>发布</button>
+  <p>abcdefg</p>
+  <script>
+    let input = document.querySelector('input')
+    let btn1 = document.querySelector('button')
+    let p = document.querySelector('p')
+
+    input.addEventListener('keyup', (e) => {
+      console.log(e.key)
+      if (e.key === 'Enter') {
+        p.innerHTML = input.value
+        input.value = ''
+      }
+    })
+    btn1.addEventListener('click', () => {
+      p.innerHTML = input.value
+      input.value = ''
+    })
+  </script>
+```
+
+# this  
+
+- **注意使用箭头函数this会直接指向window**
+- **谁调用这个函数 this就指向谁**
+- **普通函数中 this指向的是window**
+
+**函数里面调用的函数，就叫回调函数**
+
+```html
+  <div class="div1">
+    <ul>
+      <li><a class="active" href="#">abc</a></li>
+      <li><a href="#">def</a></li>
+      <li><a href="#">hij</a></li>
+    </ul>
+  </div>
+  <script>
+    let li = document.querySelectorAll('.div1 a')
+    console.log(li)
+    for (let i = 0; i < li.length; i++) {
+      li[i].addEventListener('mouseenter', function () {
+        document.querySelector('.div1 .active').classList.remove('active')
+        li[i].classList.add('active')
+      })
+    }
+  </script>
+```
+
+**复选框**
+```js
+<script>
+  let checkbox1 = document.querySelectorAll('.table-wrapper [type="checkbox"]')
+  // console.log(checkbox)
+  let checkAll = document.querySelector('.select-all-bar [type="checkbox"]')
+
+  checkAll.addEventListener('click', function () {
+    for (let i = 0; i < checkbox1.length; i++) {
+      checkbox1[i].checked = this.checked
+    }
+  })
+
+  for (let i = 0; i < checkbox1.length; i++) {
+    checkbox1[i].addEventListener('click', function () {
+      checkAll.checked = document.querySelectorAll('.table-wrapper [type="checkbox"]:checked').length === checkbox1.length
+    })
+  }
+</script>
 ```

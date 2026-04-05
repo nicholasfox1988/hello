@@ -130,7 +130,7 @@
 </code></pre>
 <h1 id="-">数据类型</h1>
 <pre><code class="lang-js">number      整数，小数，正数，负数
-string      &#39;&#39; , &quot;&quot; , ``
+string      &#39;&#39; , &quot;&quot; , ``, str.trim()去头位空格
 boolean     true , false:(&#39;&#39;,0,undefined,null,false,NaN)
 undefined   只申明，却不赋值
 null        申明了，赋值为空
@@ -445,6 +445,71 @@ for (let key in obj){
       span.innerHTML = `${input.value.length}/20字`
     })
   &lt;/script&gt;
+</code></pre>
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
+  &lt;button&gt;发布&lt;/button&gt;
+  &lt;p&gt;abcdefg&lt;/p&gt;
+  &lt;script&gt;
+    let input = document.querySelector(&#39;input&#39;)
+    let btn1 = document.querySelector(&#39;button&#39;)
+    let p = document.querySelector(&#39;p&#39;)
+
+    input.addEventListener(&#39;keyup&#39;, (e) =&gt; {
+      console.log(e.key)
+      if (e.key === &#39;Enter&#39;) {
+        p.innerHTML = input.value
+        input.value = &#39;&#39;
+      }
+    })
+    btn1.addEventListener(&#39;click&#39;, () =&gt; {
+      p.innerHTML = input.value
+      input.value = &#39;&#39;
+    })
+  &lt;/script&gt;
+</code></pre>
+<h1 id="this">this</h1>
+<ul>
+<li><strong>注意使用箭头函数this会直接指向window</strong></li>
+<li><strong>谁调用这个函数 this就指向谁</strong></li>
+<li><strong>普通函数中 this指向的是window</strong></li>
+</ul>
+<p><strong>函数里面调用的函数，就叫回调函数</strong></p>
+<pre><code class="lang-html">  &lt;div class=&quot;div1&quot;&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a class=&quot;active&quot; href=&quot;#&quot;&gt;abc&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;def&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;hij&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    let li = document.querySelectorAll(&#39;.div1 a&#39;)
+    console.log(li)
+    for (let i = 0; i &lt; li.length; i++) {
+      li[i].addEventListener(&#39;mouseenter&#39;, function () {
+        document.querySelector(&#39;.div1 .active&#39;).classList.remove(&#39;active&#39;)
+        li[i].classList.add(&#39;active&#39;)
+      })
+    }
+  &lt;/script&gt;
+</code></pre>
+<p><strong>复选框</strong></p>
+<pre><code class="lang-js">&lt;script&gt;
+  let checkbox1 = document.querySelectorAll(&#39;.table-wrapper [type=&quot;checkbox&quot;]&#39;)
+  // console.log(checkbox)
+  let checkAll = document.querySelector(&#39;.select-all-bar [type=&quot;checkbox&quot;]&#39;)
+
+  checkAll.addEventListener(&#39;click&#39;, function () {
+    for (let i = 0; i &lt; checkbox1.length; i++) {
+      checkbox1[i].checked = this.checked
+    }
+  })
+
+  for (let i = 0; i &lt; checkbox1.length; i++) {
+    checkbox1[i].addEventListener(&#39;click&#39;, function () {
+      checkAll.checked = document.querySelectorAll(&#39;.table-wrapper [type=&quot;checkbox&quot;]:checked&#39;).length === checkbox1.length
+    })
+  }
+&lt;/script&gt;
 </code></pre>
 
           	</article>
