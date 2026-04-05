@@ -301,14 +301,14 @@ for (let key in obj){
 元素.classlist.remove(&#39;类名&#39;)   //移除
 元素.classlist.toggle(&#39;类名&#39;)   //切换
 </code></pre>
-<pre><code class="lang-js">  &lt;input type=&quot;text&quot;&gt;         //输入文本  元素.value= &#39;&#39;
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;         //输入文本  元素.value= &#39;&#39;
   &lt;input type=&quot;checkbox&quot;&gt;     //打勾      元素.checked= true or false
 
   &lt;button&gt;abc&lt;/button&gt;        //btn1.disabled = true 禁用该按钮
 
 </code></pre>
 <p><strong>自定义属性</strong></p>
-<pre><code class="lang-js">  &lt;div data-id=&quot;&quot; data-name=&quot;nick&quot;&gt;1&lt;/div&gt;
+<pre><code class="lang-html">  &lt;div data-id=&quot;&quot; data-name=&quot;nick&quot;&gt;1&lt;/div&gt;
   &lt;div&gt;2&lt;/div&gt;
   &lt;div&gt;3&lt;/div&gt;
 
@@ -327,7 +327,7 @@ for (let key in obj){
   clearInterval(n)
 </code></pre>
 <p><strong>同意按钮</strong></p>
-<pre><code class="lang-js">  &lt;button disabled&gt;同意(5)&lt;/button&gt;
+<pre><code class="lang-html">  &lt;button disabled&gt;同意(5)&lt;/button&gt;
 
   &lt;script&gt;
     let btn1 = document.querySelector(&#39;button&#39;)
@@ -359,7 +359,7 @@ for (let key in obj){
 </ul>
 </li>
 </ul>
-<pre><code class="lang-js"> &lt;div class=&quot;div1&quot;&gt;
+<pre><code class="lang-html"> &lt;div class=&quot;div1&quot;&gt;
     &lt;h1&gt;名字随机抽取&lt;/h1&gt;
     &lt;span&gt;名字：&lt;/span&gt;
     &lt;div class=&quot;div2&quot;&gt;这里显示&lt;/div&gt;
@@ -390,6 +390,59 @@ for (let key in obj){
       if (arr1.length === 0) {
         arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
       }
+    })
+  &lt;/script&gt;
+</code></pre>
+<pre><code class="lang-html">  &lt;div class=&quot;mi&quot;&gt;
+    &lt;input type=&quot;text&quot; placeholder=&quot;请输入：&quot;&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;3&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    let input = document.querySelector(&#39;input&#39;)
+    let ul = document.querySelector(&#39;ul&#39;)
+
+    input.addEventListener(&#39;focus&#39;, () =&gt; {
+      ul.style.display = &#39;block&#39;
+    })
+    input.addEventListener(&#39;blur&#39;, () =&gt; {
+      ul.style.display = &#39;none&#39;
+    })
+  &lt;/script&gt;
+</code></pre>
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
+  &lt;script&gt;
+    let input = document.querySelector(&#39;input&#39;)
+    input.addEventListener(&#39;keydown&#39;, () =&gt; {
+      console.log(&#39;键盘按下&#39;)
+    })
+    input.addEventListener(&#39;keyup&#39;, () =&gt; {
+      console.log(&#39;键盘弹起&#39;)
+    })
+  &lt;/script&gt;
+</code></pre>
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
+  &lt;button&gt;发布&lt;/button&gt;
+  &lt;br&gt;
+  &lt;span class=&quot;total&quot;&gt;0/20字&lt;/span&gt;
+  &lt;script&gt;
+    let input = document.querySelector(&#39;input&#39;)
+    let span = document.querySelector(&#39;span&#39;)
+    let btn = document.querySelector(&#39;button&#39;)
+
+    input.addEventListener(&#39;input&#39;, () =&gt; {
+      if (input.value.length &lt;= 20) {
+        console.log(input.value)
+        span.innerHTML = `${input.value.length}/20字`
+      }
+    })
+    btn.addEventListener(&#39;click&#39;, () =&gt; {
+      input.value = &#39;&#39;
+      span.innerHTML = `${input.value.length}/20字`
     })
   &lt;/script&gt;
 </code></pre>

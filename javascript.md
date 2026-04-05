@@ -240,6 +240,7 @@ for (let key in obj){
   console.log(obj[key])
 }
 ```
+
 **内置对象**
 网页输入:mdn可以查看
 搜索Math
@@ -261,7 +262,7 @@ for (let key in obj){
 元素.classlist.toggle('类名')   //切换
 ```
 
-```js
+```html
   <input type="text">         //输入文本  元素.value= ''
   <input type="checkbox">     //打勾      元素.checked= true or false
 
@@ -270,7 +271,7 @@ for (let key in obj){
 ```
 
 **自定义属性**
-```js
+```html
   <div data-id="" data-name="nick">1</div>
   <div>2</div>
   <div>3</div>
@@ -293,7 +294,7 @@ for (let key in obj){
   clearInterval(n)
 ```
 **同意按钮**
-```js
+```html
   <button disabled>同意(5)</button>
 
   <script>
@@ -325,7 +326,7 @@ for (let key in obj){
   - keyup
   - input
 
-```js
+```html
  <div class="div1">
     <h1>名字随机抽取</h1>
     <span>名字：</span>
@@ -357,6 +358,65 @@ for (let key in obj){
       if (arr1.length === 0) {
         arr1 = ['abc', 'def', 'hij', 'klm']
       }
+    })
+  </script>
+```
+
+```html
+  <div class="mi">
+    <input type="text" placeholder="请输入：">
+    <ul>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+    </ul>
+  </div>
+
+  <script>
+    let input = document.querySelector('input')
+    let ul = document.querySelector('ul')
+    
+    input.addEventListener('focus', () => {
+      ul.style.display = 'block'
+    })
+    input.addEventListener('blur', () => {
+      ul.style.display = 'none'
+    })
+  </script>
+```
+
+```html
+  <input type="text">
+  <script>
+    let input = document.querySelector('input')
+    input.addEventListener('keydown', () => {
+      console.log('键盘按下')
+    })
+    input.addEventListener('keyup', () => {
+      console.log('键盘弹起')
+    })
+  </script>
+```
+
+```html
+  <input type="text">
+  <button>发布</button>
+  <br>
+  <span class="total">0/20字</span>
+  <script>
+    let input = document.querySelector('input')
+    let span = document.querySelector('span')
+    let btn = document.querySelector('button')
+
+    input.addEventListener('input', () => {
+      if (input.value.length <= 20) {
+        console.log(input.value)
+        span.innerHTML = `${input.value.length}/20字`
+      }
+    })
+    btn.addEventListener('click', () => {
+      input.value = ''
+      span.innerHTML = `${input.value.length}/20字`
     })
   </script>
 ```
