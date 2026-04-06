@@ -33,6 +33,7 @@
 
 </html>
 ```
+---
 
 # 输出语法
 ```js
@@ -45,21 +46,33 @@
 </script>
 ```
 
-# 多变量,常量申明
+**多变量,常量申明**
 
 > let age = 28,name= 'nick'
 
 > const fs = require('fs'),PI =3.14
 
-# 页面打印对话框输入
+**页面打印对话框输入**
 ```js
 <script>
   let name = prompt('请输入名字：')
   document.write('你好' + name)
 </script>
 ```
+---
+# 数据类型
+```js
+number      整数，小数，正数，负数
+string      '' , "" , ``, str.trim()去头位空格
+boolean     true , false:('',0,undefined,null,false,NaN)
+undefined   只申明，却不赋值
+null        申明了，赋值为空
+数组
+object      
+```
+> NaN  报错：不是一个数字
 
-# 数组
+**数组**
 ```js
   <script>
     let arr = ['abc', 'def', 'hij', 'lmn']
@@ -68,17 +81,6 @@
     console.log(arr.length)
   </script>
 ```
-
-# 数据类型
-```js
-number      整数，小数，正数，负数
-string      '' , "" , ``, str.trim()去头位空格
-boolean     true , false:('',0,undefined,null,false,NaN)
-undefined   只申明，却不赋值
-null        申明了，赋值为空
-object      
-```
-> NaN  报错：不是一个数字
 
 # 检测数据类型
 ```js
@@ -91,7 +93,7 @@ console.log(typeof abc)
 +运算只要有一个是string，结果就会是string
 -*/只要有一个是number,结果就会是number
 ```
-
+---
 # 输入表格显示
 ```js
 <!DOCTYPE html>
@@ -159,19 +161,23 @@ console.log(typeof abc)
 
 </html>
 ```
-
-# 逻辑运算,运算顺序如下
+---
+# 运算
+**逻辑运算,运算顺序如下**
 ```js
 !
 &&
 ||
 ```
-# 三元补零
+**三元补零**
 ```js
 let num = prompt('请输入一个数字：')
 num = num < 10 ? 0 + num : num
 alert(num)
 ```
+---
+# 判断
+**if else太简单不写了**
 
 **switch要求数据类型和值必须全等**
 ```js
@@ -189,6 +195,7 @@ switch(num){
     break
 }
 ```
+---
 # 遍历数组
 ```js
   <script>
@@ -198,30 +205,31 @@ switch(num){
     }
   </script>
   ```
-  **数组的增删改查**
-  ```js
-  <script>
-    let arr1 = ['abc', 'def', 'hij', 'klm']
-    arr1.push(value)      //增  到结尾
-    arr1.unshift(value)   //增  到开头
+**数组的增删改查**
+```js
+<script>
+  let arr1 = ['abc', 'def', 'hij', 'klm']
+  arr1.push(value)      //增  到结尾
+  arr1.unshift(value)   //增  到开头
 
-    arr1.pop()            //删  最后一个
-    arr1.shift()          //删  第一个
-    arr1.splice(index，num)    //删 从index开始的num个数 
+  arr1.pop()            //删  最后一个
+  arr1.shift()          //删  第一个
+  arr1.splice(index，num)    //删 从index开始的num个数 
 
-    arr1[index] = val     //改
+  arr1[index] = val     //改
 
-    arr1[index]           //查
-  </script>
-  
-  # 函数
-  **立即执行函数**
-  ```js
-  (function(x,y){
-    //代码段
-  })(x,y);
-  ```
-
+  arr1[index]           //查
+</script>
+```
+---
+# 函数，不难讲解了
+**立即执行函数**
+```js
+(function(x,y){
+  //代码段
+})(x,y);
+```
+---
 # object对象
 
 **删除对象的属性和方法**
@@ -282,10 +290,10 @@ for (let key in obj){
     console.log(div.dataset.name)
   </script>
 ```
+---
+# 定时器:间歇函数
 
-**定时器:间歇函数**
-
-**关闭定时器**
+**开启/关闭定时器**
 ```js
   let n = setInterval(() => {
     console.log('hello world!')
@@ -311,7 +319,7 @@ for (let key in obj){
     }, 1000)
   </script>
 ```
-
+---
 # 事件监听
 ```js
   元素.document.addEventListener('动作',()=>{ })
@@ -443,7 +451,7 @@ for (let key in obj){
     })
   </script>
 ```
-
+---
 # this  
 
 - **注意使用箭头函数this会直接指向window**
@@ -491,4 +499,79 @@ for (let key in obj){
     })
   }
 </script>
+```
+---
+# 事件流程
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .father {
+      height: 100px;
+      width: 100px;
+      background-color: pink;
+    }
+
+    .son {
+      height: 50px;
+      width: 50px;
+      background-color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="father">
+    <div class="son"></div>
+  </div>
+  <script>
+    let fa = document.querySelector('.father')
+    let son = document.querySelector('.son')
+
+    document.addEventListener('click', function () {
+      alert('爷爷')
+    })
+
+    fa.addEventListener('click', function (e) {
+      alert('爸爸')
+      e.stopPropagation()
+    })
+
+    son.addEventListener('click', function (e) {
+      alert('儿子')
+      e.stopPropagation()
+    })
+  </script>
+</body>
+</html>
+```
+
+**事件解绑**
+```html
+  <button>点击</button>
+  <script>
+    let btn = document.querySelector('button')
+    btn.onclick = function () {
+      alert('点击动作')
+    }
+    btn.onclick = null
+  </script>
+```
+
+```html
+  <button>点击</button>
+  <script>
+    let btn = document.querySelector('button')
+    function fn() {
+      alert('点击')
+    }
+
+    btn.addEventListener('click', fn)
+    btn.removeEventListener('click', fn)
+  </script>
 ```

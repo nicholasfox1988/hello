@@ -98,6 +98,7 @@
 
 &lt;/html&gt;
 </code></pre>
+<hr>
 <h1 id="-">输出语法</h1>
 <pre><code class="lang-js">&lt;script&gt;
   document.write(&#39;abc&#39;)
@@ -107,20 +108,33 @@
   prompt(&#39;请输入你的年龄&#39;)  //弹出输入对话框
 &lt;/script&gt;
 </code></pre>
-<h1 id="-">多变量,常量申明</h1>
+<p><strong>多变量,常量申明</strong></p>
 <blockquote>
 <p>let age = 28,name= &#39;nick&#39;</p>
 </blockquote>
 <blockquote>
 <p>const fs = require(&#39;fs&#39;),PI =3.14</p>
 </blockquote>
-<h1 id="-">页面打印对话框输入</h1>
+<p><strong>页面打印对话框输入</strong></p>
 <pre><code class="lang-js">&lt;script&gt;
   let name = prompt(&#39;请输入名字：&#39;)
   document.write(&#39;你好&#39; + name)
 &lt;/script&gt;
 </code></pre>
-<h1 id="-">数组</h1>
+<hr>
+<h1 id="-">数据类型</h1>
+<pre><code class="lang-js">number      整数，小数，正数，负数
+string      &#39;&#39; , &quot;&quot; , ``, str.trim()去头位空格
+boolean     true , false:(&#39;&#39;,0,undefined,null,false,NaN)
+undefined   只申明，却不赋值
+null        申明了，赋值为空
+数组
+object      
+</code></pre>
+<blockquote>
+<p>NaN  报错：不是一个数字</p>
+</blockquote>
+<p><strong>数组</strong></p>
 <pre><code class="lang-js">  &lt;script&gt;
     let arr = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;lmn&#39;]
     console.log(arr)
@@ -128,17 +142,6 @@
     console.log(arr.length)
   &lt;/script&gt;
 </code></pre>
-<h1 id="-">数据类型</h1>
-<pre><code class="lang-js">number      整数，小数，正数，负数
-string      &#39;&#39; , &quot;&quot; , ``, str.trim()去头位空格
-boolean     true , false:(&#39;&#39;,0,undefined,null,false,NaN)
-undefined   只申明，却不赋值
-null        申明了，赋值为空
-object      
-</code></pre>
-<blockquote>
-<p>NaN  报错：不是一个数字</p>
-</blockquote>
 <h1 id="-">检测数据类型</h1>
 <pre><code class="lang-js">let abc
 console.log(typeof abc)
@@ -147,6 +150,7 @@ console.log(typeof abc)
 <pre><code class="lang-js">+运算只要有一个是string，结果就会是string
 -*/只要有一个是number,结果就会是number
 </code></pre>
+<hr>
 <h1 id="-">输入表格显示</h1>
 <pre><code class="lang-js">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -213,16 +217,21 @@ console.log(typeof abc)
 
 &lt;/html&gt;
 </code></pre>
-<h1 id="-">逻辑运算,运算顺序如下</h1>
+<hr>
+<h1 id="-">运算</h1>
+<p><strong>逻辑运算,运算顺序如下</strong></p>
 <pre><code class="lang-js">!
 &amp;&amp;
 ||
 </code></pre>
-<h1 id="-">三元补零</h1>
+<p><strong>三元补零</strong></p>
 <pre><code class="lang-js">let num = prompt(&#39;请输入一个数字：&#39;)
 num = num &lt; 10 ? 0 + num : num
 alert(num)
 </code></pre>
+<hr>
+<h1 id="-">判断</h1>
+<p><strong>if else太简单不写了</strong></p>
 <p><strong>switch要求数据类型和值必须全等</strong></p>
 <pre><code class="lang-js">let num = +prompt(&#39;请输入一个数字：&#39;)
 switch(num){
@@ -238,6 +247,7 @@ switch(num){
     break
 }
 </code></pre>
+<hr>
 <h1 id="-">遍历数组</h1>
 <pre><code class="lang-js">  &lt;script&gt;
     let arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
@@ -246,28 +256,29 @@ switch(num){
     }
   &lt;/script&gt;
 </code></pre>
-<p>  <strong>数组的增删改查</strong></p>
-<pre><code class="lang-js">  &lt;script&gt;
-    let arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
-    arr1.push(value)      //增  到结尾
-    arr1.unshift(value)   //增  到开头
+<p><strong>数组的增删改查</strong></p>
+<pre><code class="lang-js">&lt;script&gt;
+  let arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
+  arr1.push(value)      //增  到结尾
+  arr1.unshift(value)   //增  到开头
 
-    arr1.pop()            //删  最后一个
-    arr1.shift()          //删  第一个
-    arr1.splice(index，num)    //删 从index开始的num个数 
+  arr1.pop()            //删  最后一个
+  arr1.shift()          //删  第一个
+  arr1.splice(index，num)    //删 从index开始的num个数 
 
-    arr1[index] = val     //改
+  arr1[index] = val     //改
 
-    arr1[index]           //查
-  &lt;/script&gt;
-
-  # 函数
-  **立即执行函数**
-  ```js
-  (function(x,y){
-    //代码段
-  })(x,y);
+  arr1[index]           //查
+&lt;/script&gt;
 </code></pre>
+<hr>
+<h1 id="-">函数，不难讲解了</h1>
+<p><strong>立即执行函数</strong></p>
+<pre><code class="lang-js">(function(x,y){
+  //代码段
+})(x,y);
+</code></pre>
+<hr>
 <h1 id="object-">object对象</h1>
 <p><strong>删除对象的属性和方法</strong></p>
 <p>delete 对象.属性</p>
@@ -318,8 +329,9 @@ for (let key in obj){
     console.log(div.dataset.name)
   &lt;/script&gt;
 </code></pre>
-<p><strong>定时器:间歇函数</strong></p>
-<p><strong>关闭定时器</strong></p>
+<hr>
+<h1 id="-">定时器:间歇函数</h1>
+<p><strong>开启/关闭定时器</strong></p>
 <pre><code class="lang-js">  let n = setInterval(() =&gt; {
     console.log(&#39;hello world!&#39;)
   }, 3000)
@@ -343,6 +355,7 @@ for (let key in obj){
     }, 1000)
   &lt;/script&gt;
 </code></pre>
+<hr>
 <h1 id="-">事件监听</h1>
 <pre><code class="lang-js">  元素.document.addEventListener(&#39;动作&#39;,()=&gt;{ })
 </code></pre>
@@ -467,6 +480,7 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
+<hr>
 <h1 id="this">this</h1>
 <ul>
 <li><strong>注意使用箭头函数this会直接指向window</strong></li>
@@ -510,6 +524,76 @@ for (let key in obj){
     })
   }
 &lt;/script&gt;
+</code></pre>
+<hr>
+<h1 id="-">事件流程</h1>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;style&gt;
+    .father {
+      height: 100px;
+      width: 100px;
+      background-color: pink;
+    }
+
+    .son {
+      height: 50px;
+      width: 50px;
+      background-color: green;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div class=&quot;father&quot;&gt;
+    &lt;div class=&quot;son&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    let fa = document.querySelector(&#39;.father&#39;)
+    let son = document.querySelector(&#39;.son&#39;)
+
+    document.addEventListener(&#39;click&#39;, function () {
+      alert(&#39;爷爷&#39;)
+    })
+
+    fa.addEventListener(&#39;click&#39;, function (e) {
+      alert(&#39;爸爸&#39;)
+      e.stopPropagation()
+    })
+
+    son.addEventListener(&#39;click&#39;, function (e) {
+      alert(&#39;儿子&#39;)
+      e.stopPropagation()
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>事件解绑</strong></p>
+<pre><code class="lang-html">  &lt;button&gt;点击&lt;/button&gt;
+  &lt;script&gt;
+    let btn = document.querySelector(&#39;button&#39;)
+    btn.onclick = function () {
+      alert(&#39;点击动作&#39;)
+    }
+    btn.onclick = null
+  &lt;/script&gt;
+</code></pre>
+<pre><code class="lang-html">  &lt;button&gt;点击&lt;/button&gt;
+  &lt;script&gt;
+    let btn = document.querySelector(&#39;button&#39;)
+    function fn() {
+      alert(&#39;点击&#39;)
+    }
+
+    btn.addEventListener(&#39;click&#39;, fn)
+    btn.removeEventListener(&#39;click&#39;, fn)
+  &lt;/script&gt;
 </code></pre>
 
           	</article>
