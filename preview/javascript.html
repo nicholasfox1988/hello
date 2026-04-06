@@ -595,6 +595,114 @@ for (let key in obj){
     btn.removeEventListener(&#39;click&#39;, fn)
   &lt;/script&gt;
 </code></pre>
+<p><strong>匿名函数不能解绑</strong></p>
+<p><strong>捕捉和冒泡,冒泡可以吧监听器安装在父级容器里面</strong></p>
+<pre><code class="lang-html">  &lt;ul&gt;
+    &lt;li&gt;a1g&lt;/li&gt;
+    &lt;li&gt;a2g&lt;/li&gt;
+    &lt;li&gt;a3g&lt;/li&gt;
+    &lt;p&gt;abc&lt;/p&gt;
+  &lt;/ul&gt;
+  &lt;script&gt;
+    let ul = document.querySelector(&#39;ul&#39;)
+
+    ul.addEventListener(&#39;click&#39;, function (e) {
+      // console.log(e)
+      if (e.target.tagName === &#39;LI&#39;) {
+        e.target.style.color = &#39;red&#39;
+      }
+    })
+  &lt;/script&gt;
+</code></pre>
+<p><strong>阻止元素默认行为如：点击表单提交，点击超链接</strong></p>
+<pre><code class="lang-html">  &lt;form action=&quot;http://www.baidu.com&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;免费注册&quot;&gt;
+  &lt;/form&gt;
+  &lt;a href=&quot;http://www.baidu.com&quot;&gt;百度一下&lt;/a&gt;
+  &lt;script&gt;
+    const form = document.querySelector(&#39;form&#39;)
+    const a = document.querySelector(&#39;a&#39;)
+    form.addEventListener(&#39;submit&#39;, function (e) {
+      e.preventDefault()
+    })
+    a.addEventListener(&#39;click&#39;, function (e) {
+      e.preventDefault()
+    })
+  &lt;/script&gt;
+</code></pre>
+<p><strong>等待网页全部加载完毕，开始运行</strong></p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;script&gt;
+    window.addEventListener(&#39;load&#39;, function () {
+      const btn = document.querySelector(&#39;button&#39;)
+      btn.addEventListener(&#39;click&#39;, function () {
+        alert(&#39;按钮被点击了&#39;)
+      })
+    })
+  &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;button&gt;点击&lt;/button&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p><strong>等待网页标签全部加载</strong></p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;script&gt;
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function () {
+      alert(&#39;验证&#39;)
+      const btn = document.querySelector(&#39;button&#39;)
+      btn.addEventListener(&#39;click&#39;, function () {
+        alert(&#39;按钮被点击了&#39;)
+      })
+    })
+  &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;button&gt;abc点击&lt;/button&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p><strong>页面滚动事件</strong></p>
+<pre><code class="lang-js">  window.addEventListener(&#39;scroll&#39;, function () {
+    console.log(&#39;滚动了&#39;)
+  })
+</code></pre>
+<pre><code class="lang-html">  &lt;script&gt;
+    const ul = document.querySelector(&#39;ul&#39;)
+
+    window.addEventListener(&#39;scroll&#39;, function () {
+      let n = document.documentElement.scrollTop
+      ul.style.opacity = n &gt;= 300 ? 0 : 1
+      console.log(n)
+    })
+  &lt;/script&gt;
+</code></pre>
+<h1 id="-">时间对象</h1>
+<pre><code class="lang-html">  &lt;script&gt;
+    const date1 = new Date()
+    const date2 = new Date(&#39;2005-5-1 08:30:45&#39;)
+    console.log(date1)
+    date2.setFullYear(2006)
+    console.log(date2)
+  &lt;/script&gt;
+</code></pre>
 
           	</article>
         </div>
