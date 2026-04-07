@@ -689,11 +689,72 @@ for (let key in obj){
 
 # 时间对象
 ```html
+  <div></div>
   <script>
+    const div = document.querySelector('div');
     const date1 = new Date()
     const date2 = new Date('2005-5-1 08:30:45')
-    console.log(date1)
+    console.log(date1.toLocaleString())
+    div.innerHTML = date1.toLocaleString()
     date2.setFullYear(2006)
     console.log(date2)
+  </script>
+```
+
+**时间戳,用来计算时间的方式**
+```js
+// 这三重写法得到的都是数字类型的时间戳
++new Date()
+Date.now()
+时间对象.getTime()
+```
+
+```js
++new Date('2026-4-7 18:30:00')
+```
+
+**倒计时**
+```js
+  <p class="date">现在时间是：</p>
+  <div>
+    <span class="hour">00</span>
+    <i>:</i>
+    <span class="minute">00</span>
+    <i>:</i>
+    <span class="second">00</span>
+  </div>
+  <p class="over"></p>
+  <script>
+    let date, time1, time2, time3, hours, minutes, seconds;
+    let p1 = document.querySelector('.date');
+    let p2 = document.querySelector('.over');
+    let hour = document.querySelector('.hour');
+    let minute = document.querySelector('.minute');
+    let second = document.querySelector('.second');
+    let str1 = '2026-04-08 07:17:00'
+    p2.innerHTML = `下课时间是：${str1.split(' ')[1]}`;
+
+
+    let n = setInterval(() => {
+      console.log('hello')
+      date = new Date();
+      p1.innerHTML = `现在时间是： ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+      time1 = +new Date()
+      time2 = +new Date(str1)
+      time3 = time2 - time1
+      hours = Math.floor(time3 / 1000 / 60 / 60);
+      minutes = Math.floor(time3 / 1000 / 60) % 60;
+      seconds = Math.floor(time3 / 1000) % 60;
+      hour.innerHTML = hours < 10 ? '0' + hours : hours;
+      minute.innerHTML = minutes < 10 ? '0' + minutes : minutes;
+      second.innerHTML = seconds < 10 ? '0' + seconds : seconds;
+      if (time3 <= 0) {
+        clearInterval(n);
+        hour.innerHTML = '00';
+        minute.innerHTML = '00';
+        second.innerHTML = '00';
+        clearInterval(n);
+      }
+    }, 1000);
   </script>
 ```
