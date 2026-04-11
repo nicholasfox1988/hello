@@ -758,3 +758,220 @@ Date.now()
     }, 1000);
   </script>
 ```
+
+```html
+<div class="card">
+    <div class="header">
+      <h1>小米有品 · 精选好物</h1>
+      <p>全选商品 | 小米生态链品质保障</p>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="goods-table">
+        <thead>
+          <tr>
+            <th>全选</th>
+            <th>商品</th>
+            <th>商家</th>
+            <th>价格</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 小米手机 行 ✅ 代表已勾选全选状态 -->
+          <tr>
+            <td style="text-align: center;">
+              <label class="checkbox-custom">
+                <input type="checkbox">
+              </label>
+            </td>
+            <td>
+              <div class="product-name">
+                <span class="product-icon">📱</span>
+                <span>小米手机</span>
+                <span class="brand-badge">小米官方</span>
+              </div>
+            </td>
+            <td>
+              <div class="merchant">小米</div>
+            </td>
+            <td class="price">¥1,999<small>.00</small></td>
+          </tr>
+          <!-- 小米净水器 行 ✅ 全选状态 -->
+          <tr>
+            <td style="text-align: center;">
+              <label class="checkbox-custom">
+                <input type="checkbox">
+              </label>
+            </td>
+            <td>
+              <div class="product-name">
+                <span class="product-icon">💧</span>
+                <span>小米净水器</span>
+                <span class="brand-badge">小米官方</span>
+              </div>
+            </td>
+            <td>
+              <div class="merchant">小米</div>
+            </td>
+            <td class="price">¥4,999<small>.00</small></td>
+          </tr>
+          <!-- 小米电视 行 ✅ 全选状态 -->
+          <tr>
+            <td style="text-align: center;">
+              <label class="checkbox-custom">
+                <input type="checkbox">
+              </label>
+            </td>
+            <td>
+              <div class="product-name">
+                <span class="product-icon">📺</span>
+                <span>小米电视</span>
+                <span class="brand-badge">小米官方</span>
+              </div>
+            </td>
+            <td>
+              <div class="merchant">小米</div>
+            </td>
+            <td class="price">¥5,999<small>.00</small></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 全选栏 — 完全静态展示，符合原图“全选”语义，所有复选框均为✅已选状态，此处显示全选信息 -->
+    <div class="select-all-bar">
+      <div class="select-all-left">
+        <label class="checkbox-custom">
+          <!-- 全选复选框样式上为已选中且不可交互（disabled），体现全选状态 -->
+          <input type="checkbox">
+          <span style="margin-left: 6px;">全选所有商品</span>
+        </label>
+        <span class="selected-info">✔️ 已选 3 件商品</span>
+      </div>
+      <div class="action-buttons">
+        <!-- 仅用于视觉占位，无JS行为，但保留样式与整体融合 -->
+        <span class="btn-placeholder">清空选择</span>
+        <span class="btn-placeholder">反选</span>
+      </div>
+    </div>
+
+    <!-- 合计金额区域 (基于全选三件商品总价: 1999+4999+5999 = 12997) -->
+    <div class="total-info">
+      <div class="total-label">合计金额 (已选商品)</div>
+      <div class="total-price">
+        <span>¥</span>12,997
+      </div>
+    </div>
+    <div class="footer-note">
+      💡 本页面为纯静态展示 · 所有商品默认为全选状态 · 符合截图样式
+    </div>
+  </div>
+</body>
+<script>
+  let checkbox1 = document.querySelectorAll('.table-wrapper [type="checkbox"]')
+  // console.log(checkbox)
+  let checkAll = document.querySelector('.select-all-bar [type="checkbox"]')
+
+  checkAll.addEventListener('click', function () {
+    for (let i = 0; i < checkbox1.length; i++) {
+      checkbox1[i].checked = this.checked
+    }
+  })
+
+  for (let i = 0; i < checkbox1.length; i++) {
+    checkbox1[i].addEventListener('click', function () {
+      checkAll.checked = document.querySelectorAll('.table-wrapper [type="checkbox"]:checked').length === checkbox1.length
+    })
+  }
+</script>
+```
+
+# 节点关系查找
+
+> 子元素.parentNode
+
+> 子元素.parentNode.parentNode
+
+> 父元素.children
+
+```html
+<div class="div1">
+    <form action="submit" class="form1" autocomplete="off">
+      <div class="form-row">
+        <span>name:</span>
+        <input type="text" name="name" placeholder="Enter your name">
+      </div>
+      <div class="form-row">
+        <span>age:</span>
+        <input type="text" name="age" placeholder="Enter your age">
+      </div>
+      <div class="form-row">
+        <span>gender:</span>
+        <select name="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  <br>
+  <div class="div2">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+
+  </div>
+  <script>
+    const form = document.querySelector('.form1');
+    const tableBody = document.querySelector('tbody');
+    let arr1 = [];
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // 阻止表单默认提交行为
+
+      const name = document.querySelector('.form1 [name="name"]').value.trim();
+      const age = document.querySelector('.form1 [name="age"]').value.trim();
+      const gender = form.querySelector('.form1 [name="gender"]').value;
+      if (name === '' || age === '') {
+        alert('请输入名字和年龄.');
+        return;
+      } else {
+        arr1.push({ name, age, gender });
+      }
+
+      render();
+      form.reset(); // 重置表单输入
+      document.querySelector('.form1 [name="name"]').focus();
+    });
+
+    function deleteRow(index) {
+      arr1.splice(index, 1); // 从数组中删除对应项
+      render(); // 重新渲染表格
+    }
+
+    function render() {
+      tableBody.innerHTML = ''; // 清空表格内容
+      arr1.forEach(item => {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.age}</td>
+          <td>${item.gender}</td>
+          <td><button class="delete-btn" onclick="deleteRow(${arr1.indexOf(item)})">Delete</button></td>
+        `;
+        tableBody.appendChild(newRow);
+      });
+    }
+  </script>
+```

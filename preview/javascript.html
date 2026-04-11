@@ -758,6 +758,221 @@ Date.now()
     }, 1000);
   &lt;/script&gt;
 </code></pre>
+<pre><code class="lang-html">&lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;header&quot;&gt;
+      &lt;h1&gt;小米有品 · 精选好物&lt;/h1&gt;
+      &lt;p&gt;全选商品 | 小米生态链品质保障&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;table-wrapper&quot;&gt;
+      &lt;table class=&quot;goods-table&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;全选&lt;/th&gt;
+            &lt;th&gt;商品&lt;/th&gt;
+            &lt;th&gt;商家&lt;/th&gt;
+            &lt;th&gt;价格&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;!-- 小米手机 行 ✅ 代表已勾选全选状态 --&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;text-align: center;&quot;&gt;
+              &lt;label class=&quot;checkbox-custom&quot;&gt;
+                &lt;input type=&quot;checkbox&quot;&gt;
+              &lt;/label&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class=&quot;product-name&quot;&gt;
+                &lt;span class=&quot;product-icon&quot;&gt;📱&lt;/span&gt;
+                &lt;span&gt;小米手机&lt;/span&gt;
+                &lt;span class=&quot;brand-badge&quot;&gt;小米官方&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class=&quot;merchant&quot;&gt;小米&lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td class=&quot;price&quot;&gt;¥1,999&lt;small&gt;.00&lt;/small&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;!-- 小米净水器 行 ✅ 全选状态 --&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;text-align: center;&quot;&gt;
+              &lt;label class=&quot;checkbox-custom&quot;&gt;
+                &lt;input type=&quot;checkbox&quot;&gt;
+              &lt;/label&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class=&quot;product-name&quot;&gt;
+                &lt;span class=&quot;product-icon&quot;&gt;💧&lt;/span&gt;
+                &lt;span&gt;小米净水器&lt;/span&gt;
+                &lt;span class=&quot;brand-badge&quot;&gt;小米官方&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class=&quot;merchant&quot;&gt;小米&lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td class=&quot;price&quot;&gt;¥4,999&lt;small&gt;.00&lt;/small&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;!-- 小米电视 行 ✅ 全选状态 --&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;text-align: center;&quot;&gt;
+              &lt;label class=&quot;checkbox-custom&quot;&gt;
+                &lt;input type=&quot;checkbox&quot;&gt;
+              &lt;/label&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class=&quot;product-name&quot;&gt;
+                &lt;span class=&quot;product-icon&quot;&gt;📺&lt;/span&gt;
+                &lt;span&gt;小米电视&lt;/span&gt;
+                &lt;span class=&quot;brand-badge&quot;&gt;小米官方&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class=&quot;merchant&quot;&gt;小米&lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td class=&quot;price&quot;&gt;¥5,999&lt;small&gt;.00&lt;/small&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 全选栏 — 完全静态展示，符合原图“全选”语义，所有复选框均为✅已选状态，此处显示全选信息 --&gt;
+    &lt;div class=&quot;select-all-bar&quot;&gt;
+      &lt;div class=&quot;select-all-left&quot;&gt;
+        &lt;label class=&quot;checkbox-custom&quot;&gt;
+          &lt;!-- 全选复选框样式上为已选中且不可交互（disabled），体现全选状态 --&gt;
+          &lt;input type=&quot;checkbox&quot;&gt;
+          &lt;span style=&quot;margin-left: 6px;&quot;&gt;全选所有商品&lt;/span&gt;
+        &lt;/label&gt;
+        &lt;span class=&quot;selected-info&quot;&gt;✔️ 已选 3 件商品&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;action-buttons&quot;&gt;
+        &lt;!-- 仅用于视觉占位，无JS行为，但保留样式与整体融合 --&gt;
+        &lt;span class=&quot;btn-placeholder&quot;&gt;清空选择&lt;/span&gt;
+        &lt;span class=&quot;btn-placeholder&quot;&gt;反选&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 合计金额区域 (基于全选三件商品总价: 1999+4999+5999 = 12997) --&gt;
+    &lt;div class=&quot;total-info&quot;&gt;
+      &lt;div class=&quot;total-label&quot;&gt;合计金额 (已选商品)&lt;/div&gt;
+      &lt;div class=&quot;total-price&quot;&gt;
+        &lt;span&gt;¥&lt;/span&gt;12,997
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;footer-note&quot;&gt;
+      💡 本页面为纯静态展示 · 所有商品默认为全选状态 · 符合截图样式
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  let checkbox1 = document.querySelectorAll(&#39;.table-wrapper [type=&quot;checkbox&quot;]&#39;)
+  // console.log(checkbox)
+  let checkAll = document.querySelector(&#39;.select-all-bar [type=&quot;checkbox&quot;]&#39;)
+
+  checkAll.addEventListener(&#39;click&#39;, function () {
+    for (let i = 0; i &lt; checkbox1.length; i++) {
+      checkbox1[i].checked = this.checked
+    }
+  })
+
+  for (let i = 0; i &lt; checkbox1.length; i++) {
+    checkbox1[i].addEventListener(&#39;click&#39;, function () {
+      checkAll.checked = document.querySelectorAll(&#39;.table-wrapper [type=&quot;checkbox&quot;]:checked&#39;).length === checkbox1.length
+    })
+  }
+&lt;/script&gt;
+</code></pre>
+<h1 id="-">节点关系查找</h1>
+<blockquote>
+<p>子元素.parentNode</p>
+</blockquote>
+<blockquote>
+<p>子元素.parentNode.parentNode</p>
+</blockquote>
+<blockquote>
+<p>父元素.children</p>
+</blockquote>
+<pre><code class="lang-html">&lt;div class=&quot;div1&quot;&gt;
+    &lt;form action=&quot;submit&quot; class=&quot;form1&quot; autocomplete=&quot;off&quot;&gt;
+      &lt;div class=&quot;form-row&quot;&gt;
+        &lt;span&gt;name:&lt;/span&gt;
+        &lt;input type=&quot;text&quot; name=&quot;name&quot; placeholder=&quot;Enter your name&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;form-row&quot;&gt;
+        &lt;span&gt;age:&lt;/span&gt;
+        &lt;input type=&quot;text&quot; name=&quot;age&quot; placeholder=&quot;Enter your age&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;form-row&quot;&gt;
+        &lt;span&gt;gender:&lt;/span&gt;
+        &lt;select name=&quot;gender&quot;&gt;
+          &lt;option value=&quot;male&quot;&gt;Male&lt;/option&gt;
+          &lt;option value=&quot;female&quot;&gt;Female&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+      &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;br&gt;
+  &lt;div class=&quot;div2&quot;&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Name&lt;/th&gt;
+          &lt;th&gt;Age&lt;/th&gt;
+          &lt;th&gt;Gender&lt;/th&gt;
+          &lt;th&gt;Action&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/div&gt;
+  &lt;script&gt;
+    const form = document.querySelector(&#39;.form1&#39;);
+    const tableBody = document.querySelector(&#39;tbody&#39;);
+    let arr1 = [];
+
+    form.addEventListener(&#39;submit&#39;, function (event) {
+      event.preventDefault(); // 阻止表单默认提交行为
+
+      const name = document.querySelector(&#39;.form1 [name=&quot;name&quot;]&#39;).value.trim();
+      const age = document.querySelector(&#39;.form1 [name=&quot;age&quot;]&#39;).value.trim();
+      const gender = form.querySelector(&#39;.form1 [name=&quot;gender&quot;]&#39;).value;
+      if (name === &#39;&#39; || age === &#39;&#39;) {
+        alert(&#39;请输入名字和年龄.&#39;);
+        return;
+      } else {
+        arr1.push({ name, age, gender });
+      }
+
+      render();
+      form.reset(); // 重置表单输入
+      document.querySelector(&#39;.form1 [name=&quot;name&quot;]&#39;).focus();
+    });
+
+    function deleteRow(index) {
+      arr1.splice(index, 1); // 从数组中删除对应项
+      render(); // 重新渲染表格
+    }
+
+    function render() {
+      tableBody.innerHTML = &#39;&#39;; // 清空表格内容
+      arr1.forEach(item =&gt; {
+        const newRow = document.createElement(&#39;tr&#39;);
+        newRow.innerHTML = `
+          &lt;td&gt;${item.name}&lt;/td&gt;
+          &lt;td&gt;${item.age}&lt;/td&gt;
+          &lt;td&gt;${item.gender}&lt;/td&gt;
+          &lt;td&gt;&lt;button class=&quot;delete-btn&quot; onclick=&quot;deleteRow(${arr1.indexOf(item)})&quot;&gt;Delete&lt;/button&gt;&lt;/td&gt;
+        `;
+        tableBody.appendChild(newRow);
+      });
+    }
+  &lt;/script&gt;
+</code></pre>
 
           	</article>
         </div>
