@@ -32,6 +32,8 @@
       justify-content: center;
       align-items: center;
       padding: 24px;
+      overscroll-behavior: contain;
+      overscroll-behavior-y: contain;
     }
 
     .div2 {
@@ -228,7 +230,7 @@
   <script>
     const tableBody = document.querySelector('tbody');
     // let arr1 = [{ 'name': 'coca-cola', 'quantity': 1 }, { 'name': 'fanta', 'quantity': 1 }, { 'name': 'sprite', 'quantity': 1 }];
-    let arr1 = ['coca-cola', 'fanta', 'sprite'];
+    let arr1 = ['coca-cola', 'fanta', 'sprite', 'pepsi', 'mountain dew', 'dr pepper', '7up', 'mirinda', 'sunkist', 'schweppes'];
 
     function render() {
       tableBody.innerHTML = ''; // 清空表格内容
@@ -268,6 +270,19 @@
         }
       });
     });
+
+    let touchStartY = 0;
+    document.addEventListener('touchstart', event => {
+      if (event.touches.length === 1) {
+        touchStartY = event.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchmove', event => {
+      if (window.pageYOffset === 0 && event.touches.length === 1 && event.touches[0].clientY > touchStartY) {
+        event.preventDefault();
+      }
+    }, { passive: false });
 
     render();
   </script>
