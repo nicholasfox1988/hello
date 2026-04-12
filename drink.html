@@ -64,11 +64,19 @@
       border-collapse: collapse;
       background: transparent;
       margin: 0 auto;
+      border-top: 1px solid #cbd5e1;
+      border-bottom: 1px solid #cbd5e1;
+      border-left: none;
+      border-right: none;
     }
 
     thead th,
     td {
       padding: 10px 12px;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      border-bottom: 1px solid #e2e8f0;
     }
 
     thead th {
@@ -201,8 +209,8 @@
 
 <body>
   <div class="div2">
-    <h1>饮品清单</h1>
-    <button id="showAllBtn" class="show-all-btn">全部显示</button>
+    <h1>Drink Order</h1>
+    <button id="showAllBtn" class="show-all-btn">display all</button>
     <table>
       <thead>
         <tr>
