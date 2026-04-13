@@ -975,3 +975,15 @@ Date.now()
     }
   </script>
 ```
+
+# BOM  window对象
+```
+navigator
+location
+document
+history
+screen
+```
+
+setInterval(()=>{},1000)
+setTimeout(()=>{},1000)
