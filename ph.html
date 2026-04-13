@@ -123,9 +123,9 @@
       <thead>
         <tr>
           <th>Code</th>
+          <th>Q...</th>
           <th>Meal</th>
           <th>Pri</th>
-          <th>Q...</th>
           <th>Total</th>
           <th>Action</th>
         </tr>
@@ -185,9 +185,9 @@
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
           <td>${item.order.split(" ")[0]}</td>
+          <td>${item.quntity}</td>
           <td>${item.order.split(" ")[1]}   ${item.noodle}</td>
           <td>${item.price}</td>
-          <td>${item.quntity}</td>
           <td>${item.price * item.quntity}</td>
           <td><button class="btn" data-index="${index}">Delete</button></td>
         `;
