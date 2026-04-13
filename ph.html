@@ -114,9 +114,9 @@
 
       <tfoot>
         <tr>
-          <td colspan="4" style="text-align: right;">总计:&emsp; </td>
-          <td class="total">$&emsp;0</td>
-          <td> <button onclick="arr1=[];render()" class="clear">Clear Orders</button></td>
+          <td colspan="4" style="text-align: right;">总计:$&emsp; </td>
+          <td class="total">0</td>
+          <td> <button onclick="arr1=[];render()" class="clear">Clear</button></td>
         </tr>
       </tfoot>
     </table>
@@ -170,8 +170,7 @@
         tbody.insertBefore(newRow, tbody.firstChild); // 将新行插入到表格顶部
       });
       const sum = arr1.reduce((total, item) => total + item.price * item.quntity, 0)
-      console.log(sum);
-      total.innerHTML = `\$  ${sum}`; // 更新总计.   
+      total.innerHTML = `${sum}`; // 更新总计.   
     }
 
     tbody.addEventListener("click", function (event) {
