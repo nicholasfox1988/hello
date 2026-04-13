@@ -985,5 +985,8 @@ history
 screen
 ```
 
+**间歇和延迟函数**
+```js
 setInterval(()=>{},1000)
 setTimeout(()=>{},1000)
+```
