@@ -54,42 +54,54 @@
     cursor: pointer;
     border: none;
     border-radius: 6px;
-    padding: 10px 18px;
+    padding: 5px;
     font-size: 14px;
     background: #ff3b30;
     color: #fff;
     transition: background 0.25s ease, transform 0.2s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    margin-top: 12px;
+    margin: 5px;
   }
 </style>
 
 <body>
 
-  <form action="submit" class="order">
-    <span>Start Order: </span>
+  <form action="submit" class="order1">
     <select name="mySelect" id="mySelect">
-      <option value="option1">N1 rare-beef</option>
-      <option value="option2">N2 special-beef</option>
-      <option value="option3">N3 pork-chop</option>
+      <option value="20">N1 rare-beef</option>
+      <option value="21">N2 special-beef</option>
+      <option value="20">N3 pork-chop</option>
+      <option value="20">N4 pork-silce</option>
+      <option value="20">N5 pork-roll</option>
+      <option value="20">N6 pork&chicken</option>
+      <option value="20">N7 LG-chicken</option>
+      <option value="20">N8 shr-chicken</option>
+      <option value="20">N9 beef-stew</option>
+      <option value="20">N10 curry-Ck</option>
+      <option value="20">N11 shrimp</option>
+      <option value="20">N12 combination</option>
+      <option value="20">N13 woton-soup</option>
+      <option value="20">N14 woton</option>
+      <option value="20">N15 spicy</option>
     </select>
     <select name="mySelect" id="NoodleSelect">
       <option value="">Rice Noodle</option>
       <option value="">Egg Noodle</option>
       <option value="">Vermicelli</option>
+      <option value="">No Noodle</option>
     </select>
     <input type="submit" value="Submit" class="submit">
   </form>
-  <button onclick="arr1=[];render()" class="clear">Clear Orders</button>
+
 
   <div class="showTable">
     <table border="1" cellpadding="0" cellspacing="0" class="table">
       <thead>
         <tr>
-          <th>Order</th>
-          <th>Noodle</th>
-          <th>Price</th>
-          <th>Quantity</th>
+          <th>Code</th>
+          <th>Meal</th>
+          <th>Pri</th>
+          <th>Q...</th>
           <th>Total</th>
           <th>Action</th>
         </tr>
@@ -102,23 +114,17 @@
 
       <tfoot>
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td class="total">总计:0</td>
+          <td colspan="4" style="text-align: right;">总计:&emsp; </td>
+          <td class="total">$&emsp;0</td>
+          <td> <button onclick="arr1=[];render()" class="clear">Clear Orders</button></td>
         </tr>
       </tfoot>
     </table>
   </div>
 
   <script>
-    let arr2 = [
-      { order: "N1 rare-beef", price: 20 },
-      { order: "N2 special-beef", price: 21 },
-      { order: "N3 pork-chop", price: 20 }
-    ]
     let arr1 = []
+    const form = document.querySelector(".order1");
     const mySelect = document.getElementById("mySelect");
     const NoodleSelect = document.getElementById("NoodleSelect");
     const submitBtn = document.querySelector(".submit");
@@ -126,13 +132,13 @@
 
     submitBtn.addEventListener("click", function (event) {
       event.preventDefault(); // 阻止表单默认提交行为
-      const selectedOption1 = mySelect.options[mySelect.selectedIndex].text;
-      const selectedOption2 = NoodleSelect.options[NoodleSelect.selectedIndex].text;
+      const selectedOption1 = mySelect.options[mySelect.selectedIndex];
+      const selectedOption2 = NoodleSelect.options[NoodleSelect.selectedIndex];
       const obj1 = {
-        order: selectedOption1,
-        noodle: selectedOption2,
+        order: selectedOption1.text,
+        noodle: selectedOption2.text,
         quntity: 1,
-        price: arr2.find(item => item.order === selectedOption1).price
+        price: selectedOption1.value
       }
       const findItem = arr1.find(item => item.order === obj1.order && item.noodle === obj1.noodle);
       console.log(findItem);
@@ -143,6 +149,7 @@
         arr1.push(obj1); // 如果没有找到相同订单，直接添加新订单
         render(); // 重新渲染表格
       }
+      // form.reset(); // 重置表单
     });
 
     function render() {
@@ -153,29 +160,25 @@
       arr1.forEach((item, index) => {
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${item.order} _ ${item.noodle}</td>
+          <td>${item.order.split(" ")[0]}</td>
+          <td>${item.order.split(" ")[1]}   ${item.noodle}</td>
           <td>${item.price}</td>
           <td>${item.quntity}</td>
           <td>${item.price * item.quntity}</td>
           <td><button class="btn" data-index="${index}">Delete</button></td>
         `;
-        tbody.appendChild(newRow);
+        tbody.insertBefore(newRow, tbody.firstChild); // 将新行插入到表格顶部
       });
       const sum = arr1.reduce((total, item) => total + item.price * item.quntity, 0)
       console.log(sum);
-      total.innerHTML = `Total: ${sum}`; // 更新总计.   
-    }
-
-    function deleteOrder(index) {
-      arr1.splice(index, 1); // 从数组中删除对应的订单
-      render(); // 重新渲染表格
+      total.innerHTML = `\$  ${sum}`; // 更新总计.   
     }
 
     tbody.addEventListener("click", function (event) {
       if (!event.target.matches(".btn")) return;
       const index = Number(event.target.dataset.index);
-      deleteOrder(index);
+      arr1.splice(index, 1); // 从数组中删除对应的订单
+      render(); // 重新渲染表格
     });
   </script>
 </body>
