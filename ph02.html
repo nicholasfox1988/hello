@@ -23,7 +23,8 @@
   }
 
   #mySelect,
-  #mySelect1 {
+  #mySelect1,
+  #mySelect2 {
     height: 30px;
     width: auto;
     padding: 5px;
@@ -35,7 +36,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
-  #mySelect1 {
+  #mySelect1,
+  #mySelect2 {
     width: 225px;
   }
 
@@ -51,7 +53,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
-  #NoodleSelect1 {
+  #NoodleSelect1,
+  #NoodleSelect2 {
     display: none;
   }
 
@@ -65,6 +68,12 @@
     background: #4bca82;
     color: #333;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  option {
+    background: #fff;
+    color: #333;
+    text-align: left;
   }
 
   .th {
@@ -105,7 +114,8 @@
 
 
   .submit,
-  .submit1 {
+  .submit1,
+  .submit2 {
     cursor: pointer;
     border: none;
     border-radius: 6px;
@@ -137,7 +147,7 @@
     <form action="submit" class="order1">
       <select name="mySelect" id="mySelect">
         <option value="20">N1 rare-beef</option>
-        <option value="21.5">N2 Spe-beef</option>
+        <option value="21.5">N2 Special-beef</option>
         <option value="20">N3 pork-chop</option>
         <option value="20">N4 pork-silce</option>
         <option value="20">N5 pork-roll</option>
@@ -159,6 +169,40 @@
         <option value="">No Noodle</option>
       </select>
       <input type="submit" value="Add" class="submit">
+    </form>
+
+    <form action="submit" class="order1">
+      <select name="mySelect" id="mySelect2">
+        <option value="20">R1 pork-chop</option>
+        <option value="21.5">R2 pork-chop&shreddle-pork</option>
+        <option value="20">R3 pork-chop&suasage</option>
+        <option value="20">R4 pork-chop&prawn</option>
+        <option value="20">R5 combination</option>
+        <option value="21">R6 pork-chop&LG-chicken</option>
+        <option value="20">R7 Hainanese-chicken</option>
+        <option value="20">R8 LG-chicken</option>
+        <option value="21">R9 LG-chicken&shreddle-pork</option>
+        <option value="21">R10 LG-chicken&suasage</option>
+        <option value="21">R11 LG-chicken&prawn</option>
+        <option value="21">R12 prawn</option>
+        <option value="20">R13 beef-stew</option>
+        <option value="21">R14 curry-chicken</option>
+        <option value="21">R15 stir-fry-beef</option>
+        <option value="20">R16 stir-fry-beef-with-ginger</option>
+        <option value="21">R17 stir-fry-chicken</option>
+        <option value="21">R18 stir-fry-prawn</option>
+        <option value="21">R19 stir-fry-seafood</option>
+        <option value="21">R20 stir-fry-chilli-chicken</option>
+        <option value="21">R21 stir-fry-Veg</option>
+        <option value="21">R22 egg-fry-rice</option>
+        <option value="21">R23 chicken-fry-rice</option>
+        <option value="21">R24 beef-fry-rice</option>
+        <option value="21">R25 shrimp-fry-rice</option>
+      </select>
+      <select name="mySelect" id="NoodleSelect2">
+        <option value="">on rice </option>
+      </select>
+      <input type="submit" value="Add" class="submit2">
     </form>
 
     <form action="submit" class="order1">
@@ -206,7 +250,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="4" style="text-align: right;">总计:$&emsp; </td>
+            <td colspan="4" style="text-align: right;">Total : $--&emsp; </td>
             <td class="total">0</td>
             <td> <button onclick="arr1=[];render()" class="clear">Clear</button></td>
           </tr>
@@ -220,13 +264,17 @@
     const form = document.querySelector(".order1");
     const mySelect = document.getElementById("mySelect");
     const mySelect1 = document.getElementById("mySelect1");
+    const mySelect2 = document.getElementById("mySelect2");
+
 
     const NoodleSelect = document.getElementById("NoodleSelect");
     const NoodleSelect1 = document.getElementById("NoodleSelect1");
+    const NoodleSelect2 = document.getElementById("NoodleSelect2");
 
 
     const submitBtn = document.querySelector(".submit");
     const submitBtn1 = document.querySelector(".submit1");
+    const submitBtn2 = document.querySelector(".submit2");
 
     const tbody = document.querySelector("tbody");
 
@@ -256,6 +304,29 @@
       event.preventDefault(); // 阻止表单默认提交行为
       const selectedOption1 = mySelect1.options[mySelect1.selectedIndex];
       const selectedOption2 = NoodleSelect1.options[NoodleSelect1.selectedIndex];
+
+      const obj1 = {
+        order: selectedOption1.text,
+        noodle: selectedOption2.text,
+        quntity: 1,
+        price: selectedOption1.value
+      }
+      const findItem = arr1.find(item => item.order === obj1.order);
+      // console.log(findItem);
+      if (findItem) {
+        findItem.quntity += 1; // 如果找到相同订单，数量加1
+        render(); // 重新渲染表格
+      } else {
+        arr1.push(obj1); // 如果没有找到相同订单，直接添加新订单
+        render(); // 重新渲染表格
+      }
+      // form.reset(); // 重置表单
+    });
+
+    submitBtn2.addEventListener("click", function (event) {
+      event.preventDefault(); // 阻止表单默认提交行为
+      const selectedOption1 = mySelect2.options[mySelect2.selectedIndex];
+      const selectedOption2 = NoodleSelect2.options[NoodleSelect2.selectedIndex];
 
       const obj1 = {
         order: selectedOption1.text,
