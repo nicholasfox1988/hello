@@ -76,6 +76,16 @@
       border-bottom: none;
     }
 
+    .comment-input {
+      width: 100px;
+    }
+
+    .list-item {
+      font-weight: 500;
+      font-size: 30px;
+      background-color: pink;
+    }
+
     @media (max-width: 640px) {
       body {
         padding: 16px;
@@ -96,6 +106,7 @@
         <tr>
           <th class="th">Check</th>
           <th class="th">list</th>
+          <th class="th">Comment</th>
         </tr>
       </thead>
       <tbody>
@@ -105,9 +116,9 @@
 
   <script>
     let arr1 = [
-      'abc',
-      'efg',
-      'hij'
+      '妈逼',
+      '傻叉',
+      '你她爹的'
     ];
 
     const tbody = document.querySelector("tbody");
@@ -115,7 +126,8 @@
       const newRow = document.createElement("tr");
       newRow.innerHTML = `
             <td><input type="checkbox"></td>
-            <td>${item}</td>
+            <td class="list-item">${item}</td>
+            <td><input type='text' value='' class="comment-input"></td>
           `;
 
       const checkbox = newRow.querySelector("input[type=checkbox]");
@@ -123,7 +135,7 @@
         newRow.classList.toggle("completed", checkbox.checked);
       });
 
-      tbody.insertBefore(newRow, tbody.firstChild);
+      tbody.appendChild(newRow);
     });
   </script>
 </body>
