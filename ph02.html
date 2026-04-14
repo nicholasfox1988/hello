@@ -105,6 +105,7 @@
     text-align: center;
     padding: 5px;
     height: 50px;
+    background-color: rgb(160, 210, 96);
   }
 
   .order-name2 {
@@ -116,6 +117,7 @@
   .submit,
   .submit1,
   .submit2 {
+    width: 200px;
     cursor: pointer;
     border: none;
     border-radius: 6px;
@@ -147,7 +149,7 @@
     <form action="submit" class="order1">
       <select name="mySelect" id="mySelect">
         <option value="20">N1 rare-beef</option>
-        <option value="21.5">N2 Special-beef</option>
+        <option value="21.50">N2 Special-beef</option>
         <option value="20">N3 pork-chop</option>
         <option value="20">N4 pork-silce</option>
         <option value="20">N5 pork-roll</option>
@@ -174,7 +176,7 @@
     <form action="submit" class="order1">
       <select name="mySelect" id="mySelect2">
         <option value="20">R1 pork-chop</option>
-        <option value="21.5">R2 pork-chop&shreddle-pork</option>
+        <option value="21.50">R2 pork-chop&shreddle-pork</option>
         <option value="20">R3 pork-chop&suasage</option>
         <option value="20">R4 pork-chop&prawn</option>
         <option value="20">R5 combination</option>
@@ -200,14 +202,14 @@
         <option value="21">R25 shrimp-fry-rice</option>
       </select>
       <select name="mySelect" id="NoodleSelect2">
-        <option value="">on rice </option>
+        <option value="">on rice</option>
       </select>
       <input type="submit" value="Add" class="submit2">
     </form>
 
     <form action="submit" class="order1">
       <select name="mySelect" id="mySelect1">
-        <option value="15.5">A1 spring-roll</option>
+        <option value="15.50">A1 spring-roll</option>
         <option value="15">A2 summer-roll(prawn)</option>
         <option value="15">A2 summer-roll(pork)</option>
         <option value="15">A2 summer-roll(chicken)</option>
@@ -215,7 +217,7 @@
         <option value="15">A2 summer-roll(vegetable)</option>
         <option value="15">A2 summer-roll(Special)</option>
         <option value="14">A3 chicken-wings</option>
-        <option value="14.5">A4 fried-woton</option>
+        <option value="14.50">A4 fried-woton</option>
         <option value="15">A5 pork-chop</option>
         <option value="15">A6 LG-chicken</option>
         <option value="15">A7 slice-P&B</option>
@@ -224,7 +226,7 @@
         <option value="14">A10 small-fried-veg</option>
       </select>
       <select name="mySelect" id="NoodleSelect1">
-        <option value="">&emsp; </option>
+        <option value="">(Sides)</option>
       </select>
       <input type="submit" value="Add" class="submit1">
     </form>
@@ -236,9 +238,9 @@
             <th class="th">Code</th>
             <th class="th">Q...</th>
             <th class="th"><select name="" id="etp">
-                <option value="">Eat here</option>
-                <option value="">Take away</option>
-                <option value="">Phone order</option>
+                <option value="">Eat Here</option>
+                <option value="">Take Away</option>
+                <option value="">Phone Order</option>
               </select></th>
             <th class="th">Pri</th>
             <th class="th">Total</th>
@@ -311,7 +313,7 @@
         quntity: 1,
         price: selectedOption1.value
       }
-      const findItem = arr1.find(item => item.order === obj1.order);
+      const findItem = arr1.find(item => item.order === obj1.order && item.noodle === obj1.noodle);
       // console.log(findItem);
       if (findItem) {
         findItem.quntity += 1; // 如果找到相同订单，数量加1
@@ -334,7 +336,7 @@
         quntity: 1,
         price: selectedOption1.value
       }
-      const findItem = arr1.find(item => item.order === obj1.order);
+      const findItem = arr1.find(item => item.order === obj1.order && item.noodle === obj1.noodle);
       // console.log(findItem);
       if (findItem) {
         findItem.quntity += 1; // 如果找到相同订单，数量加1
@@ -364,7 +366,7 @@
         tbody.insertBefore(newRow, tbody.firstChild); // 将新行插入到表格顶部
       });
       const sum = arr1.reduce((total, item) => total + item.price * item.quntity, 0)
-      total.innerHTML = `${sum}`; // 更新总计.   
+      total.innerHTML = `${sum.toFixed(2)}`; // 更新总计.   
     }
 
     tbody.addEventListener("click", function (event) {

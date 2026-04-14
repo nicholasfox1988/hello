@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f2f6fb;
+      color: #333;
+      margin: 0;
+      padding: 24px;
+    }
+
+    .showtable {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(49, 80, 125, 0.12);
+      overflow: hidden;
+      border: 1px solid rgba(32, 66, 101, 0.08);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 320px;
+    }
+
+    .table th,
+    .table td {
+      padding: 18px 22px;
+      text-align: left;
+      border-bottom: 1px solid #ebeff5;
+    }
+
+    .table thead {
+      background: linear-gradient(90deg, #4e7cff 0%, #1db4ff 100%);
+      color: #fff;
+    }
+
+    .table th {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .table tbody tr:hover {
+      background: rgba(78, 124, 255, 0.08);
+    }
+
+    .table td {
+      font-size: 0.95rem;
+      color: #4b5563;
+      transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .table tbody tr.completed {
+      background: rgba(226, 232, 240, 0.65);
+      opacity: 0.75;
+    }
+
+    .table tbody tr.completed td:nth-child(2) {
+      color: #6b7280;
+      text-decoration: line-through;
+    }
+
+    .table tbody tr.completed td:first-child {
+      opacity: 1;
+    }
+
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
+      .table th,
+      .table td {
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="showtable">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="th">Check</th>
+          <th class="th">list</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let arr1 = [
+      'abc',
+      'efg',
+      'hij'
+    ];
+
+    const tbody = document.querySelector("tbody");
+    arr1.forEach(item => {
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `
+            <td><input type="checkbox"></td>
+            <td>${item}</td>
+          `;
+
+      const checkbox = newRow.querySelector("input[type=checkbox]");
+      checkbox.addEventListener("change", () => {
+        newRow.classList.toggle("completed", checkbox.checked);
+      });
+
+      tbody.insertBefore(newRow, tbody.firstChild);
+    });
+  </script>
+</body>
+
+</html>
