@@ -30,7 +30,7 @@
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    background: #fff;
+    background: #4bca82;
     color: #333;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
@@ -46,13 +46,20 @@
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    background: #fff;
+    background: #4bca82;
     color: #333;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
   #NoodleSelect1 {
     display: none;
+  }
+
+  .th {
+    background: #c77bd1;
+    padding: 10px;
+    font-size: 16px;
+    color: #000;
   }
 
   .order {
@@ -164,14 +171,14 @@
     </form>
 
     <div class="showTable">
-      <table border="1" cellpadding="0" cellspacing="0" class="table">
+      <table border="3" cellpadding="0" cellspacing="0" class="table">
         <thead>
           <tr>
-            <th>Q...</th>
-            <th>Meal</th>
-            <th>Pri</th>
-            <th>Total</th>
-            <th>Action</th>
+            <th class="th">Q...</th>
+            <th class="th">Meal</th>
+            <th class="th">Pri</th>
+            <th class="th">Total</th>
+            <th class="th">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -257,7 +264,7 @@
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
           <td class="order-name">${item.quntity}</td>
-          <td class="order-name1">${item.order}    ${item.noodle}</td>
+          <td class="order-name1">${item.order}<br/>${item.noodle}</td>
           <td class="order-name">${item.price}</td>
           <td class="order-name">${item.price * item.quntity}</td>
           <td class="order-name"><button class="btn" data-index="${index}">Delete</button></td>
