@@ -70,6 +70,18 @@
     margin-top: 12px;
   }
 
+  .order-name {
+    text-align: center;
+    padding: 5px;
+    height: 50px;
+  }
+
+  .order-name1 {
+    text-align: left;
+    padding: 5px;
+    height: 50px;
+  }
+
   .submit,
   .submit1 {
     cursor: pointer;
@@ -244,11 +256,11 @@
       arr1.forEach((item, index) => {
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
-          <td>${item.quntity}</td>
-          <td>${item.order} ${item.noodle}</td>
-          <td>${item.price}</td>
-          <td>${item.price * item.quntity}</td>
-          <td><button class="btn" data-index="${index}">Delete</button></td>
+          <td class="order-name">${item.quntity}</td>
+          <td class="order-name1">${item.order}    ${item.noodle}</td>
+          <td class="order-name">${item.price}</td>
+          <td class="order-name">${item.price * item.quntity}</td>
+          <td class="order-name"><button class="btn" data-index="${index}">Delete</button></td>
         `;
         tbody.insertBefore(newRow, tbody.firstChild); // 将新行插入到表格顶部
       });
