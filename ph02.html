@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Pho kitchen</title>
 </head>
 <style>
   /* 全局页面布局 */
@@ -55,6 +55,18 @@
     display: none;
   }
 
+  #etp {
+    height: 30px;
+    width: 150px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #4bca82;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
   .th {
     background: #c77bd1;
     padding: 10px;
@@ -77,17 +89,20 @@
     margin-top: 12px;
   }
 
-  .order-name {
+  .order-name,
+  .order-name1,
+  .order-name2 {
+    width: auto;
     text-align: center;
     padding: 5px;
     height: 50px;
   }
 
-  .order-name1 {
-    text-align: left;
-    padding: 5px;
-    height: 50px;
+  .order-name2 {
+    font-size: 25px;
+    color: red;
   }
+
 
   .submit,
   .submit1 {
@@ -174,11 +189,16 @@
       <table border="3" cellpadding="0" cellspacing="0" class="table">
         <thead>
           <tr>
+            <th class="th">Code</th>
             <th class="th">Q...</th>
-            <th class="th">Meal</th>
+            <th class="th"><select name="" id="etp">
+                <option value="">Eat here</option>
+                <option value="">Take away</option>
+                <option value="">Phone order</option>
+              </select></th>
             <th class="th">Pri</th>
             <th class="th">Total</th>
-            <th class="th">Action</th>
+            <th class="th">Act</th>
           </tr>
         </thead>
         <tbody>
@@ -186,7 +206,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="3" style="text-align: right;">总计:$&emsp; </td>
+            <td colspan="4" style="text-align: right;">总计:$&emsp; </td>
             <td class="total">0</td>
             <td> <button onclick="arr1=[];render()" class="clear">Clear</button></td>
           </tr>
@@ -263,11 +283,12 @@
       arr1.forEach((item, index) => {
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
-          <td class="order-name">${item.quntity}</td>
-          <td class="order-name1">${item.order}<br/>${item.noodle}</td>
+          <td class="order-name">${item.order.split(' ')[0]}</td>
+          <td class="order-name2">${item.quntity}</td>
+          <td class="order-name1">${item.order.split(' ')[1]}<br/>${item.noodle}</td>
           <td class="order-name">${item.price}</td>
           <td class="order-name">${item.price * item.quntity}</td>
-          <td class="order-name"><button class="btn" data-index="${index}">Delete</button></td>
+          <td class="order-name"><button class="btn" data-index="${index}">Del</button></td>
         `;
         tbody.insertBefore(newRow, tbody.firstChild); // 将新行插入到表格顶部
       });
