@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .todo-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .todo-form input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .todo-form button {
+      padding: 10px 16px;
+      font-size: 16px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+
+    li.done span {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .item-left input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+
+    .remove-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>To-Do List</h1>
+
+  <form class="todo-form" id="todo-form">
+    <input type="text" id="todo-input" placeholder="输入新的待办事项" autocomplete="off" />
+    <button type="submit">添加</button>
+  </form>
+
+  <ul id="todo-list">
+    <li></li>
+  </ul>
+
+  <script>
+    const STORAGE_KEY = 'todoListItems';
+    const todoForm = document.getElementById('todo-form');
+    const todoInput = document.getElementById('todo-input');
+    const todoList = document.getElementById('todo-list');
+
+    function getSavedTodos() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveTodos(todos) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+    }
+
+    function renderTodos() {
+      const todos = getSavedTodos();
+      todoList.innerHTML = '';
+
+      todos.forEach((todo, index) => {
+        const li = document.createElement('li');
+        li.className = todo.done ? 'done' : '';
+
+        const itemLeft = document.createElement('div');
+        itemLeft.className = 'item-left';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = todo.done;
+        checkbox.addEventListener('change', () => {
+          todos[index].done = checkbox.checked;
+          saveTodos(todos);
+          renderTodos();
+        });
+
+        const label = document.createElement('span');
+        label.textContent = todo.text;
+
+        itemLeft.appendChild(checkbox);
+        itemLeft.appendChild(label);
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = '删除';
+        removeButton.className = 'remove-btn';
+        removeButton.addEventListener('click', () => {
+          todos.splice(index, 1);
+          saveTodos(todos);
+          renderTodos();
+        });
+
+        li.appendChild(itemLeft);
+        li.appendChild(removeButton);
+        todoList.insertBefore(li, todoList.firstChild);
+      });
+    }
+
+    todoForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const text = todoInput.value.trim();
+      if (!text) return;
+
+      const todos = getSavedTodos();
+      todos.push({ text, done: false });
+      saveTodos(todos);
+      todoInput.value = '';
+      renderTodos();
+    });
+
+    document.addEventListener('DOMContentLoaded', renderTodos);
+  </script>
+</body>
+
+</html>
