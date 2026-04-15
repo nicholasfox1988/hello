@@ -6,91 +6,198 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do List</title>
   <style>
+    :root {
+      --bg: #f2f7ff;
+      --panel: rgba(255, 255, 255, 0.95);
+      --border: rgba(100, 116, 139, 0.18);
+      --accent: #5c6ef8;
+      --accent-soft: #dfe4ff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --danger: #ef4444;
+      --shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 0 16px;
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 16px;
+    }
+
+    .page {
+      width: min(100%, 680px);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 32px;
     }
 
     h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 3vw, 2.6rem);
       text-align: center;
+      letter-spacing: -0.03em;
+    }
+
+    p.description {
+      margin: 0 0 24px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
     }
 
     .todo-form {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-bottom: 22px;
     }
 
     .todo-form input {
-      flex: 1;
-      padding: 10px;
-      font-size: 16px;
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--text);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .todo-form input:focus {
+      outline: none;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 4px rgba(92, 110, 248, 0.1);
     }
 
     .todo-form button {
-      padding: 10px 16px;
-      font-size: 16px;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 16px;
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .todo-form button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .todo-form button:active {
+      transform: translateY(0);
     }
 
     ul {
       list-style: none;
       padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
     }
 
     li {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 10px 12px;
-      margin-bottom: 10px;
-      background: #fafafa;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    li:hover {
+      transform: translateY(-1px);
+      border-color: rgba(92, 110, 248, 0.2);
+    }
+
+    li.done {
+      background: #f8fafc;
+      border-color: rgba(148, 163, 184, 0.2);
     }
 
     li.done span {
       text-decoration: line-through;
-      color: #888;
+      color: var(--muted);
     }
 
     .item-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
+      flex: 1;
     }
 
     .item-left input[type="checkbox"] {
-      transform: scale(1.2);
-    }
-
-    .remove-btn {
-      background: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 10px;
+      width: 20px;
+      height: 20px;
+      accent-color: var(--accent);
       cursor: pointer;
     }
 
+    .item-left span {
+      word-break: break-word;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .remove-btn {
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
     .remove-btn:hover {
-      background: #c0392b;
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    .empty-state {
+      color: var(--muted);
+      text-align: center;
+      padding: 24px 16px;
+      border: 1px dashed rgba(100, 116, 139, 0.3);
+      border-radius: 18px;
+      background: rgba(223, 228, 255, 0.35);
+      margin-top: 8px;
     }
   </style>
 </head>
 
 <body>
-  <h1>To-Do List</h1>
+  <div class="page">
+    <h1>To-Do List</h1>
+    <p class="description">记下今天要做的事情，已完成的会保存在浏览器中，刷新也不会丢失。</p>
 
-  <form class="todo-form" id="todo-form">
-    <input type="text" id="todo-input" placeholder="输入新的待办事项" autocomplete="off" />
-    <button type="submit">添加</button>
-  </form>
+    <form class="todo-form" id="todo-form">
+      <input type="text" id="todo-input" placeholder="输入新的待办事项" autocomplete="off" />
+      <button type="submit">添加</button>
+    </form>
 
-  <ul id="todo-list">
-    <li></li>
-  </ul>
+    <ul id="todo-list"></ul>
+  </div>
 
   <script>
     const STORAGE_KEY = 'todoListItems';
@@ -110,6 +217,14 @@
     function renderTodos() {
       const todos = getSavedTodos();
       todoList.innerHTML = '';
+
+      if (todos.length === 0) {
+        const emptyItem = document.createElement('li');
+        emptyItem.className = 'empty-state';
+        emptyItem.textContent = '当前还没有待办事项，输入一个新任务开始吧。';
+        todoList.appendChild(emptyItem);
+        return;
+      }
 
       todos.forEach((todo, index) => {
         const li = document.createElement('li');
