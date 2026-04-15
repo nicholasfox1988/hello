@@ -236,7 +236,7 @@
         removeButton.textContent = '删除';
         removeButton.className = 'remove-btn';
         removeButton.addEventListener('click', () => {
-          window.confirm('确定要删除这个待办事项吗？') {
+          if (window.confirm('确定要删除这个待办事项吗？')) {
             todos.splice(index, 1);
             saveTodos(todos);
             renderTodos();
