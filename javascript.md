@@ -984,6 +984,22 @@ document
 history
 screen
 ```
+**location**
+```js
+location.ref='http://www.baidu.com'
+location.search
+location.hash
+location.reload() //刷新页面
+```
+
+**history**
+```js
+history.back()
+history.forward()
+history.go() //1向前，-1后退
+```
+
+**navigator.userAgent**
 
 **间歇和延迟函数**
 ```js
