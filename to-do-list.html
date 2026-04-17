@@ -26,29 +26,29 @@
       margin: 0;
       min-height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+      background: linear-gradient(180deg, #ffe4ec 0%, #ffd1e0 100%);
       color: var(--text);
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 32px 16px;
+      align-items: flex-start;
+      padding: 16px 12px;
     }
 
     .page {
       width: min(100%, 680px);
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 28px;
+      border-radius: 24px;
       box-shadow: var(--shadow);
-      padding: 32px;
-      margin-top: 20px;
+      padding: 24px;
+      margin-top: 0;
     }
 
     .todo-form {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 12px;
-      margin: 10px 0 24px;
+      gap: 10px;
+      margin: 8px 0 18px;
     }
 
     .todo-form input {
@@ -95,30 +95,30 @@
       padding: 0;
       margin: 0;
       display: grid;
-      gap: 12px;
+      gap: 8px;
     }
 
     li {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      background: #fff;
-      border: 1px solid rgba(148, 163, 184, 0.15);
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #d1fae5;
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.08);
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
     li:hover {
       transform: translateY(-1px);
-      border-color: rgba(92, 110, 248, 0.2);
+      border-color: rgba(34, 197, 94, 0.35);
     }
 
     li.done {
-      background: #f8fafc;
-      border-color: rgba(148, 163, 184, 0.2);
+      background: #bbf7d0;
+      border-color: rgba(34, 197, 94, 0.35);
     }
 
     li.done span {
@@ -188,7 +188,7 @@
 <body>
   <div class="page">
     <form class="todo-form" id="todo-form">
-      <input type="text" id="todo-input" placeholder="输入新的待办事项" autocomplete="off" />
+      <input type="text" id="todo-input" placeholder="随便写吧！" autocomplete="off" />
       <!-- <button type="submit">添加</button> -->
     </form>
 
@@ -217,7 +217,7 @@
       if (todos.length === 0) {
         const emptyItem = document.createElement('li');
         emptyItem.className = 'empty-state';
-        emptyItem.textContent = '当前还没有待办事项，输入一个新任务开始吧。';
+        emptyItem.textContent = '暂时没有待办事项！';
         todoList.appendChild(emptyItem);
         return;
       }
