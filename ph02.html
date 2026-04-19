@@ -262,7 +262,8 @@
   </div>
 
   <script>
-    let arr1 = []
+    let arr1 = localStorage.getItem("pho_data") ? JSON.parse(localStorage.getItem("pho_data")) : [];
+
     const form = document.querySelector(".order1");
     const mySelect = document.getElementById("mySelect");
     const mySelect1 = document.getElementById("mySelect1");
@@ -367,6 +368,7 @@
       });
       const sum = arr1.reduce((total, item) => total + item.price * item.quntity, 0)
       total.innerHTML = `${sum.toFixed(2)}`; // 更新总计.   
+      localStorage.setItem("pho_data", JSON.stringify(arr1)); // 将订单数据保存到本地存储
     }
 
     tbody.addEventListener("click", function (event) {
@@ -375,6 +377,10 @@
       arr1.splice(index, 1); // 从数组中删除对应的订单
       render(); // 重新渲染表格
     });
+
+    (function () {
+      render(); // 页面加载时渲染表格
+    })();
   </script>
 </body>
 

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test04</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .all {
+      background-color: pink;
+      width: fit-content;
+      padding: 10px;
+    }
+
+    #mySelect1 {
+      width: 120px;
+    }
+
+    #mySelect2 {
+      width: 70px;
+    }
+
+    .table {
+      margin-top: 10px;
+      width: 280px;
+    }
+
+    .div0,
+    .div1,
+    .div2 {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="all">
+  </div>
+
+  <div class="table">
+  </div>
+
+  <script>
+    const allForm = document.querySelector(".all");
+    const table = document.querySelector(".table");
+
+    let order = JSON.parse(localStorage.getItem("pho_order")) || [];
+    let arr = [
+      [
+        { name: "N1 rare-beef", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N2 Special-beef", price: 21.50, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N3 pork-chop", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N4 pork-silce", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N5 pork-roll", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N6 pork&chicken", price: 21, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N7 LG-chicken", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N8 shr-chicken", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N9 beef-stew", price: 21, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N10 curry-Ck", price: 21, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N11 shrimp", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N12 combination", price: 21, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N13 woton-soup", price: 21, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N14 woton", price: 20, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] },
+        { name: "N15 spicy", price: 21, plus: ['rice-noodle', 'egg-noodle', 'vermicelli', 'no-noodle'] }
+      ],
+      [
+        { name: "R1 pork-chop", price: 20, plus: ['On_rice'] },
+        { name: "R2 pork-chop&shreddle-pork", price: 21, plus: ['On_rice'] },
+        { name: "R3 pork-chop&suasage", price: 21, plus: ['On_rice'] },
+        { name: "R4 pork-chop&prawn", price: 21, plus: ['On_rice'] },
+        { name: "R5 combination", price: 21, plus: ['On_rice'] },
+        { name: "R6 pork-chop&LG-chicken", price: 21, plus: ['On_rice'] },
+        { name: "R7 Hainanese-chicken", price: 20, plus: ['On_rice'] },
+        { name: "R8 LG-chicken", price: 20, plus: ['On_rice'] },
+        { name: "R9 LG-chicken&shreddle-pork", price: 21, plus: ['On_rice'] },
+        { name: "R10 LG-chicken&suasage", price: 21, plus: ['On_rice'] },
+        { name: "R11 LG-chicken&prawn", price: 21, plus: ['On_rice'] },
+        { name: "R12 prawn", price: 21, plus: ['On_rice'] },
+        { name: "R13 beef-stew", price: 21, plus: ['On_rice'] },
+        { name: "R14 curry-Ck", price: 21, plus: ['On_rice'] },
+        { name: "R15 stir-fry-beefn", price: 21, plus: ['On_rice'] },
+        { name: "R16 stir-fry-beef-with-ginger", price: 21, plus: ['On_rice'] },
+        { name: "R17 stir-fry-chicken", price: 21, plus: ['On_rice'] },
+        { name: "R18 stir-fry-prawn", price: 21, plus: ['On_rice'] },
+        { name: "R19 stir-fry-seafood", price: 21, plus: ['On_rice'] },
+        { name: "R20 stir-fry-chilli-chicken", price: 21, plus: ['On_rice'] },
+        { name: "R21 stir-fry-Veg", price: 21, plus: ['On_rice'] },
+        { name: "R22 egg-fry-rice", price: 21, plus: ['On_rice'] },
+        { name: "R23 chicken-fry-rice", price: 21, plus: ['On_rice'] },
+        { name: "R24 beef-fry-rice", price: 21, plus: ['On_rice'] },
+        { name: "R25 shrimp-fry-rice", price: 21, plus: ['On_rice'] }
+      ],
+      [
+        { name: "A1 spring-roll", price: 15.5, plus: ['(Sides)'] },
+        { name: "S2 egg-roll", price: 5, plus: ['(Sides)'] },
+        { name: "S3 shrimp-roll", price: 6, plus: ['(Sides)'] },
+        { name: "S4 fried-tofu", price: 5, plus: ['(Sides)'] },
+        { name: "S5 fried-egg", price: 5, plus: ['(Sides)'] },
+        { name: "S6 fried-shrimp", price: 6, plus: ['(Sides)'] },
+        { name: "S7 fried-chicken", price: 6, plus: ['(Sides)'] },
+        { name: "S8 fried-pork", price: 6, plus: ['(Sides)'] },
+        { name: "S9 fried-beef", price: 6, plus: ['(Sides)'] },
+        { name: "S10 fried-seafood", price: 7, plus: ['(Sides)'] }
+      ]
+    ];
+
+    allForm.innerHTML = arr.map((item, i) => {
+      return `
+        <div class="div${i}" name="div">
+          <form action="submit" class="order${i}">
+            <select id="mySelect1" class="mySelect${i}">
+              ${item.map(item2 => `<option value="${item2.price}">${item2.name}</option>`).join('')}
+            </select>
+            <select id="mySelect2" class="plus${i}">
+              ${item[0].plus.map(item3 => `<option value="${item3}">${item3}</option>`).join('')}
+            </select>
+            <input type="submit" value="Add_Item" class="submit${i}">
+          </form>
+        </div>
+      `;
+    }).join('');
+
+    table.innerHTML = `
+      <table border="3" cellpadding="0" cellspacing="0" class="table">
+        <thead>
+          <tr>
+            <th class="th">Code</th>
+            <th class="th">Q...</th>
+            <th class="th">meal</th>
+            <th class="th">Pri</th>
+            <th class="th">Total</th>
+            <th class="th">Act</th>
+          </tr>
+        </thead>
+        <tbody class="tbody">
+          <tr></tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" style="text-align: right;">Total : $&emsp; </td>
+            <td class="total">0</td>
+            <td> <button onclick="clearOrder()" class="clear">Clear</button></td>
+          </tr>
+        </tfoot>
+      </table> 
+    `;
+
+    for (let i = 0; i < arr.length; i++) {
+      const form = document.querySelector(`.order${i}`);
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const mealSelect = form.querySelector(`.mySelect${i}`);
+        const plusSelect = form.querySelector(`.plus${i}`);
+        const mealName = mealSelect.options[mealSelect.selectedIndex].text;
+        const mealPrice = parseFloat(mealSelect.value);
+        const plusOption = plusSelect.options[plusSelect.selectedIndex].text;
+        order.find(item => item.meal === `${mealName} ${plusOption}`) ? order.find(item => item.meal === `${mealName} ${plusOption}`).quantity++ :
+          order.push({ meal: `${mealName} ${plusOption}`, price: mealPrice, quantity: 1 });
+        localStorage.setItem("pho_order", JSON.stringify(order));
+        render();
+      });
+    }
+
+    const tbody = document.querySelector(".tbody");
+    const total = document.querySelector(".total");
+
+    function render() {
+      tbody.innerHTML = order.map((item, index) => {
+        return `
+          <tr>
+            <td>${item.meal.split(' ')[0]}</td>
+            <td>${item.quantity}</td>
+            <td>${item.meal.split(' ').slice(1).join('<br>')}</td>
+            <td>${item.price}</td>
+            <td>${item.price * item.quantity}</td>
+            <td><button onclick="deleteItem(${index})">Delete</button></td>
+          </tr>
+        `;
+      }).join('');
+      const totalPrice = order.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      total.textContent = `${totalPrice}`;
+    }
+
+    function deleteItem(index) {
+      order.splice(index, 1);
+      localStorage.setItem("pho_order", JSON.stringify(order));
+      render();
+    }
+
+    function clearOrder() {
+      order = [];
+      localStorage.removeItem("pho_order");
+      render();
+    }
+
+    (function () {
+      render();
+    })();
+  </script>
+</body>
+
+</html>
