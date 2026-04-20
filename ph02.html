@@ -4,382 +4,235 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pho kitchen</title>
+  <title>Pho</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .all {
+      background-color: pink;
+      width: fit-content;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    #mySelect1 {
+      width: 120px;
+    }
+
+    #mySelect2 {
+      width: 70px;
+    }
+
+    .table {
+      margin-top: 10px;
+      width: 280px;
+      border-radius: 10px;
+    }
+
+    .div0,
+    .div1,
+    .div2 {
+      margin-top: 5px;
+    }
+
+    #th {
+      text-align: center;
+      background-color: rgb(171, 173, 31);
+    }
+
+    #td {
+      text-align: center;
+      background-color: rgb(62, 156, 39);
+      padding: 5px;
+    }
+
+    #td1 {
+      text-align: center;
+      background-color: rgb(62, 156, 39);
+      padding: 5px;
+      font-size: 25px;
+      color: red;
+    }
+
+    #del {
+      background-color: rgb(204, 52, 136);
+      border-radius: 5px;
+    }
+  </style>
 </head>
-<style>
-  /* 全局页面布局 */
-  * {
-    box-sizing: border-box;
-    text-align: center;
-  }
-
-  body {
-    margin: 0;
-    padding: 24px;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    background: #f7f9fc;
-    color: #333;
-    text-align: center;
-  }
-
-  #mySelect,
-  #mySelect1,
-  #mySelect2 {
-    height: 30px;
-    width: auto;
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background: #4bca82;
-    color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  #mySelect1,
-  #mySelect2 {
-    width: 225px;
-  }
-
-  #NoodleSelect {
-    height: 30px;
-    width: 80px;
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background: #4bca82;
-    color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  #NoodleSelect1,
-  #NoodleSelect2 {
-    display: none;
-  }
-
-  #etp {
-    height: 30px;
-    width: 150px;
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background: #4bca82;
-    color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  option {
-    background: #fff;
-    color: #333;
-    text-align: left;
-  }
-
-  .th {
-    background: #c77bd1;
-    padding: 10px;
-    font-size: 16px;
-    color: #000;
-  }
-
-  .order {
-    background: #fff;
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 16px 35px rgba(40, 54, 80, 0.08);
-    display: inline-block;
-    margin-bottom: 24px;
-  }
-
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 12px;
-  }
-
-  .order-name,
-  .order-name1,
-  .order-name2 {
-    width: auto;
-    text-align: center;
-    padding: 5px;
-    height: 50px;
-    background-color: rgb(160, 210, 96);
-  }
-
-  .order-name2 {
-    font-size: 25px;
-    color: red;
-  }
-
-
-  .submit,
-  .submit1,
-  .submit2 {
-    width: 200px;
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    padding: 5px;
-    font-size: 14px;
-    background: #4a90e2;
-    color: #fff;
-    transition: background 0.25s ease, transform 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    margin-top: 12px;
-  }
-
-  .clear {
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    padding: 5px;
-    font-size: 14px;
-    background: #ff3b30;
-    color: #fff;
-    transition: background 0.25s ease, transform 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    margin: 5px;
-  }
-</style>
 
 <body>
-  <div class="father">
-    <form action="submit" class="order1">
-      <select name="mySelect" id="mySelect">
-        <option value="20">N1 rare-beef</option>
-        <option value="21.50">N2 Special-beef</option>
-        <option value="20">N3 pork-chop</option>
-        <option value="20">N4 pork-silce</option>
-        <option value="20">N5 pork-roll</option>
-        <option value="21">N6 pork&chicken</option>
-        <option value="20">N7 LG-chicken</option>
-        <option value="20">N8 shr-chicken</option>
-        <option value="21">N9 beef-stew</option>
-        <option value="21">N10 curry-Ck</option>
-        <option value="20">N11 shrimp</option>
-        <option value="21">N12 combination</option>
-        <option value="21">N13 woton-soup</option>
-        <option value="20">N14 woton</option>
-        <option value="21">N15 spicy</option>
-      </select>
-      <select name="mySelect" id="NoodleSelect">
-        <option value="">Rice Noodle</option>
-        <option value="">Egg Noodle</option>
-        <option value="">Vermicelli</option>
-        <option value="">No Noodle</option>
-      </select>
-      <input type="submit" value="Add" class="submit">
-    </form>
 
-    <form action="submit" class="order1">
-      <select name="mySelect" id="mySelect2">
-        <option value="20">R1 pork-chop</option>
-        <option value="21.50">R2 pork-chop&shreddle-pork</option>
-        <option value="20">R3 pork-chop&suasage</option>
-        <option value="20">R4 pork-chop&prawn</option>
-        <option value="20">R5 combination</option>
-        <option value="21">R6 pork-chop&LG-chicken</option>
-        <option value="20">R7 Hainanese-chicken</option>
-        <option value="20">R8 LG-chicken</option>
-        <option value="21">R9 LG-chicken&shreddle-pork</option>
-        <option value="21">R10 LG-chicken&suasage</option>
-        <option value="21">R11 LG-chicken&prawn</option>
-        <option value="21">R12 prawn</option>
-        <option value="20">R13 beef-stew</option>
-        <option value="21">R14 curry-chicken</option>
-        <option value="21">R15 stir-fry-beef</option>
-        <option value="20">R16 stir-fry-beef-with-ginger</option>
-        <option value="21">R17 stir-fry-chicken</option>
-        <option value="21">R18 stir-fry-prawn</option>
-        <option value="21">R19 stir-fry-seafood</option>
-        <option value="21">R20 stir-fry-chilli-chicken</option>
-        <option value="21">R21 stir-fry-Veg</option>
-        <option value="21">R22 egg-fry-rice</option>
-        <option value="21">R23 chicken-fry-rice</option>
-        <option value="21">R24 beef-fry-rice</option>
-        <option value="21">R25 shrimp-fry-rice</option>
-      </select>
-      <select name="mySelect" id="NoodleSelect2">
-        <option value="">on rice</option>
-      </select>
-      <input type="submit" value="Add" class="submit2">
-    </form>
+  <div class="all">
+  </div>
 
-    <form action="submit" class="order1">
-      <select name="mySelect" id="mySelect1">
-        <option value="15.50">A1 spring-roll</option>
-        <option value="15">A2 summer-roll(prawn)</option>
-        <option value="15">A2 summer-roll(pork)</option>
-        <option value="15">A2 summer-roll(chicken)</option>
-        <option value="15">A2 summer-roll(oneOfEach)</option>
-        <option value="15">A2 summer-roll(vegetable)</option>
-        <option value="15">A2 summer-roll(Special)</option>
-        <option value="14">A3 chicken-wings</option>
-        <option value="14.50">A4 fried-woton</option>
-        <option value="15">A5 pork-chop</option>
-        <option value="15">A6 LG-chicken</option>
-        <option value="15">A7 slice-P&B</option>
-        <option value="14">A8 bok-choy</option>
-        <option value="20">A9 Large-fried-veg</option>
-        <option value="14">A10 small-fried-veg</option>
-      </select>
-      <select name="mySelect" id="NoodleSelect1">
-        <option value="">(Sides)</option>
-      </select>
-      <input type="submit" value="Add" class="submit1">
-    </form>
+  <div class="table">
+  </div>
 
-    <div class="showTable">
+  <script>
+    const allForm = document.querySelector(".all");
+    const table = document.querySelector(".table");
+
+    let order = JSON.parse(localStorage.getItem("pho_order")) || [];
+    let arr = [
+      [
+        { name: "N1 rare-beef   ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N2 Special-beef", price: 21.50, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N3 pork-chop   ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N4 pork-silce  ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N5 pork-roll   ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N6 pork&chicken", price: 21, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N7 LG-chicken  ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N8 shr-chicken ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N9 beef-stew   ", price: 21, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N10 curry-Ck   ", price: 21, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N11 shrimp     ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N12 combination", price: 21, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N13 woton-soup ", price: 21, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N14 woton      ", price: 20, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] },
+        { name: "N15 spicy-soup ", price: 21, plus: ['Rice_Noodle', 'Egg_Noodle', 'Vermicelli', 'No_Noodle'] }
+      ],
+      [
+        { name: "R1 pork-chop              ", price: 20, plus: ['On_Rice'] },
+        { name: "R2 pork-chop&shreddle-pork", price: 21, plus: ['On_Rice'] },
+        { name: "R3 pork-chop&suasage      ", price: 21, plus: ['On_Rice'] },
+        { name: "R4 pork-chop&prawn        ", price: 21, plus: ['On_Rice'] },
+        { name: "R5 combination            ", price: 21, plus: ['On_Rice'] },
+        { name: "R6 pork-chop&LG-chicken", price: 21, plus: ['On_Rice'] },
+        { name: "R7 Hainanese-chicken", price: 20, plus: ['On_Rice'] },
+        { name: "R8 LG-chicken", price: 20, plus: ['On_Rice'] },
+        { name: "R9 LG-chicken&shreddle-pork", price: 21, plus: ['On_Rice'] },
+        { name: "R10 LG-chicken&suasage", price: 21, plus: ['On_Rice'] },
+        { name: "R11 LG-chicken&prawn", price: 21, plus: ['On_Rice'] },
+        { name: "R12 prawn", price: 21, plus: ['On_Rice'] },
+        { name: "R13 beef-stew", price: 21, plus: ['On_Rice'] },
+        { name: "R14 curry-Ck", price: 21, plus: ['On_Rice'] },
+        { name: "R15 stir-fry-beefn", price: 21, plus: ['On_Rice'] },
+        { name: "R16 stir-fry-beef-with-ginger", price: 21, plus: ['On_Rice'] },
+        { name: "R17 stir-fry-chicken", price: 21, plus: ['On_Rice'] },
+        { name: "R18 stir-fry-prawn", price: 21, plus: ['On_Rice'] },
+        { name: "R19 stir-fry-seafood", price: 21, plus: ['On_Rice'] },
+        { name: "R20 stir-fry-chilli-chicken", price: 21, plus: ['On_Rice'] },
+        { name: "R21 stir-fry-Veg", price: 21, plus: ['On_Rice'] },
+        { name: "R22 egg-fry-rice", price: 21, plus: ['On_Rice'] },
+        { name: "R23 chicken-fry-rice", price: 21, plus: ['On_Rice'] },
+        { name: "R24 beef-fry-rice", price: 21, plus: ['On_Rice'] },
+        { name: "R25 shrimp-fry-rice", price: 21, plus: ['On_Rice'] }
+      ],
+      [
+        { name: "A1 spring-roll", price: 15.5, plus: ['(Sides)'] },
+        { name: "S2 egg-roll", price: 5, plus: ['(Sides)'] },
+        { name: "S3 shrimp-roll", price: 6, plus: ['(Sides)'] },
+        { name: "S4 fried-tofu", price: 5, plus: ['(Sides)'] },
+        { name: "S5 fried-egg", price: 5, plus: ['(Sides)'] },
+        { name: "S6 fried-shrimp", price: 6, plus: ['(Sides)'] },
+        { name: "S7 fried-chicken", price: 6, plus: ['(Sides)'] },
+        { name: "S8 fried-pork", price: 6, plus: ['(Sides)'] },
+        { name: "S9 fried-beef", price: 6, plus: ['(Sides)'] },
+        { name: "S10 fried-seafood", price: 7, plus: ['(Sides)'] }
+      ]
+    ];
+
+    allForm.innerHTML = arr.map((item, i) => {
+      return `
+        <div class="div${i}" name="div">
+          <form action="submit" class="order${i}">
+            <select id="mySelect1" class="mySelect${i}">
+              ${item.map(item2 => `<option value="${item2.price}">${item2.name}</option>`).join('')}
+            </select>
+            <select id="mySelect2" class="plus${i}">
+              ${item[0].plus.map(item3 => `<option value="${item3}">${item3}</option>`).join('')}
+            </select>
+            <input type="submit" value="Add_Item" class="submit${i}">
+          </form>
+        </div>
+      `;
+    }).join('');
+
+    table.innerHTML = `
       <table border="3" cellpadding="0" cellspacing="0" class="table">
         <thead>
           <tr>
-            <th class="th">Code</th>
-            <th class="th">Q...</th>
-            <th class="th"><select name="" id="etp">
-                <option value="">Eat Here</option>
-                <option value="">Take Away</option>
-                <option value="">Phone Order</option>
-              </select></th>
-            <th class="th">Pri</th>
-            <th class="th">Total</th>
-            <th class="th">Act</th>
+            <th id="th">Code</th>
+            <th id="th">Q...</th>
+            <th id="th">&emsp;Meals&emsp;</th>
+            <th id="th">Pri</th>
+            <th id="th">Sum</th>
+            <th id="th">Act</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody">
           <tr></tr>
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="4" style="text-align: right;">Total : $--&emsp; </td>
+            <td colspan="4" style="text-align: right;">Total : $&emsp; </td>
             <td class="total">0</td>
-            <td> <button onclick="arr1=[];render()" class="clear">Clear</button></td>
+            <td id="td"> <button onclick="clearOrder()" class="clear" id="del">&nbsp;Clear&nbsp;</button></td>
           </tr>
         </tfoot>
-      </table>
-    </div>
-  </div>
+      </table> 
+    `;
 
-  <script>
-    let arr1 = localStorage.getItem("pho_data") ? JSON.parse(localStorage.getItem("pho_data")) : [];
-
-    const form = document.querySelector(".order1");
-    const mySelect = document.getElementById("mySelect");
-    const mySelect1 = document.getElementById("mySelect1");
-    const mySelect2 = document.getElementById("mySelect2");
-
-
-    const NoodleSelect = document.getElementById("NoodleSelect");
-    const NoodleSelect1 = document.getElementById("NoodleSelect1");
-    const NoodleSelect2 = document.getElementById("NoodleSelect2");
-
-
-    const submitBtn = document.querySelector(".submit");
-    const submitBtn1 = document.querySelector(".submit1");
-    const submitBtn2 = document.querySelector(".submit2");
-
-    const tbody = document.querySelector("tbody");
-
-    submitBtn.addEventListener("click", function (event) {
-      event.preventDefault(); // 阻止表单默认提交行为
-      const selectedOption1 = mySelect.options[mySelect.selectedIndex];
-      const selectedOption2 = NoodleSelect.options[NoodleSelect.selectedIndex];
-      const obj1 = {
-        order: selectedOption1.text,
-        noodle: selectedOption2.text,
-        quntity: 1,
-        price: selectedOption1.value
-      }
-      const findItem = arr1.find(item => item.order === obj1.order && item.noodle === obj1.noodle);
-      // console.log(findItem);
-      if (findItem) {
-        findItem.quntity += 1; // 如果找到相同订单，数量加1
-        render(); // 重新渲染表格
-      } else {
-        arr1.push(obj1); // 如果没有找到相同订单，直接添加新订单
-        render(); // 重新渲染表格
-      }
-      // form.reset(); // 重置表单
-    });
-
-    submitBtn1.addEventListener("click", function (event) {
-      event.preventDefault(); // 阻止表单默认提交行为
-      const selectedOption1 = mySelect1.options[mySelect1.selectedIndex];
-      const selectedOption2 = NoodleSelect1.options[NoodleSelect1.selectedIndex];
-
-      const obj1 = {
-        order: selectedOption1.text,
-        noodle: selectedOption2.text,
-        quntity: 1,
-        price: selectedOption1.value
-      }
-      const findItem = arr1.find(item => item.order === obj1.order && item.noodle === obj1.noodle);
-      // console.log(findItem);
-      if (findItem) {
-        findItem.quntity += 1; // 如果找到相同订单，数量加1
-        render(); // 重新渲染表格
-      } else {
-        arr1.push(obj1); // 如果没有找到相同订单，直接添加新订单
-        render(); // 重新渲染表格
-      }
-      // form.reset(); // 重置表单
-    });
-
-    submitBtn2.addEventListener("click", function (event) {
-      event.preventDefault(); // 阻止表单默认提交行为
-      const selectedOption1 = mySelect2.options[mySelect2.selectedIndex];
-      const selectedOption2 = NoodleSelect2.options[NoodleSelect2.selectedIndex];
-
-      const obj1 = {
-        order: selectedOption1.text,
-        noodle: selectedOption2.text,
-        quntity: 1,
-        price: selectedOption1.value
-      }
-      const findItem = arr1.find(item => item.order === obj1.order && item.noodle === obj1.noodle);
-      // console.log(findItem);
-      if (findItem) {
-        findItem.quntity += 1; // 如果找到相同订单，数量加1
-        render(); // 重新渲染表格
-      } else {
-        arr1.push(obj1); // 如果没有找到相同订单，直接添加新订单
-        render(); // 重新渲染表格
-      }
-      // form.reset(); // 重置表单
-    });
-
-    function render() {
-      const tbody = document.querySelector("tbody");
-      tbody.innerHTML = ""; // 清空表格内容
-      const total = document.querySelector(".total");
-
-      arr1.forEach((item, index) => {
-        const newRow = document.createElement("tr");
-        newRow.innerHTML = `
-          <td class="order-name">${item.order.split(' ')[0]}</td>
-          <td class="order-name2">${item.quntity}</td>
-          <td class="order-name1">${item.order.split(' ')[1]}<br/>${item.noodle}</td>
-          <td class="order-name">${item.price}</td>
-          <td class="order-name">${item.price * item.quntity}</td>
-          <td class="order-name"><button class="btn" data-index="${index}">Del</button></td>
-        `;
-        tbody.insertBefore(newRow, tbody.firstChild); // 将新行插入到表格顶部
+    for (let i = 0; i < arr.length; i++) {
+      const form = document.querySelector(`.order${i}`);
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const mealSelect = form.querySelector(`.mySelect${i}`);
+        const plusSelect = form.querySelector(`.plus${i}`);
+        const mealName = mealSelect.options[mealSelect.selectedIndex].text;
+        const mealPrice = parseFloat(mealSelect.value);
+        const plusOption = plusSelect.options[plusSelect.selectedIndex].text;
+        order.find(item => item.meal === `${mealName} ${plusOption}`) ? order.find(item => item.meal === `${mealName} ${plusOption}`).quantity++ :
+          order.unshift({ meal: `${mealName} ${plusOption}`, price: mealPrice, quantity: 1 });
+        localStorage.setItem("pho_order", JSON.stringify(order));
+        render();
       });
-      const sum = arr1.reduce((total, item) => total + item.price * item.quntity, 0)
-      total.innerHTML = `${sum.toFixed(2)}`; // 更新总计.   
-      localStorage.setItem("pho_data", JSON.stringify(arr1)); // 将订单数据保存到本地存储
     }
 
-    tbody.addEventListener("click", function (event) {
-      if (!event.target.matches(".btn")) return;
-      const index = Number(event.target.dataset.index);
-      arr1.splice(index, 1); // 从数组中删除对应的订单
-      render(); // 重新渲染表格
-    });
+    const tbody = document.querySelector(".tbody");
+    const total = document.querySelector(".total");
+
+    function render() {
+      tbody.innerHTML = order.map((item, index) => {
+        return `
+          <tr>
+            <td id='td'>${item.meal.split(' ')[0]}</td>
+            <td id='td1'>${item.quantity}</td>
+            <td id='td'>${item.meal.split(' ').slice(1).join('<br>')}</td>
+            <td id='td'>${item.price}</td>
+            <td id='td'>${item.price * item.quantity}</td>
+            <td id='td'><button onclick="deleteItem(${index})" id="del">&nbsp;&nbsp;Del&nbsp;&nbsp;</button></td>
+          </tr>
+        `;
+      }).join('');
+      const totalPrice = order.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      total.textContent = `${totalPrice}`;
+    }
+
+    function deleteItem(index) {
+      order.splice(index, 1);
+      localStorage.setItem("pho_order", JSON.stringify(order));
+      render();
+    }
+
+    function clearOrder() {
+      order = [];
+      localStorage.removeItem("pho_order");
+      render();
+    }
 
     (function () {
-      render(); // 页面加载时渲染表格
+      render();
     })();
   </script>
 </body>
