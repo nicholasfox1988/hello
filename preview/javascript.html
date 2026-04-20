@@ -1,83 +1,72 @@
 <html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:javascript</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>i5ting_ztree_toc:javascript</title>
-  <link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet"
-    type="text/css" />
-  <link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet"
-    type="text/css" />
-  <link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
 
-  <style>
-    pre {
-      counter-reset: line-numbering;
-      border: solid 1px #d9d9d9;
-      border-radius: 0;
-      background: #fff;
-      padding: 0;
-      line-height: 23px;
-      margin-bottom: 30px;
-      white-space: pre;
-      overflow-x: auto;
-      word-break: inherit;
-      word-wrap: inherit;
-    }
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
 
-    pre a::before {
-      content: counter(line-numbering);
-      counter-increment: line-numbering;
-      padding-right: 1em;
-      /* space after numbers */
-      width: 25px;
-      text-align: right;
-      opacity: 0.7;
-      display: inline-block;
-      color: #aaa;
-      background: #eee;
-      margin-right: 16px;
-      padding: 2px 10px;
-      font-size: 13px;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
 
-    pre a:first-of-type::before {
-      padding-top: 10px;
-    }
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
 
-    pre a:last-of-type::before {
-      padding-bottom: 10px;
-    }
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
 
-    pre a:only-of-type::before {
-      padding: 10px;
-    }
-
-    .highlight {
-      background-color: #ffffcc
-    }
-
-    /* RIGHT */
-  </style>
-</head>
-
-<body>
-  <div>
-    <div style='width:25%;'>
-      <ul id="tree" class="ztree" style='width:100%'>
-
-      </ul>
-    </div>
-    <div id='readme' style='width:70%;margin-left:20%;'>
-      <article class='markdown-body'>
-        <h1 id="-">按钮颜色变换</h1>
-        <pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="-">按钮颜色变换</h1>
+<pre><code class="lang-js">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 
 &lt;head&gt;
@@ -109,9 +98,9 @@
 
 &lt;/html&gt;
 </code></pre>
-        <hr>
-        <h1 id="-">输出语法</h1>
-        <pre><code class="lang-html">&lt;script&gt;
+<hr>
+<h1 id="-">输出语法</h1>
+<pre><code class="lang-js">&lt;script&gt;
   document.write(&#39;abc&#39;)
   document.write(&#39;&lt;h1&gt;abc&lt;/h1&gt;&#39;)
   console.log(&#39;abc&#39;)
@@ -119,22 +108,22 @@
   prompt(&#39;请输入你的年龄&#39;)  //弹出输入对话框
 &lt;/script&gt;
 </code></pre>
-        <p><strong>多变量,常量申明</strong></p>
-        <blockquote>
-          <p>let age = 28,name= &#39;nick&#39;</p>
-        </blockquote>
-        <blockquote>
-          <p>const fs = require(&#39;fs&#39;),PI =3.14</p>
-        </blockquote>
-        <p><strong>页面打印对话框输入</strong></p>
-        <pre><code class="lang-html">&lt;script&gt;
+<p><strong>多变量,常量申明</strong></p>
+<blockquote>
+<p>let age = 28,name= &#39;nick&#39;</p>
+</blockquote>
+<blockquote>
+<p>const fs = require(&#39;fs&#39;),PI =3.14</p>
+</blockquote>
+<p><strong>页面打印对话框输入</strong></p>
+<pre><code class="lang-js">&lt;script&gt;
   let name = prompt(&#39;请输入名字：&#39;)
   document.write(&#39;你好&#39; + name)
 &lt;/script&gt;
 </code></pre>
-        <hr>
-        <h1 id="-">数据类型</h1>
-        <pre><code class="lang-html">number      整数，小数，正数，负数
+<hr>
+<h1 id="-">数据类型</h1>
+<pre><code class="lang-js">number      整数，小数，正数，负数
 string      &#39;&#39; , &quot;&quot; , ``, str.trim()去头位空格
 boolean     true , false:(&#39;&#39;,0,undefined,null,false,NaN)
 undefined   只申明，却不赋值
@@ -142,28 +131,28 @@ null        申明了，赋值为空
 数组
 object      
 </code></pre>
-        <blockquote>
-          <p>NaN 报错：不是一个数字</p>
-        </blockquote>
-        <p><strong>数组</strong></p>
-        <pre><code class="lang-html">  &lt;script&gt;
+<blockquote>
+<p>NaN  报错：不是一个数字</p>
+</blockquote>
+<p><strong>数组</strong></p>
+<pre><code class="lang-js">  &lt;script&gt;
     let arr = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;lmn&#39;]
     console.log(arr)
     console.log(arr[1])
     console.log(arr.length)
   &lt;/script&gt;
 </code></pre>
-        <h1 id="-">检测数据类型</h1>
-        <pre><code class="lang-html">let abc
+<h1 id="-">检测数据类型</h1>
+<pre><code class="lang-js">let abc
 console.log(typeof abc)
 </code></pre>
-        <h1 id="-">隐式转换</h1>
-        <pre><code class="lang-html">+运算只要有一个是string，结果就会是string
+<h1 id="-">隐式转换</h1>
+<pre><code class="lang-js">+运算只要有一个是string，结果就会是string
 -*/只要有一个是number,结果就会是number
 </code></pre>
-        <hr>
-        <h1 id="-">输入表格显示</h1>
-        <pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+<hr>
+<h1 id="-">输入表格显示</h1>
+<pre><code class="lang-js">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 
 &lt;head&gt;
@@ -228,23 +217,23 @@ console.log(typeof abc)
 
 &lt;/html&gt;
 </code></pre>
-        <hr>
-        <h1 id="-">运算</h1>
-        <p><strong>逻辑运算,运算顺序如下</strong></p>
-        <pre><code class="lang-html">!
+<hr>
+<h1 id="-">运算</h1>
+<p><strong>逻辑运算,运算顺序如下</strong></p>
+<pre><code class="lang-js">!
 &amp;&amp;
 ||
 </code></pre>
-        <p><strong>三元补零</strong></p>
-        <pre><code class="lang-html">let num = prompt(&#39;请输入一个数字：&#39;)
+<p><strong>三元补零</strong></p>
+<pre><code class="lang-js">let num = prompt(&#39;请输入一个数字：&#39;)
 num = num &lt; 10 ? 0 + num : num
 alert(num)
 </code></pre>
-        <hr>
-        <h1 id="-">判断</h1>
-        <p><strong>if else太简单不写了</strong></p>
-        <p><strong>switch要求数据类型和值必须全等</strong></p>
-        <pre><code class="lang-html">let num = +prompt(&#39;请输入一个数字：&#39;)
+<hr>
+<h1 id="-">判断</h1>
+<p><strong>if else太简单不写了</strong></p>
+<p><strong>switch要求数据类型和值必须全等</strong></p>
+<pre><code class="lang-js">let num = +prompt(&#39;请输入一个数字：&#39;)
 switch(num){
   case 1:
     pass
@@ -258,17 +247,17 @@ switch(num){
     break
 }
 </code></pre>
-        <hr>
-        <h1 id="-">遍历数组</h1>
-        <pre><code class="lang-html">  &lt;script&gt;
+<hr>
+<h1 id="-">遍历数组</h1>
+<pre><code class="lang-js">  &lt;script&gt;
     let arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
     for (let i = 0; i &lt; arr1.length; i++) {
       document.write(&#39;&lt;br&gt;&#39;, arr1[i])
     }
   &lt;/script&gt;
 </code></pre>
-        <p><strong>数组的增删改查</strong></p>
-        <pre><code class="lang-html">&lt;script&gt;
+<p><strong>数组的增删改查</strong></p>
+<pre><code class="lang-js">&lt;script&gt;
   let arr1 = [&#39;abc&#39;, &#39;def&#39;, &#39;hij&#39;, &#39;klm&#39;]
   arr1.push(value)      //增  到结尾
   arr1.unshift(value)   //增  到开头
@@ -282,19 +271,19 @@ switch(num){
   arr1[index]           //查
 &lt;/script&gt;
 </code></pre>
-        <hr>
-        <h1 id="-">函数，不难讲解了</h1>
-        <p><strong>立即执行函数</strong></p>
-        <pre><code class="lang-html">(function(x,y){
+<hr>
+<h1 id="-">函数，不难讲解了</h1>
+<p><strong>立即执行函数</strong></p>
+<pre><code class="lang-js">(function(x,y){
   //代码段
 })(x,y);
 </code></pre>
-        <hr>
-        <h1 id="object-">object对象</h1>
-        <p><strong>删除对象的属性和方法</strong></p>
-        <p>delete 对象.属性</p>
-        <p><strong>遍历对象</strong></p>
-        <pre><code class="lang-html">let obj = {
+<hr>
+<h1 id="object-">object对象</h1>
+<p><strong>删除对象的属性和方法</strong></p>
+<p>delete 对象.属性</p>
+<p><strong>遍历对象</strong></p>
+<pre><code class="lang-js">let obj = {
   uname : &#39;nick&#39;,
   age : 18,
   gender : &#39;男&#39;
@@ -304,33 +293,33 @@ for (let key in obj){
   console.log(obj[key])
 }
 </code></pre>
-        <p><strong>内置对象</strong>
-          网页输入:mdn可以查看
-          搜索Math</p>
-        <p><strong>随机数函数返回n到m之间的一个随机数</strong></p>
-        <pre><code class="lang-html">  let n = 6
+<p><strong>内置对象</strong>
+网页输入:mdn可以查看
+搜索Math</p>
+<p><strong>随机数函数返回n到m之间的一个随机数</strong></p>
+<pre><code class="lang-js">  let n = 6
   let random1 = parseInt(Math.random() * n + 1)
   document.write(random1)
 </code></pre>
-        <blockquote>
-          <p>innerText 不是别标签，纯文本(不推荐使用)</p>
-        </blockquote>
-        <blockquote>
-          <p>innerHTML 可以解析标签</p>
-        </blockquote>
-        <pre><code class="lang-html">元素.className
+<blockquote>
+<p>innerText 不是别标签，纯文本(不推荐使用)</p>
+</blockquote>
+<blockquote>
+<p>innerHTML 可以解析标签</p>
+</blockquote>
+<pre><code class="lang-js">元素.className
 元素.classlist.add(&#39;类名&#39;)      //追加 原来div,变成div 类名
 元素.classlist.remove(&#39;类名&#39;)   //移除
 元素.classlist.toggle(&#39;类名&#39;)   //切换
 </code></pre>
-        <pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;         //输入文本  元素.value= &#39;&#39;
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;         //输入文本  元素.value= &#39;&#39;
   &lt;input type=&quot;checkbox&quot;&gt;     //打勾      元素.checked= true or false
 
   &lt;button&gt;abc&lt;/button&gt;        //btn1.disabled = true 禁用该按钮
 
 </code></pre>
-        <p><strong>自定义属性</strong></p>
-        <pre><code class="lang-html">  &lt;div data-id=&quot;&quot; data-name=&quot;nick&quot;&gt;1&lt;/div&gt;
+<p><strong>自定义属性</strong></p>
+<pre><code class="lang-html">  &lt;div data-id=&quot;&quot; data-name=&quot;nick&quot;&gt;1&lt;/div&gt;
   &lt;div&gt;2&lt;/div&gt;
   &lt;div&gt;3&lt;/div&gt;
 
@@ -340,17 +329,17 @@ for (let key in obj){
     console.log(div.dataset.name)
   &lt;/script&gt;
 </code></pre>
-        <hr>
-        <h1 id="-">定时器:间歇函数</h1>
-        <p><strong>开启/关闭定时器</strong></p>
-        <pre><code class="lang-html">  let n = setInterval(() =&gt; {
+<hr>
+<h1 id="-">定时器:间歇函数</h1>
+<p><strong>开启/关闭定时器</strong></p>
+<pre><code class="lang-js">  let n = setInterval(() =&gt; {
     console.log(&#39;hello world!&#39;)
   }, 3000)
 
   clearInterval(n)
 </code></pre>
-        <p><strong>同意按钮</strong></p>
-        <pre><code class="lang-html">  &lt;button disabled&gt;同意(5)&lt;/button&gt;
+<p><strong>同意按钮</strong></p>
+<pre><code class="lang-html">  &lt;button disabled&gt;同意(5)&lt;/button&gt;
 
   &lt;script&gt;
     let btn1 = document.querySelector(&#39;button&#39;)
@@ -366,25 +355,24 @@ for (let key in obj){
     }, 1000)
   &lt;/script&gt;
 </code></pre>
-        <hr>
-        <h1 id="-">事件监听</h1>
-        <pre><code class="lang-html">  元素.document.addEventListener(&#39;动作&#39;,()=&gt;{ })
+<hr>
+<h1 id="-">事件监听</h1>
+<pre><code class="lang-js">  元素.document.addEventListener(&#39;动作&#39;,()=&gt;{ })
 </code></pre>
-        <ul>
-          <li><strong>动作包含如下：</strong>
-            <ul>
-              <li>click</li>
-              <li>mouseenter</li>
-              <li>mouseleave</li>
-              <li>focus</li>
-              <li>blur</li>
-              <li>keydown</li>
-              <li>keyup</li>
-              <li>input</li>
-            </ul>
-          </li>
-        </ul>
-        <pre><code class="lang-html"> &lt;div class=&quot;div1&quot;&gt;
+<ul>
+<li><strong>动作包含如下：</strong><ul>
+<li>click</li>
+<li>mouseenter</li>
+<li>mouseleave</li>
+<li>focus</li>
+<li>blur</li>
+<li>keydown</li>
+<li>keyup</li>
+<li>input</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-html"> &lt;div class=&quot;div1&quot;&gt;
     &lt;h1&gt;名字随机抽取&lt;/h1&gt;
     &lt;span&gt;名字：&lt;/span&gt;
     &lt;div class=&quot;div2&quot;&gt;这里显示&lt;/div&gt;
@@ -418,7 +406,7 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <pre><code class="lang-html">  &lt;div class=&quot;mi&quot;&gt;
+<pre><code class="lang-html">  &lt;div class=&quot;mi&quot;&gt;
     &lt;input type=&quot;text&quot; placeholder=&quot;请输入：&quot;&gt;
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
@@ -439,7 +427,7 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
   &lt;script&gt;
     let input = document.querySelector(&#39;input&#39;)
     input.addEventListener(&#39;keydown&#39;, () =&gt; {
@@ -450,7 +438,7 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
   &lt;button&gt;发布&lt;/button&gt;
   &lt;br&gt;
   &lt;span class=&quot;total&quot;&gt;0/20字&lt;/span&gt;
@@ -471,7 +459,7 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
+<pre><code class="lang-html">  &lt;input type=&quot;text&quot;&gt;
   &lt;button&gt;发布&lt;/button&gt;
   &lt;p&gt;abcdefg&lt;/p&gt;
   &lt;script&gt;
@@ -492,15 +480,15 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <hr>
-        <h1 id="this">this</h1>
-        <ul>
-          <li><strong>注意使用箭头函数this会直接指向window</strong></li>
-          <li><strong>谁调用这个函数 this就指向谁</strong></li>
-          <li><strong>普通函数中 this指向的是window</strong></li>
-        </ul>
-        <p><strong>函数里面调用的函数，就叫回调函数</strong></p>
-        <pre><code class="lang-html">  &lt;div class=&quot;div1&quot;&gt;
+<hr>
+<h1 id="this">this</h1>
+<ul>
+<li><strong>注意使用箭头函数this会直接指向window</strong></li>
+<li><strong>谁调用这个函数 this就指向谁</strong></li>
+<li><strong>普通函数中 this指向的是window</strong></li>
+</ul>
+<p><strong>函数里面调用的函数，就叫回调函数</strong></p>
+<pre><code class="lang-html">  &lt;div class=&quot;div1&quot;&gt;
     &lt;ul&gt;
       &lt;li&gt;&lt;a class=&quot;active&quot; href=&quot;#&quot;&gt;abc&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;def&lt;/a&gt;&lt;/li&gt;
@@ -518,8 +506,8 @@ for (let key in obj){
     }
   &lt;/script&gt;
 </code></pre>
-        <p><strong>复选框</strong></p>
-        <pre><code class="lang-html">&lt;script&gt;
+<p><strong>复选框</strong></p>
+<pre><code class="lang-js">&lt;script&gt;
   let checkbox1 = document.querySelectorAll(&#39;.table-wrapper [type=&quot;checkbox&quot;]&#39;)
   // console.log(checkbox)
   let checkAll = document.querySelector(&#39;.select-all-bar [type=&quot;checkbox&quot;]&#39;)
@@ -537,9 +525,9 @@ for (let key in obj){
   }
 &lt;/script&gt;
 </code></pre>
-        <hr>
-        <h1 id="-">事件流程</h1>
-        <pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+<hr>
+<h1 id="-">事件流程</h1>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 
 &lt;head&gt;
@@ -586,8 +574,8 @@ for (let key in obj){
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-        <p><strong>事件解绑</strong></p>
-        <pre><code class="lang-html">  &lt;button&gt;点击&lt;/button&gt;
+<p><strong>事件解绑</strong></p>
+<pre><code class="lang-html">  &lt;button&gt;点击&lt;/button&gt;
   &lt;script&gt;
     let btn = document.querySelector(&#39;button&#39;)
     btn.onclick = function () {
@@ -596,7 +584,7 @@ for (let key in obj){
     btn.onclick = null
   &lt;/script&gt;
 </code></pre>
-        <pre><code class="lang-html">  &lt;button&gt;点击&lt;/button&gt;
+<pre><code class="lang-html">  &lt;button&gt;点击&lt;/button&gt;
   &lt;script&gt;
     let btn = document.querySelector(&#39;button&#39;)
     function fn() {
@@ -607,9 +595,9 @@ for (let key in obj){
     btn.removeEventListener(&#39;click&#39;, fn)
   &lt;/script&gt;
 </code></pre>
-        <p><strong>匿名函数不能解绑</strong></p>
-        <p><strong>捕捉和冒泡,冒泡可以吧监听器安装在父级容器里面</strong></p>
-        <pre><code class="lang-html">  &lt;ul&gt;
+<p><strong>匿名函数不能解绑</strong></p>
+<p><strong>捕捉和冒泡,冒泡可以吧监听器安装在父级容器里面</strong></p>
+<pre><code class="lang-html">  &lt;ul&gt;
     &lt;li&gt;a1g&lt;/li&gt;
     &lt;li&gt;a2g&lt;/li&gt;
     &lt;li&gt;a3g&lt;/li&gt;
@@ -626,8 +614,8 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <p><strong>阻止元素默认行为如：点击表单提交，点击超链接</strong></p>
-        <pre><code class="lang-html">  &lt;form action=&quot;http://www.baidu.com&quot;&gt;
+<p><strong>阻止元素默认行为如：点击表单提交，点击超链接</strong></p>
+<pre><code class="lang-html">  &lt;form action=&quot;http://www.baidu.com&quot;&gt;
     &lt;input type=&quot;submit&quot; value=&quot;免费注册&quot;&gt;
   &lt;/form&gt;
   &lt;a href=&quot;http://www.baidu.com&quot;&gt;百度一下&lt;/a&gt;
@@ -642,8 +630,8 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <p><strong>等待网页全部加载完毕，开始运行</strong></p>
-        <pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+<p><strong>等待网页全部加载完毕，开始运行</strong></p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 
 &lt;head&gt;
@@ -666,8 +654,8 @@ for (let key in obj){
 
 &lt;/html&gt;
 </code></pre>
-        <p><strong>等待网页标签全部加载</strong></p>
-        <pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+<p><strong>等待网页标签全部加载</strong></p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 
 &lt;head&gt;
@@ -691,12 +679,12 @@ for (let key in obj){
 
 &lt;/html&gt;
 </code></pre>
-        <p><strong>页面滚动事件</strong></p>
-        <pre><code class="lang-html">  window.addEventListener(&#39;scroll&#39;, function () {
+<p><strong>页面滚动事件</strong></p>
+<pre><code class="lang-js">  window.addEventListener(&#39;scroll&#39;, function () {
     console.log(&#39;滚动了&#39;)
   })
 </code></pre>
-        <pre><code class="lang-html">  &lt;script&gt;
+<pre><code class="lang-html">  &lt;script&gt;
     const ul = document.querySelector(&#39;ul&#39;)
 
     window.addEventListener(&#39;scroll&#39;, function () {
@@ -706,8 +694,8 @@ for (let key in obj){
     })
   &lt;/script&gt;
 </code></pre>
-        <h1 id="-">时间对象</h1>
-        <pre><code class="lang-html">  &lt;div&gt;&lt;/div&gt;
+<h1 id="-">时间对象</h1>
+<pre><code class="lang-html">  &lt;div&gt;&lt;/div&gt;
   &lt;script&gt;
     const div = document.querySelector(&#39;div&#39;);
     const date1 = new Date()
@@ -718,16 +706,16 @@ for (let key in obj){
     console.log(date2)
   &lt;/script&gt;
 </code></pre>
-        <p><strong>时间戳,用来计算时间的方式</strong></p>
-        <pre><code class="lang-html">// 这三重写法得到的都是数字类型的时间戳
+<p><strong>时间戳,用来计算时间的方式</strong></p>
+<pre><code class="lang-js">// 这三重写法得到的都是数字类型的时间戳
 +new Date()
 Date.now()
 时间对象.getTime()
 </code></pre>
-        <pre><code class="lang-html">+new Date(&#39;2026-4-7 18:30:00&#39;)
+<pre><code class="lang-js">+new Date(&#39;2026-4-7 18:30:00&#39;)
 </code></pre>
-        <p><strong>倒计时</strong></p>
-        <pre><code class="lang-html">  &lt;p class=&quot;date&quot;&gt;现在时间是：&lt;/p&gt;
+<p><strong>倒计时</strong></p>
+<pre><code class="lang-js">  &lt;p class=&quot;date&quot;&gt;现在时间是：&lt;/p&gt;
   &lt;div&gt;
     &lt;span class=&quot;hour&quot;&gt;00&lt;/span&gt;
     &lt;i&gt;:&lt;/i&gt;
@@ -770,7 +758,7 @@ Date.now()
     }, 1000);
   &lt;/script&gt;
 </code></pre>
-        <pre><code class="lang-html">&lt;div class=&quot;card&quot;&gt;
+<pre><code class="lang-html">&lt;div class=&quot;card&quot;&gt;
     &lt;div class=&quot;header&quot;&gt;
       &lt;h1&gt;小米有品 · 精选好物&lt;/h1&gt;
       &lt;p&gt;全选商品 | 小米生态链品质保障&lt;/p&gt;
@@ -895,17 +883,17 @@ Date.now()
   }
 &lt;/script&gt;
 </code></pre>
-        <h1 id="-">节点关系查找</h1>
-        <blockquote>
-          <p>子元素.parentNode</p>
-        </blockquote>
-        <blockquote>
-          <p>子元素.parentNode.parentNode</p>
-        </blockquote>
-        <blockquote>
-          <p>父元素.children</p>
-        </blockquote>
-        <pre><code class="lang-html">&lt;div class=&quot;div1&quot;&gt;
+<h1 id="-">节点关系查找</h1>
+<blockquote>
+<p>子元素.parentNode</p>
+</blockquote>
+<blockquote>
+<p>子元素.parentNode.parentNode</p>
+</blockquote>
+<blockquote>
+<p>父元素.children</p>
+</blockquote>
+<pre><code class="lang-html">&lt;div class=&quot;div1&quot;&gt;
     &lt;form action=&quot;submit&quot; class=&quot;form1&quot; autocomplete=&quot;off&quot;&gt;
       &lt;div class=&quot;form-row&quot;&gt;
         &lt;span&gt;name:&lt;/span&gt;
@@ -985,28 +973,47 @@ Date.now()
     }
   &lt;/script&gt;
 </code></pre>
+<h1 id="bom-window-">BOM  window对象</h1>
+<pre><code>navigator
+location
+document
+history
+screen
+</code></pre><p><strong>location</strong></p>
+<pre><code class="lang-js">location.ref=&#39;http://www.baidu.com&#39;
+location.search
+location.hash
+location.reload() //刷新页面
+</code></pre>
+<p><strong>history</strong></p>
+<pre><code class="lang-js">history.back()
+history.forward()
+history.go() //1向前，-1后退
+</code></pre>
+<p><strong>navigator.userAgent</strong></p>
+<p><strong>间歇和延迟函数</strong></p>
+<pre><code class="lang-js">setInterval(()=&gt;{},1000)
+setTimeout(()=&gt;{},1000)
+</code></pre>
 
-      </article>
-    </div>
-  </div>
-</body>
-
+          	</article>
+        </div>
+		</div>
+  </body>
 </html>
 <script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="toc/js/ztree_toc.js"></script>
 <script type="text/javascript" src="toc_conf.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
 
-<SCRIPT type="text/javascript">
-  < !-
-    $(document).ready(function () {
-      var css_conf = eval(markdown_panel_style);
-      $('#readme').css(css_conf)
-
-      var conf = eval(jquery_ztree_toc_opts);
-      $('#tree').ztree_toc(conf);
-    });
-  //-->
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
 </SCRIPT>
