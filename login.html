@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      width: 380px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #555;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="password"]:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-group .span {
+      display: block;
+      height: 20px;
+      color: #e74c3c;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-group span {
+      color: #666;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .submit:active {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-container">
+    <h2>用户登录</h2>
+    <form action="./ph01.html">
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" name="uname" class="uname" autocomplete="off" placeholder="字母6-10位">
+        <span class="span"></span>
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" name="password" class="password" autocomplete="off" placeholder="字母6-10位 + 数字2位">
+        <span class="span"></span>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" class="check">
+        <span>请勾选同意用户协议</span>
+      </div>
+      <input type="submit" class="submit" value="登 录">
+    </form>
+  </div>
+
+  <script>
+    const form = document.querySelector('form')
+    const uname = document.querySelector('.uname')
+    const password = document.querySelector('.password')
+    const check = document.querySelector('.check')
+
+    function verifyName() {
+      let reg = /^[a-z]{6,10}$/
+      let span = uname.parentElement.querySelector('.span')
+      if (!reg.test(uname.value)) {
+        span.textContent = '用户名格式错误（需6-10位字母）'
+        span.style.color = '#e74c3c'
+        return false
+      }
+      span.textContent = ''
+      return true
+    }
+    uname.addEventListener('change', verifyName)
+
+    function verifyPwd() {
+      let reg = /^[a-z]{6,10}\d{2}$/
+      let span = password.nextElementSibling
+      if (!reg.test(password.value)) {
+        span.textContent = '密码格式错误（需6-10位字母+2位数字）'
+        span.style.color = '#e74c3c'
+        return false
+      }
+      span.textContent = ''
+      return true
+    }
+    password.addEventListener('change', verifyPwd)
+
+    function verifyCheck() {
+      let span = check.nextElementSibling
+      if (!check.checked) {
+        span.textContent = '请勾选同意用户协议'
+        span.style.color = '#e74c3c'
+        return false
+      }
+      span.textContent = '我已阅读并同意用户协议'
+      span.style.color = '#27ae60'
+      return true
+    }
+    check.addEventListener('change', verifyCheck)
+
+    form.addEventListener('submit', function (e) {
+      let isValid = true
+      if (!verifyName()) isValid = false
+      if (!verifyPwd()) isValid = false
+      if (!verifyCheck()) isValid = false
+      if (!isValid) {
+        e.preventDefault()
+        alert('请TM的准确填写！')
+      } else {
+        alert('提交成功！')
+      }
+    })
+  </script>
+</body>
+
+</html>

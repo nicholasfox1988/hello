@@ -71,11 +71,10 @@
 </head>
 
 <body>
-
   <div class="all">
   </div>
 
-  <div class="table">
+  <div class="table" id="table">
   </div>
 
   <script>
@@ -159,7 +158,7 @@
     }).join('');
 
     table.innerHTML = `
-      <table border="3" cellpadding="0" cellspacing="0" class="table">
+      <table border="3" cellpadding="0" cellspacing="0">
         <thead>
           <tr>
             <th id="th">Code</th>
@@ -175,7 +174,8 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="4" style="text-align: right;">Total : $&emsp; </td>
+            <td><button onclick="printIframe()">Print</button></td>
+            <td colspan="3" style="text-align: right;">Total : $&emsp; </td>
             <td class="total">0</td>
             <td id="td"> <button onclick="clearOrder()" class="clear" id="del">&nbsp;Clear&nbsp;</button></td>
           </tr>
@@ -229,6 +229,19 @@
       order = [];
       localStorage.removeItem("pho_order");
       render();
+    }
+
+    function printIframe() {
+      // 创建隐藏的 iframe
+      let iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      // 写入内容并打印
+      let doc = iframe.contentWindow.document;
+      doc.write(document.getElementById('table').innerHTML);
+      doc.close();
+      iframe.contentWindow.print();
     }
 
     (function () {
