@@ -1006,3 +1006,12 @@ history.go() //1向前，-1后退
 setInterval(()=>{},1000)
 setTimeout(()=>{},1000)
 ```
+
+**array**
+```js
+arr.forEach()
+arr.map()
+arr.filter()
+arr.reduce()
+arr.find()
+```

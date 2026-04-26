@@ -9,11 +9,13 @@
 
 <body>
   <span></span>
-  <label>hello:</label>
+  <label></label>
   <script>
     const span = document.querySelector('span')
-
-    span.innerHTML = `hello:&emsp;${localStorage.getItem('username')}`
+    span.innerHTML = getHello()
+    function getHello() {
+      return `hello:&emsp;${localStorage.getItem('username')}`
+    }
   </script>
 </body>
 
