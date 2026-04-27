@@ -96,34 +96,29 @@
 </blockquote>
 <p><strong>jquery是顶级对象，和Array，String，Number等相同</strong></p>
 <blockquote>
-<p><strong>DOM对象转jQuery对象:--&gt;&emsp;$(DOM对象)</strong></p>
+<p><strong>DOM对象转jQuery对象:--&gt;&emsp;$(DOM对象)</strong><br>
+<strong>jQuery对象转DOM对象:--&gt;&emsp;\$(&#39;&#39;)[0] ; \$(&#39;&#39;).get(0)</strong></p>
 </blockquote>
-<blockquote>
-<p><strong>jQuery对象转DOM对象:--&gt; &emsp; \$(&#39;&#39;)[0] ; \$(&#39;&#39;).get(0)</strong>
-<code>`</code>html</p>
-</blockquote>
-<p><body>
-  <ul>
-    <li>a</li>
-    <li>b</li>
-    <li>c</li>
-    <li>d</li>
-    <li>e</li>
-  </ul>
-  <script>
+<pre><code class="lang-html">&lt;body&gt;
+  &lt;ul&gt;
+    &lt;li&gt;a&lt;/li&gt;
+    &lt;li&gt;b&lt;/li&gt;
+    &lt;li&gt;c&lt;/li&gt;
+    &lt;li&gt;d&lt;/li&gt;
+    &lt;li&gt;e&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;script&gt;
     $(function () {
       $(&#39;ul li:even&#39;).css(&#39;background&#39;, &#39;pink&#39;)
       $(&#39;li&#39;)[2].style.backgroundColor = &#39;blue&#39;
     })
-  </script>
-</body></p>
-<pre><code>
-# ???
-**选择器原理等同css选择器**
-
-**隐式迭代:会将所有的div标签全部选中进行修改**
-```html
-&lt;body&gt;
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<h1 id="-">未命名</h1>
+<p><strong>选择器原理等同css选择器</strong></p>
+<p><strong>隐式迭代:会将所有的div标签全部选中进行修改</strong></p>
+<pre><code class="lang-html">&lt;body&gt;
   &lt;div class=&quot;div1&quot;&gt;abc&lt;/div&gt;
   &lt;div class=&quot;div2&quot;&gt;abc&lt;/div&gt;
   &lt;div class=&quot;div3&quot;&gt;abc&lt;/div&gt;
@@ -133,7 +128,8 @@
     })
   &lt;/script&gt;
 &lt;/body&gt;
-</code></pre><p><strong>jQuery筛选选择器--&gt;有first,last,eq(index),odd,even</strong></p>
+</code></pre>
+<p><strong>jQuery筛选选择器--&gt;有first,last,eq(index),odd,even</strong></p>
 <pre><code class="lang-html">&lt;body&gt;
   &lt;ul&gt;
     &lt;li&gt;a&lt;/li&gt;
