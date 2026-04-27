@@ -1,0 +1,182 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:jquery</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="-jquery">开始使用 jQuery</h1>
+<p><strong>jquery库文件的获取地址</strong>
+<a href="https://jquery.com">https://jquery.com</a></p>
+<p><strong>引入jquery,最好在head里面</strong></p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;script src=&quot;js/jquery-4.0.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;abc&lt;/div&gt;
+  &lt;script&gt;
+    $(document).ready(function () {
+      $(&#39;div&#39;).hide()
+    })
+    $(function () {   // Dom加载完后，立即执行
+      $(&#39;div&#39;).hide()
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>调用jquery可以写$或者jQuery如下</strong></p>
+<blockquote>
+<p>$( ) , jQuery( )</p>
+</blockquote>
+<p><strong>jquery是顶级对象，和Array，String，Number等相同</strong></p>
+<blockquote>
+<p><strong>DOM对象转jQuery对象:--&gt;&emsp;$(DOM对象)</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>jQuery对象转DOM对象:--&gt; &emsp; \$(&#39;&#39;)[0] ; \$(&#39;&#39;).get(0)</strong>
+<code>`</code>html</p>
+</blockquote>
+<p><body>
+  <ul>
+    <li>a</li>
+    <li>b</li>
+    <li>c</li>
+    <li>d</li>
+    <li>e</li>
+  </ul>
+  <script>
+    $(function () {
+      $(&#39;ul li:even&#39;).css(&#39;background&#39;, &#39;pink&#39;)
+      $(&#39;li&#39;)[2].style.backgroundColor = &#39;blue&#39;
+    })
+  </script>
+</body></p>
+<pre><code>
+# ???
+**选择器原理等同css选择器**
+
+**隐式迭代:会将所有的div标签全部选中进行修改**
+```html
+&lt;body&gt;
+  &lt;div class=&quot;div1&quot;&gt;abc&lt;/div&gt;
+  &lt;div class=&quot;div2&quot;&gt;abc&lt;/div&gt;
+  &lt;div class=&quot;div3&quot;&gt;abc&lt;/div&gt;
+  &lt;script&gt;
+    $(function () {
+      $(&#39;div&#39;).css(&#39;background&#39;, &#39;pink&#39;)
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre><p><strong>jQuery筛选选择器--&gt;有first,last,eq(index),odd,even</strong></p>
+<pre><code class="lang-html">&lt;body&gt;
+  &lt;ul&gt;
+    &lt;li&gt;a&lt;/li&gt;
+    &lt;li&gt;b&lt;/li&gt;
+    &lt;li&gt;c&lt;/li&gt;
+    &lt;li&gt;d&lt;/li&gt;
+    &lt;li&gt;e&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;script&gt;
+    $(function () {
+      $(&#39;ul li:odd&#39;).css(&#39;background&#39;, &#39;pink&#39;)
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<p><strong>筛选方法</strong></p>
+<pre><code class="lang-html">$(&#39;&#39;).parent()
+$(&#39;&#39;).children(&#39;&#39;) // $(&#39;??&gt;??&#39;)  子代选择
+$(&#39;&#39;).find(&#39;&#39;)  //在什么中找它的所有后代
+$(&#39;&#39;).nextAll()
+$(&#39;&#39;).preAll()
+$(&#39;&#39;).hasClass(&#39;&#39;)
+$(&#39;&#39;).eq(2)  //等同于$(&#39;??:eq(2)&#39;)
+</code></pre>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
