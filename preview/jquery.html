@@ -146,13 +146,53 @@
 &lt;/body&gt;
 </code></pre>
 <p><strong>筛选方法</strong></p>
-<pre><code class="lang-html">$(&#39;&#39;).parent()
-$(&#39;&#39;).children(&#39;&#39;) // $(&#39;??&gt;??&#39;)  子代选择
-$(&#39;&#39;).find(&#39;&#39;)  //在什么中找它的所有后代
+<pre><code class="lang-html">$(&#39;&#39;).parent()        //选中父亲
+$(&#39;&#39;).children(&#39;&#39;)    //$(&#39;??&gt;??&#39;)  子代选择
+$(&#39;&#39;).find(&#39;&#39;)        //在什么中找它的所有后代
+$(&#39;li&#39;).siblings(&#39;&#39;)  //兄弟选择
 $(&#39;&#39;).nextAll()
 $(&#39;&#39;).preAll()
 $(&#39;&#39;).hasClass(&#39;&#39;)
 $(&#39;&#39;).eq(2)  //等同于$(&#39;??:eq(2)&#39;)
+</code></pre>
+<pre><code class="lang-html">  &lt;ul&gt;
+    &lt;li&gt;a&lt;/li&gt;
+    &lt;li&gt;b&lt;/li&gt;
+    &lt;li&gt;c&lt;/li&gt;
+    &lt;li&gt;d&lt;/li&gt;
+    &lt;li&gt;e&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div class=&quot;content&quot;&gt;
+    &lt;div&gt;a&lt;/div&gt;
+    &lt;div&gt;b&lt;/div&gt;
+    &lt;div&gt;c&lt;/div&gt;
+    &lt;div&gt;d&lt;/div&gt;
+    &lt;div&gt;e&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    $(function () {
+      $(&#39;ul li&#39;).mouseover(function () {
+        let index = $(this).index()
+        // console.log(index)
+        $(&#39;.content&gt;div&#39;).eq(index).show()
+        $(&#39;.content&gt;div&#39;).eq(index).siblings().hide()
+      })
+    })
+  &lt;/script&gt;
+</code></pre>
+<pre><code class="lang-html">  &lt;button&gt;快速&lt;/button&gt;
+  &lt;button&gt;快速&lt;/button&gt;
+  &lt;button&gt;快速&lt;/button&gt;
+  &lt;button&gt;快速&lt;/button&gt;
+  &lt;button&gt;快速&lt;/button&gt;
+  &lt;script&gt;
+    $(function () {
+      $(&#39;button&#39;).click(function () {
+        $(this).css(&#39;background&#39;, &#39;pink&#39;)
+        $(this).siblings().css(&#39;background&#39;, &#39;&#39;)
+      })
+    })
+  &lt;/script&gt;
 </code></pre>
 
           	</article>
