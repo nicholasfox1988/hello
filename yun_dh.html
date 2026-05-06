@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数据处理</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -110,7 +111,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>check</th>
+                    <th><button class="diaomao">吊毛</button></th>
                     <th>Name1</th>
                     <th>Pic</th>
                     <th>FO</th>
@@ -253,6 +254,26 @@
             reader.readAsArrayBuffer(file);
         });
 
+        $('.diaomao').on({
+            'click': function () {
+                // 按下吊毛按钮,下面副选框被选择中的全部隐藏
+                $('.display tbody tr').each(function () {
+                    const checkbox = $(this).find('input[type="checkbox"]');
+                    if (checkbox.is(':checked')) {
+                        $(this).hide();
+                    }
+                });
+            },
+            'dblclick': function () {
+                // 双击吊毛按钮,下面副选框被选择中的全部显示
+                $('.display tbody tr').each(function () {
+                    const checkbox = $(this).find('input[type="checkbox"]');
+                    if (checkbox.is(':checked')) {
+                        $(this).toggle();
+                    }
+                });
+            }
+        });
     </script>
 </body>
 
