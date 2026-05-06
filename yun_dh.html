@@ -98,6 +98,12 @@
             text-decoration: line-through;
             color: #777;
         }
+
+        .diaomao {
+            background-color: green;
+            color: white;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
@@ -267,10 +273,7 @@
             'dblclick': function () {
                 // 双击吊毛按钮,下面副选框被选择中的全部显示
                 $('.display tbody tr').each(function () {
-                    const checkbox = $(this).find('input[type="checkbox"]');
-                    if (checkbox.is(':checked')) {
-                        $(this).toggle();
-                    }
+                    $(this).show();
                 });
             }
         });
