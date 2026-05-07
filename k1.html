@@ -7,6 +7,7 @@
     <title>韩国海/空运数据</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="./js/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -122,8 +123,7 @@
                 <tr>
                     <th>px</th>
                     <th>
-                        <input type="checkbox" id="selectAll">
-                        <label for="selectAll">全选</label>
+                        <button class="diaomao">吊毛</button>
                     </th>
                     <th>Delivery</th>
                     <th>Q...</th>
@@ -139,7 +139,6 @@
     <script>
         let excelData = [];
         let currentResult = '';
-        // let resultObj= {"bis":0,"cp":0,"pick up":0,"no deal":0};
 
         const vm1 = new Vue({
             el: '#showing',
@@ -241,28 +240,28 @@
                 const checkbox = tr.querySelector('.rowCheckbox');
                 checkbox.addEventListener('change', function () {
                     tr.classList.toggle('row-checked', this.checked);
-                    updateSelectAllState();
+                    // updateSelectAllState();
                 });
                 tableBody.appendChild(tr);
             });
-            updateSelectAllState();
+            // updateSelectAllState();
         }
 
-        function updateSelectAllState() {
-            const allCheckboxes = document.querySelectorAll('.rowCheckbox');
-            const checkedCheckboxes = document.querySelectorAll('.rowCheckbox:checked');
-            const selectAll = document.getElementById('selectAll');
-            if (!selectAll) return;
-            selectAll.checked = allCheckboxes.length > 0 && checkedCheckboxes.length === allCheckboxes.length;
-        }
+        // function updateSelectAllState() {
+        //     const allCheckboxes = document.querySelectorAll('.rowCheckbox');
+        //     const checkedCheckboxes = document.querySelectorAll('.rowCheckbox:checked');
+        //     const selectAll = document.getElementById('selectAll');
+        //     if (!selectAll) return;
+        //     selectAll.checked = allCheckboxes.length > 0 && checkedCheckboxes.length === allCheckboxes.length;
+        // }
 
-        document.getElementById('selectAll').addEventListener('change', function () {
-            const checked = this.checked;
-            document.querySelectorAll('.rowCheckbox').forEach(box => {
-                box.checked = checked;
-                box.closest('tr').classList.toggle('row-checked', checked);
-            });
-        });
+        // document.getElementById('selectAll').addEventListener('change', function () {
+        //     const checked = this.checked;
+        //     document.querySelectorAll('.rowCheckbox').forEach(box => {
+        //         box.checked = checked;
+        //         box.closest('tr').classList.toggle('row-checked', checked);
+        //     });
+        // });
 
         function downLoad(excelData, fileName) {
             if (window.confirm("是否要保存？")) {
@@ -326,6 +325,24 @@
         document.getElementById('searchInput').addEventListener('keyup', function (e) {
             if (e.key === 'Enter') {
                 searchData();
+            }
+        });
+
+        $('.diaomao').on({
+            'click': function () {
+                // 按下吊毛按钮,下面副选框被选择中的全部隐藏
+                $('#tableBody tr').each(function () {
+                    const checkbox = $(this).find('input[type="checkbox"]');
+                    if (checkbox.is(':checked')) {
+                        $(this).hide();
+                    }
+                });
+            },
+            'dblclick': function () {
+                // 双击吊毛按钮,下面副选框被选择中的全部显示
+                $('#tableBody tr').each(function () {
+                    $(this).show();
+                });
             }
         });
     </script>
