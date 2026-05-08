@@ -53,6 +53,8 @@
     }
 
     li {
+      display: flex;
+      justify-content: space-between;
       list-style: none;
       text-align: left
     }
@@ -112,9 +114,9 @@
         $('ul').empty()
         $.each(data, function (index, item) {
           if (item.done) {
-            $('ul').prepend(`<li><input type='checkbox' checked='checked'><p>${item.content}</p><a href='javascript:;' id=${index}>a</a></li>`)
+            $('ul').prepend(`<li><input type='checkbox' checked='checked'><p>${item.content}</p><a href='javascript:;' id=${index}>delete</a></li>`)
           } else {
-            $('ol').prepend(`<li><input type='checkbox'><p>${item.content}</p><a href='javascript:;' id=${index}>a</a></li>`)
+            $('ol').prepend(`<li><input type='checkbox'><p>${item.content}</p><a href='javascript:;' id=${index}>delete</a></li>`)
           }
         })
       }
