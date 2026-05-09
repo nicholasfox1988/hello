@@ -68,32 +68,24 @@
   </div>
   <div class="now">
     <p>正在处理的待办</p>
-    <ol>
-
-    </ol>
+    <ol></ol>
   </div>
   <div class="pass">
     <p>已经处理的待办</p>
-    <ul>
-
-    </ul>
+    <ul></ul>
   </div>
 
   <script>
     let data = localStorage.getItem('todolist-data') ? JSON.parse(localStorage.getItem('todolist-data')) : []
     $(function () {
       render()
-      // console.log(data)
       $('.input').on('keyup', function (e) {
         if (e.key === 'Enter') {
-          if (!$(this).val()) {
-            alert('输入不能为空!')
-          } else {
-            data.push({ content: $(this).val(), done: false })
-            localStorage.setItem('todolist-data', JSON.stringify(data))
-            $(this).val('')
-            render()
-          }
+          if (!$(this).val()) return alert('输入不能为空!')
+          data.push({ content: $(this).val(), done: false })
+          localStorage.setItem('todolist-data', JSON.stringify(data))
+          $(this).val('')
+          render()
         }
       })
 
@@ -110,8 +102,7 @@
       })
 
       function render() {
-        $('ol').empty()
-        $('ul').empty()
+        $('ol,ul').empty()
         $.each(data, function (index, item) {
           if (item.done) {
             $('ul').prepend(`<li><input type='checkbox' checked='checked'><p>${item.content}</p><a href='javascript:;' id=${index}>delete</a></li>`)

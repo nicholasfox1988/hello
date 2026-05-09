@@ -110,8 +110,11 @@
 <body>
     <div class="file-input">
         <input type="file" id="fileInput" accept=".xlsx, .xls">
+        <button class="downLoad">下载</button>
         <span class="hold">Hold Item: </span>
     </div>
+
+    </button>
 
     <div class="display">
         <table>
@@ -138,11 +141,13 @@
     <script>
 
         const tableBody = document.getElementById('tableBody');
+        let save = []
+        let filename
 
         document.getElementById('fileInput').addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (!file) return;
-
+            filename = file.name
             const reader = new FileReader();
             reader.onload = function (e) {
                 const data = new Uint8Array(e.target.result);
@@ -239,7 +244,6 @@
                     tableBody.appendChild(newRow);
                 });
 
-
                 const save4 = jsonData.filter(row => row.type === 'C' || row.type === 'S' && !row.fo.includes('AION')).sort((a, b) => {
                     const nameA = a['pic']; // 忽略大小写
                     const nameB = b['pic'];
@@ -253,9 +257,7 @@
                 });
                 const savesheet4 = XLSX.utils.json_to_sheet(save4);
                 XLSX.utils.book_append_sheet(savebook, savesheet4, "CS");
-
-                // 保存工作簿为 Excel 文件
-                if (window.confirm('要保存吗？')) XLSX.writeFile(savebook, "done_" + file.name.slice(7, 12) + ".xlsx");
+                save = savebook
             }
             reader.readAsArrayBuffer(file);
         });
@@ -277,6 +279,12 @@
                 });
             }
         });
+
+        $('.downLoad').on({
+            click: function () {
+                if (window.confirm('要保存吗？')) XLSX.writeFile(save, "done_" + filename.slice(7, 12) + ".xlsx");
+            }
+        })
     </script>
 </body>
 
