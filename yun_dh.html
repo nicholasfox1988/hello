@@ -110,6 +110,8 @@
 <body>
     <div class="file-input">
         <input type="file" id="fileInput" accept=".xlsx, .xls">
+        <br />
+        <br />
         <button class="downLoad">下载</button>
         <span class="hold">Hold Item: </span>
     </div>
@@ -198,7 +200,6 @@
                 const savesheet1 = XLSX.utils.json_to_sheet(save1);
                 XLSX.utils.book_append_sheet(savebook, savesheet1, "hold");
                 const nameList = save1.map(item => item.name1);
-                document.querySelector('.hold').textContent = `（Hold Item: ${nameList.join(', ')}）`;
 
                 const save2 = jsonData2.filter(row => row.type === 'K' && row.pic <= 7).sort((a, b) => a.pic - b.pic);
                 const savesheet2 = XLSX.utils.json_to_sheet(save2);
@@ -257,6 +258,7 @@
                 });
                 const savesheet4 = XLSX.utils.json_to_sheet(save4);
                 XLSX.utils.book_append_sheet(savebook, savesheet4, "CS");
+                document.querySelector('.hold').textContent = `Hold Item: ${nameList.join(', ')},~~~~CS的数量:${save4.length}`;
                 save = savebook
             }
             reader.readAsArrayBuffer(file);
