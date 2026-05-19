@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+
+  </style>
+</head>
+
+<body>
+  <section id="app">
+    <header class="header">
+      <h1>记事本</h1>
+      <input v-model="todoName" placeholder="请输入:" type="text" name="" id="" @keyup.enter="add">
+    </header>
+    <section class="main">
+      <ul class="todo-list">
+        <li v-for="(item,index) in list" :key="item.id">
+          <div>
+            <span>{{ index+1 }}</span>
+            <input type="checkbox">
+            <span>{{ item.name }}</span>
+            <button @click="del(item.id)">删除</button>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <footer></footer>
+  </section>
+
+
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        todoName: '',
+        list: []
+      },
+      methods: {
+        add() {
+          this.list.unshift({
+            id: +new Date(),
+            name: this.todoName
+          })
+          this.todoName = ''
+        },
+        del(id) {
+          this.list = this.list.filter(item => item.id !== id)
+        }
+
+      }
+    })
+  </script>
+</body>
+
+</html>
