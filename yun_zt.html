@@ -84,7 +84,7 @@
         }
 
         .search {
-            width: 100px;
+            width: 80px;
         }
 
         html,
@@ -128,17 +128,11 @@
                     <th><input type="text" class="search"></th>
                     <th>Pic</th>
                     <th><span class="searchCount">未搜索</span></th>
-                    <th>Account</th>
+                    <th>No</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <!-- 此处动态插入表格数据 -->
             </tbody>
         </table>
     </div>
@@ -249,8 +243,6 @@
                     const savesheet3 = XLSX.utils.json_to_sheet(save3);
                     XLSX.utils.book_append_sheet(savebook, savesheet3, "大货");
 
-
-
                     const save4 = jsonData.filter(row => row.type === 'C' || row.type === 'S' && !row.fo.includes('AION')).sort((a, b) => {
                         const nameA = a['pic']; // 忽略大小写
                         const nameB = b['pic'];
@@ -295,13 +287,17 @@
                         e.preventDefault();
                         // console.log($(this).val().trim());
                         const x = $(this).val().trim();
-                        console.log(x);
+                        // console.log(x);
                         const totalCount = searchData.reduce((sum, item) => {
                             return item.name2 === x ? sum + item.pic : sum;
                         }, 0);
-                        $('.searchCount').html(`《${x}》：${totalCount}`);
-
-                        $(this).val('');
+                        if (totalCount !== 0) {
+                            $('.searchCount').html(`《${x}》：${totalCount}`);
+                            $(this).val('');
+                        } else {
+                            $('.searchCount').html(`《${x}》：找不到`);
+                            $(this).val('');
+                        }
                     }
                 }
             })
@@ -312,7 +308,6 @@
                 }
             })
         })
-
     </script>
 </body>
 
