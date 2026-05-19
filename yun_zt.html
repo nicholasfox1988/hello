@@ -83,6 +83,10 @@
             color: #666;
         }
 
+        .search {
+            width: 100px;
+        }
+
         html,
         body {
             overscroll-behavior-y: none;
@@ -121,9 +125,9 @@
             <thead>
                 <tr>
                     <th><button class="diaomao">点击</button></th>
-                    <th>Name1</th>
+                    <th><input type="text" class="search"></th>
                     <th>Pic</th>
-                    <th>FO</th>
+                    <th><span class="searchCount">未搜索</span></th>
                     <th>Account</th>
                 </tr>
             </thead>
@@ -139,98 +143,53 @@
         </table>
     </div>
     <script>
+        $(function () {
+            const tableBody = document.getElementById('tableBody');
+            let save = []
+            let filename
+            let searchData = []
+            document.getElementById('fileInput').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                filename = file.name
 
-        const tableBody = document.getElementById('tableBody');
-        let save = []
-        let filename
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
 
-        document.getElementById('fileInput').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            filename = file.name
-
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-
-                // Get the last sheet
-                const lastSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[lastSheetName];
-                const savebook = XLSX.utils.book_new();
+                    // Get the last sheet
+                    const lastSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[lastSheetName];
+                    const savebook = XLSX.utils.book_new();
 
 
-                // Convert to JSON
-                const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
-                const jsonData = jsonData1.map(row => {
-                    return {
-                        hold: row.hold,
-                        name1: row.name,
-                        pic: row.pieces,
-                        name2: row.name,
-                        account: row['account_no'],
-                        fo: row.fo,
-                        type: row['delivery type'],
-                        vol: row.volume
-                    };
-                });
+                    // Convert to JSON
+                    const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
+                    const jsonData = jsonData1.map(row => {
+                        return {
+                            hold: row.hold,
+                            name1: row.name,
+                            pic: row.pieces,
+                            name2: row.name,
+                            account: row['account_no'],
+                            fo: row.fo,
+                            type: row['delivery type'],
+                            vol: row.volume
+                        };
+                    });
 
-                const jsonData2 = jsonData1.map(row => {
-                    return {
-                        pic: row.pieces,
-                        name2: row.name,
-                        account: row['account_no'],
-                        fo: row.fo,
-                        type: row['delivery type']
-                    };
-                });
+                    const jsonData2 = jsonData1.map(row => {
+                        return {
+                            pic: row.pieces,
+                            name2: row.name,
+                            account: row['account_no'],
+                            fo: row.fo,
+                            type: row['delivery type']
+                        };
+                    });
 
-                const save1 = jsonData.filter(row => row.fo.includes('AION') || row.hold).sort((a, b) => {
-                    const nameA = a['fo'].toUpperCase(); // 忽略大小写
-                    const nameB = b['fo'].toUpperCase();
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                const savesheet1 = XLSX.utils.json_to_sheet(save1);
-                XLSX.utils.book_append_sheet(savebook, savesheet1, "hold");
-                const nameList = save1.map(item => item.name1);
-
-                const save2 = jsonData2.filter(row => row.type === 'K' && row.pic <= 7).sort((a, b) => a.pic - b.pic);
-                const savesheet2 = XLSX.utils.json_to_sheet(save2);
-                XLSX.utils.book_append_sheet(savebook, savesheet2, "自提（数量）");
-                save2.forEach(row => {
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td><input type="checkbox"></td>
-                        <td>${row.name2}</td>
-                        <td>${row.pic}</td>
-                        <td>${row.fo}</td>
-                        <td>${row.account}</td>
-                    `;
-                    tableBody.appendChild(newRow);
-                });
-
-                tableBody.addEventListener('change', function (event) {
-                    const checkbox = event.target;
-                    if (checkbox.matches('input[type="checkbox"]')) {
-                        const row = checkbox.closest('tr');
-                        if (row) {
-                            row.classList.toggle('completed', checkbox.checked);
-                        }
-                    }
-                });
-
-                const save5 = jsonData.filter(row => row.type === 'K').sort((a, b) => a.account_no - b.account_no);
-                const savesheet5 = XLSX.utils.json_to_sheet(save5);
-                XLSX.utils.book_append_sheet(savebook, savesheet5, "自提（名字）");
-
-                const save3 = jsonData.filter(row => row.fo.includes('AION') || row.pic >= 7 || row.hold
-                    || row.vol >= 1).sort((a, b) => {
+                    const save1 = jsonData.filter(row => row.fo.includes('AION') || row.hold).sort((a, b) => {
                         const nameA = a['fo'].toUpperCase(); // 忽略大小写
                         const nameB = b['fo'].toUpperCase();
                         if (nameA < nameB) {
@@ -241,54 +200,119 @@
                         }
                         return 0;
                     });
-                const savesheet3 = XLSX.utils.json_to_sheet(save3);
-                XLSX.utils.book_append_sheet(savebook, savesheet3, "大货");
+                    const savesheet1 = XLSX.utils.json_to_sheet(save1);
+                    XLSX.utils.book_append_sheet(savebook, savesheet1, "hold");
+                    const nameList = save1.map(item => item.name1);
+
+                    const save2 = jsonData2.filter(row => row.type === 'K' && row.pic <= 7).sort((a, b) => a.pic - b.pic);
+                    const savesheet2 = XLSX.utils.json_to_sheet(save2);
+                    XLSX.utils.book_append_sheet(savebook, savesheet2, "自提（数量）");
+                    save2.forEach(row => {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                        <td><input type="checkbox"></td>
+                        <td>${row.name2}</td>
+                        <td>${row.pic}</td>
+                        <td>${row.fo}</td>
+                        <td>${row.account}</td>
+                    `;
+                        tableBody.appendChild(newRow);
+                    });
+                    searchData = save2
+
+                    tableBody.addEventListener('change', function (event) {
+                        const checkbox = event.target;
+                        if (checkbox.matches('input[type="checkbox"]')) {
+                            const row = checkbox.closest('tr');
+                            if (row) {
+                                row.classList.toggle('completed', checkbox.checked);
+                            }
+                        }
+                    });
+
+                    const save5 = jsonData.filter(row => row.type === 'K').sort((a, b) => a.account_no - b.account_no);
+                    const savesheet5 = XLSX.utils.json_to_sheet(save5);
+                    XLSX.utils.book_append_sheet(savebook, savesheet5, "自提（名字）");
+
+                    const save3 = jsonData.filter(row => row.fo.includes('AION') || row.pic >= 7 || row.hold
+                        || row.vol >= 1).sort((a, b) => {
+                            const nameA = a['fo'].toUpperCase(); // 忽略大小写
+                            const nameB = b['fo'].toUpperCase();
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                    const savesheet3 = XLSX.utils.json_to_sheet(save3);
+                    XLSX.utils.book_append_sheet(savebook, savesheet3, "大货");
 
 
 
-                const save4 = jsonData.filter(row => row.type === 'C' || row.type === 'S' && !row.fo.includes('AION')).sort((a, b) => {
-                    const nameA = a['pic']; // 忽略大小写
-                    const nameB = b['pic'];
-                    if (nameA < nameB) {
-                        return -1;
+                    const save4 = jsonData.filter(row => row.type === 'C' || row.type === 'S' && !row.fo.includes('AION')).sort((a, b) => {
+                        const nameA = a['pic']; // 忽略大小写
+                        const nameB = b['pic'];
+                        if (nameA < nameB) {
+                            return -1;
+                        }
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    const savesheet4 = XLSX.utils.json_to_sheet(save4);
+                    XLSX.utils.book_append_sheet(savebook, savesheet4, "CS");
+                    document.querySelector('.hold').textContent = `Hold Item: ${nameList.join(', ')},~~~~CS的数量:${save4.length}`;
+
+                    save = savebook
+                }
+                reader.readAsArrayBuffer(file);
+            });
+
+            $('.diaomao').on({
+                'click': function () {
+                    // 按下吊毛按钮,下面副选框被选择中的全部隐藏
+                    $('.display tbody tr').each(function () {
+                        const checkbox = $(this).find('input[type="checkbox"]');
+                        if (checkbox.is(':checked')) {
+                            $(this).hide();
+                        }
+                    });
+                },
+                'dblclick': function () {
+                    // 双击吊毛按钮,下面副选框被选择中的全部显示
+                    $('.display tbody tr').each(function () {
+                        $(this).show();
+                    });
+                }
+            });
+
+            $('.search').on({
+                'keyup': function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        // console.log($(this).val().trim());
+                        const x = $(this).val().trim();
+                        console.log(x);
+                        const totalCount = searchData.reduce((sum, item) => {
+                            return item.name2 === x ? sum + item.pic : sum;
+                        }, 0);
+                        $('.searchCount').html(`《${x}》：${totalCount}`);
+
+                        $(this).val('');
                     }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                const savesheet4 = XLSX.utils.json_to_sheet(save4);
-                XLSX.utils.book_append_sheet(savebook, savesheet4, "CS");
-                document.querySelector('.hold').textContent = `Hold Item: ${nameList.join(', ')},~~~~CS的数量:${save4.length}`;
+                }
+            })
 
-                save = savebook
-            }
-            reader.readAsArrayBuffer(file);
-        });
-
-        $('.diaomao').on({
-            'click': function () {
-                // 按下吊毛按钮,下面副选框被选择中的全部隐藏
-                $('.display tbody tr').each(function () {
-                    const checkbox = $(this).find('input[type="checkbox"]');
-                    if (checkbox.is(':checked')) {
-                        $(this).hide();
-                    }
-                });
-            },
-            'dblclick': function () {
-                // 双击吊毛按钮,下面副选框被选择中的全部显示
-                $('.display tbody tr').each(function () {
-                    $(this).show();
-                });
-            }
-        });
-
-        $('.downLoad').on({
-            click: function () {
-                if (window.confirm('要保存吗？')) XLSX.writeFile(save, "done_" + filename.slice(7, 12) + ".xlsx");
-            }
+            $('.downLoad').on({
+                click: function () {
+                    if (window.confirm('要保存吗？')) XLSX.writeFile(save, "done_" + filename.slice(7, 12) + ".xlsx");
+                }
+            })
         })
+
     </script>
 </body>
 
