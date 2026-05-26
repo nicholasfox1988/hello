@@ -198,7 +198,7 @@
                     XLSX.utils.book_append_sheet(savebook, savesheet1, "hold");
                     const nameList = save1.map(item => item.name1);
 
-                    const save2 = jsonData2.filter(row => row.type === 'K' && row.pic <= 7).sort((a, b) => a.pic - b.pic);
+                    const save2 = jsonData2.filter(row => row.type === 'K').sort((a, b) => a.pic - b.pic);
                     const savesheet2 = XLSX.utils.json_to_sheet(save2);
                     XLSX.utils.book_append_sheet(savebook, savesheet2, "自提（数量）");
                     save2.forEach(row => {
