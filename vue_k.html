@@ -107,7 +107,7 @@
             <br>
             <!-- 输入px查询 -->
             <input type="text" placeholder="3个数字" autocomplete="off" @keyup.enter="search" v-model="inputValue">
-            <!-- <button onclick="speakResult()">重复发音</button> -->
+            <button @click="speakResult()">重复发音</button>
             <p v-html="total"></p>
         </div>
         <div>
@@ -119,7 +119,7 @@
                     <tr>
                         <th>px</th>
                         <th>
-                            <button class="diaomao">点击</button>
+                            <button class="diaomao" @dblclick="showAll" @click="hide">点击</button>
                         </th>
                         <th>Delivery</th>
                         <th>Q...</th>
@@ -128,9 +128,10 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr v-for="(row,index) in excelData" :key="row.px">
+                    <tr v-for="(row,index) in excelData" :key="row.px" :class="{'row-checked': row.tick}"
+                        v-show="!row.hide">
                         <td>{{ row.px }}</td>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" v-model="row.tick"></td>
                         <td>{{ row.delivery }}</td>
                         <td>{{ row.ctns }}</td>
                         <td>{{ row.consignee }}</td>
@@ -148,7 +149,7 @@
                 htmlContent: "查询结果",
                 inputValue: "",
                 excelData: [],
-                searchData: [],
+                searchData: {},
                 currentResult: '',
                 total: {}
             },
@@ -178,6 +179,8 @@
                             const px = no.toString().slice(-3);
                             return {
                                 px: px,
+                                tick: false,
+                                hide: false,
                                 delivery: row[headers[7]],
                                 ctns: row[headers[2]],
                                 consignee: row[headers[0]],
@@ -215,14 +218,42 @@
                     };
                     reader.readAsArrayBuffer(file);
                 },
+                speakResult() {
+                    if (!app.currentResult) {
+                        alert('没有可发音的内容');
+                        return;
+                    }
+
+                    // 使用Web Speech API发音
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(app.currentResult);
+                        utterance.lang = 'en-US'; // 设置为阴文
+                        utterance.rate = 1.0; // 语速
+                        utterance.pitch = 1.0; // 音高
+                        utterance.volume = 1.0; // 音量
+
+                        speechSynthesis.speak(utterance);
+                    } else {
+                        alert('您的浏览器不支持语音合成功能');
+                    }
+                },
                 search() {
-                    app.searchData = app.excelData.find(item => item.px === app.inputValue)
-                    app.htmlContent = `${app.searchData.delivery}<br>${app.searchData.px}<br>${app.searchData.consignee}  ${app.searchData.ctns}`
-                    app.inputValue = ''
+                    this.searchData = this.excelData.find(item => item.px === this.inputValue);
+                    this.htmlContent = `${this.searchData.delivery}<br>${this.searchData.px}<br>${this.searchData.consignee}  ${this.searchData.ctns}`
+                    this.currentResult = this.searchData.delivery;
+                    this.speakResult();
+                    this.inputValue = ''
+                },
+                hide() {
+                    this.excelData.forEach(element => {
+                        if (element.tick) element.hide = true;
+                    });
+                },
+                showAll() {
+                    this.excelData.forEach(element => element.hide = false);
                 }
             }
         });
-
     </script>
 </body>
 
