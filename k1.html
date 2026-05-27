@@ -92,7 +92,7 @@
 
         #showing {
             padding: 20px;
-            width: 50%;
+            width: 60%;
             border: solid;
             border-color: green;
             border-radius: 30px;
@@ -108,13 +108,12 @@
         <p v-html="htmlContent">这里显示数据</p>
         <br>
         <!-- 输入px查询 -->
-        <input type="text" id="searchInput" placeholder="3个数字">
+        <input type="text" id="searchInput" placeholder="3个数字" autocomplete="off">
         <button onclick="speakResult()">重复发音</button>
-        <p v-html="total">这里显示数据</p>
+        <p v-html="total"></p>
     </div>
 
     <div class="file-input">
-        <p>海/空运数据</p>
         <input type="file" id="fileInput" accept=".xlsx, .xls">
     </div>
     <div id="tableContainer">
@@ -144,7 +143,7 @@
             el: '#showing',
             data() {
                 return {
-                    htmlContent: "这里显示查询结果",
+                    htmlContent: "查询结果",
                     inputValue: "",
                     total: {}
                 }
