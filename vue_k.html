@@ -238,7 +238,7 @@
                     }
                 },
                 search() {
-                    this.searchData = this.excelData.find(item => item.px === this.inputValue);
+                    this.searchData = this.excelData.find(item => item.px.includes(this.inputValue));
                     this.htmlContent = `${this.searchData.delivery}<br>${this.searchData.px}<br>${this.searchData.consignee}  ${this.searchData.ctns}`
                     this.currentResult = this.searchData.delivery;
                     this.speakResult();
