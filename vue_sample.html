@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 5px;
+    }
+
+    body {
+      text-align: center;
+      display: flexbox;
+    }
+
+    table {
+      border: 3px solid green;
+      border-radius: 8px;
+      text-align: center;
+      width: 100%;
+      padding: 5px;
+    }
+
+    p {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <table>
+      <thead>
+        <th><button>显/隐</button></th>
+        <th>商品</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>小计</th>
+        <th>操作</th>
+      </thead>
+      <tbody>
+        <tr v-for="(item,index) in list" :key="item.id">
+          <td><input type="checkbox"></td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <button :disabled="item.quantity<=0" @click="sub(item.id)">-</button>
+            {{ item.quantity }}
+            <button @click="add(item.id)">+</button>
+          </td>
+          <td>{{ item.price*item.quantity}}</td>
+          <td><button @click="del(item.id)">del</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>总价为:$ {{ count }}</p>
+
+  </div>
+
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      num1: 0,
+      data: {
+        list: [
+          { id: 1, name: '苹果', price: 15, quantity: 0 },
+          { id: 2, name: '香蕉', price: 20, quantity: 0 },
+          { id: 3, name: '菠萝', price: 13, quantity: 0 }
+        ]
+      },
+      methods: {
+        add(id) {
+          // console.log(id);
+          this.list.find(item => item.id === id).quantity++
+        },
+        sub(id) {
+          // console.log(id);
+          this.list.find(item => item.id === id).quantity--
+        },
+        del(id) {
+          if (confirm("确定要删除吗?")) {
+            this.list = this.list.filter(item => item.id !== id)
+          }
+        }
+      },
+      computed: {
+        count: {
+          get() {
+            return this.list.reduce((sum, item) => sum + item.quantity * item.price, 0)
+          },
+          set() {
+
+          }
+        },
+      },
+      watch: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>
