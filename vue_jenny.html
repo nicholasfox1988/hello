@@ -1,106 +1,510 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Cooking poultry, minced meat and liver - batch checks</title>
   <style>
+    /* 基础重置 */
     * {
-      margin: 5px;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      text-align: center;
-      display: flexbox;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
     }
 
-    table {
-      border: 3px solid green;
-      border-radius: 8px;
-      text-align: center;
+    /* 主容器：模拟 A4 纸或单页宽度 */
+    .container {
+      background-color: white;
       width: 100%;
-      padding: 5px;
+      max-width: 900px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      padding-bottom: 60px;
+      /* 为底部页码留出空间 */
     }
 
-    p {
+    /* 顶部头部区域 */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .header-left {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    /* 模拟图标 */
+    .icon-placeholder {
+      width: 60px;
+      height: 60px;
+      border: 3px solid #b04774;
+      /* 一种紫红色 */
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      color: #b04774;
+    }
+
+    .main-title {
+      color: #b04774;
+      font-size: 26px;
+      font-weight: bold;
+      line-height: 1.2;
+      max-width: 400px;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       text-align: center;
+    }
+
+    .badge {
+      padding: 12px 15px;
+      border-radius: 20px;
+      color: white;
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1.2;
+      max-width: 250px;
+    }
+
+    .badge-magenta {
+      background-color: #b04774;
+    }
+
+    .badge-teal {
+      background-color: #369f97;
+    }
+
+    /* 说明文字 */
+    .intro-text {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .intro-text ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-top: 5px;
+    }
+
+    /* 表格样式 */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .data-table th,
+    .data-table td {
+      border: 1px solid #9fc5c5;
+      /* 浅青色边框 */
+      padding: 10px 5px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .data-table td {
+      padding: 0;
+    }
+
+    /* 表头样式 */
+    .data-table thead th {
+      background-color: #b8658d;
+      /* 表头背景色 */
+      color: white;
+      font-weight: bold;
+    }
+
+    /* 针对特定列设置宽度 */
+    .col-date {
+      width: 10%;
+    }
+
+    .col-time {
+      width: 10%;
+    }
+
+    .col-food {
+      width: 20%;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .col-type {
+      width: 25%;
+    }
+
+    .col-temp {
+      width: 10%;
+    }
+
+    .col-duration {
+      width: 15%;
+    }
+
+    .col-by {
+      width: 10%;
+    }
+
+    /* 类型检查的列处理 */
+    .type-header {
+      text-align: center;
+    }
+
+    .type-header span {
+      display: block;
+    }
+
+    /* 第一行示例数据样式 */
+    .example-row td {
+      background-color: white;
+      height: 40px;
+    }
+
+    .example-row .food-text {
+      font-style: italic;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    /* 底部留空的用于打勾的单元格 */
+    .empty-row td {
+      height: 45px;
+    }
+
+    /* 底部脚注 */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #666;
+      position: absolute;
+      bottom: 20px;
+      left: 30px;
+      right: 30px;
+    }
+
+    .footer-note {
+      font-style: italic;
+    }
+
+    .page-number {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* 对勾符号 SVG */
+    .checkmark {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
     }
   </style>
 </head>
 
 <body>
-  <div id="app">
-    <table>
-      <thead>
-        <!-- <th><button>显/隐</button></th> -->
-        <th>商品</th>
-        <th>单价</th>
-        <th>数量</th>
-        <th>小计</th>
-        <th>操作</th>
-      </thead>
-      <tbody>
-        <tr v-for="(item,index) in list" :key="item.id">
-          <!-- <td><input type="checkbox"></td> -->
-          <td>{{ item.name }}</td>
-          <td>{{ item.price }}</td>
-          <td>
-            <button :disabled="item.quantity<=0" @click="sub(item.id)">-</button>
-            {{ item.quantity }}
-            <button @click="add(item.id)">+</button>
-          </td>
-          <td>{{ item.price*item.quantity}}</td>
-          <td><button @click="del(item.id)">del</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <p>总价为:$ {{ count }}</p>
+  <div class="container" id="printArea">
+    <button type="button" onclick="printContent()">点击打印</button>
 
+    <div class="container">
+
+      <div class="header">
+        <div class="header-left">
+          <div class="icon-placeholder">🍗</div>
+          <div class="main-title">Cooking poultry, minced meat and liver - batch checks</div>
+        </div>
+        <div class="header-right">
+          <div class="badge badge-magenta">See the 'Cooking poultry, minced meat and liver' [magenta] card in SS&S</div>
+          <div class="badge badge-teal">See the 'Making doner kebabs' [teal] card in SS&S</div>
+        </div>
+      </div>
+
+      <div class="intro-text">
+        You can use this record form/template to record:
+        <ul>
+          <li>each batch temperature; or</li>
+          <li>your weekly batch checks if you have proved your method; or</li>
+          <li>to confirm your proven method is still working; or</li>
+          <li>when making doner kebabs.</li>
+        </ul>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th rowspan="2" class="col-date">Date</th>
+            <th rowspan="2" class="col-time">Time*</th>
+            <th rowspan="2" class="col-food">Food</th>
+            <th colspan="3" class="type-header">Type of check</th>
+            <th rowspan="2" class="col-temp">Temp °C<br>cooked to</th>
+            <th rowspan="2" class="col-duration">How long at this temp</th>
+            <th rowspan="2" class="col-by">Task done by</th>
+          </tr>
+          <tr>
+            <th style="font-size: 11px;">Individual<br>(every item)</th>
+            <th style="font-size: 11px;">One item<br>in each batch</th>
+            <th style="font-size: 11px;">Weekly<br>batch check</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 示例数据行 -->
+          <tr class="example-row">
+            <td>01/04/17</td>
+            <td>1:20pm</td>
+            <td class="food-text">baked chicken breast</td>
+            <td></td>
+            <td>
+              <!-- SVG 对勾 -->
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>65°C</td>
+            <td>15 mins</td>
+            <td>JW</td>
+          </tr>
+
+          <!-- 空白行 (图片中的空行) -->
+          <tr class="empty-row">
+            <td>WK</td>
+            <td></td>
+            <td>HOT DOG</td>
+            <td></td>
+            <td> <!-- SVG 对勾 -->
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>SAUSAGES</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>CHICKEN NIBBLES</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>CHICKEN SATAY SKEWER</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td>WK</td>
+            <td></td>
+            <td>HOT DOG</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>SAUSAGES</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>CHICKEN NIBBLES</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+
+          <!-- 包含对勾的空白行 (模拟图中下半部分的勾) -->
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>CHICKEN THIGH</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+
+          <tr class="empty-row">
+            <td>WK</td>
+            <td></td>
+            <td>HOT DOG</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>SAUSAGES</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>CHICKEN NIBBLES</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="empty-row">
+            <td></td>
+            <td></td>
+            <td>CHICKEN SATAY SKEWER</td>
+            <td></td>
+            <td>
+              <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </td>
+            <td></td>
+            <td>°C</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="footer">
+        <div class="footer-note">any items marked with a * are not required by law to record but you may find them
+          useful
+        </div>
+        <div class="page-number">15</div>
+      </div>
+
+    </div>
   </div>
 
-
-  <script src="js/vue.js"></script>
   <script>
-    const app = new Vue({
-      el: '#app',
-      num1: 0,
-      data: {
-        list: [
-          { id: 1, name: '苹果', price: 15, quantity: 0 },
-          { id: 2, name: '香蕉', price: 20, quantity: 0 },
-          { id: 3, name: '菠萝', price: 13, quantity: 0 }
-        ]
-      },
-      methods: {
-        add(id) {
-          // console.log(id);
-          this.list.find(item => item.id === id).quantity++
-        },
-        sub(id) {
-          // console.log(id);
-          this.list.find(item => item.id === id).quantity--
-        },
-        del(id) {
-          if (confirm("确定要删除吗?")) {
-            this.list = this.list.filter(item => item.id !== id)
-          }
-        }
-      },
-      computed: {
-        count: {
-          get() {
-            return this.list.reduce((sum, item) => sum + item.quantity * item.price, 0)
-          },
-          set() {
-
-          }
-        },
-      },
-      watch: {
-
-      }
-    })
+    function printContent() {
+      window.print();
+    }
   </script>
 </body>
 
