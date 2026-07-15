@@ -42,6 +42,11 @@
       background-color: pink;
     }
 
+    .btn {
+      width: 30px;
+      margin: 5px;
+    }
+
     select {
       width: 100px;
       height: 30px;
@@ -76,10 +81,10 @@
           <td>{{item.value}}</td>
         </tr>
         <tr>
-          <td>加/减 <button @click="extra=0">clear</button></td>
+          <td><button @click="extra=0">clear</button></td>
           <td>
-            <button @click="sub">-</button>
-            <button @click="add">+</button>
+            <button @click="sub" class="btn"> - </button>
+            <button @click="add" class="btn"> + </button>
 
           </td>
           <td>{{ extra }}</td>
