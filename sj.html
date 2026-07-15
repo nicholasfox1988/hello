@@ -54,7 +54,7 @@
     <table>
       <thead>
         <tr>
-          <th></th>
+          <th>星期</th>
           <th>时间</th>
           <th>数值</th>
         </tr>
@@ -75,6 +75,15 @@
           </td>
           <td>{{item.value}}</td>
         </tr>
+        <tr>
+          <td>加/减 <button @click="extra=0">clear</button></td>
+          <td>
+            <button @click="sub">-</button>
+            <button @click="add">+</button>
+
+          </td>
+          <td>{{ extra }}</td>
+        </tr>
       </tbody>
       <tfoot>
         <tr>
@@ -93,23 +102,29 @@
       el: '#app',
       data: {
         per: 0,
+        extra: 0,
         week: [
-          { id: 1, name: '星期一', value: 0 },
-          { id: 2, name: '星期二', value: 0 },
-          { id: 3, name: '星期三', value: 0 },
-          { id: 4, name: '星期四', value: 0 },
-          { id: 5, name: '星期五', value: 0 },
-          { id: 6, name: '星期六', value: 0 },
-          { id: 7, name: '星期日', value: 0 }
+          { id: 1, name: '一', value: 0 },
+          { id: 2, name: '二', value: 0 },
+          { id: 3, name: '三', value: 0 },
+          { id: 4, name: '四', value: 0 },
+          { id: 5, name: '五', value: 0 },
+          { id: 6, name: '六', value: 0 },
+          { id: 7, name: '日', value: 0 },
         ]
       },
       computed: {
         total() {
-          return this.week.reduce((a, b) => a + Number(b.value), 0)
+          return this.week.reduce((a, b) => a + Number(b.value), this.extra)
         }
       },
       methods: {
-
+        add() {
+          return this.extra += 0.5
+        },
+        sub() {
+          return this.extra -= 0.5
+        }
       }
     })
 
