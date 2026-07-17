@@ -85,9 +85,10 @@
           <td>
             <button @click="sub" class="btn"> - </button>
             <button @click="add" class="btn"> + </button>
-
           </td>
-          <td>{{ extra }}</td>
+          <td>
+            <input type="text" v-model.number="extra">
+          </td>
         </tr>
       </tbody>
       <tfoot>
