@@ -140,17 +140,31 @@
             let filename
             let searchData = []
 
+            function getRowKey(row) {
+                return `${row.name2 || ''}|${row.pic || ''}|${row.fo || ''}|${row.account || ''}`;
+            }
+
             function renderTableRows(data) {
+                const checkedKeys = Array.from(tableBody.querySelectorAll('input[type="checkbox"]:checked'))
+                    .map(checkbox => checkbox.closest('tr')?.dataset.key)
+                    .filter(Boolean);
+
                 tableBody.innerHTML = '';
                 data.forEach(row => {
+                    const rowKey = getRowKey(row);
                     const newRow = document.createElement('tr');
+                    newRow.dataset.key = rowKey;
+                    const isChecked = checkedKeys.includes(rowKey);
                     newRow.innerHTML = `
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" ${isChecked ? 'checked' : ''}></td>
                         <td>${row.name2}</td>
                         <td>${row.pic}</td>
                         <td>${row.fo}</td>
                         <td>${row.account}</td>
                     `;
+                    if (isChecked) {
+                        newRow.classList.add('completed');
+                    }
                     tableBody.appendChild(newRow);
                 });
             }
