@@ -40,6 +40,7 @@
             border: none;
             cursor: pointer;
             font-size: 16px;
+            border-radius: 8px;
         }
 
         button:hover {
@@ -102,22 +103,14 @@
             text-decoration: line-through;
             color: #777;
         }
-
-        .diaomao {
-            background-color: green;
-            color: white;
-            border-radius: 8px;
-        }
     </style>
 </head>
 
 <body>
     <div class="file-input">
         <input type="file" id="fileInput" accept=".xlsx, .xls">
-        <br />
-        <br />
-        <button class="downLoad">下载</button>
         <span class="hold">Hold Item: </span>
+        <button class="downLoad">下载</button>
     </div>
 
     <div class="display">
@@ -125,7 +118,11 @@
             <thead>
                 <tr>
                     <th><button class="diaomao">点击</button></th>
-                    <th><input type="text" class="search"></th>
+                    <th>
+                        <input type="text" class="search">
+                        <button class="name">名字</button>
+                        <button class="quantity">数量</button>
+                    </th>
                     <th>Pic</th>
                     <th><span class="searchCount">未搜索</span></th>
                     <th>No</th>
@@ -142,6 +139,22 @@
             let save = []
             let filename
             let searchData = []
+
+            function renderTableRows(data) {
+                tableBody.innerHTML = '';
+                data.forEach(row => {
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td><input type="checkbox"></td>
+                        <td>${row.name2}</td>
+                        <td>${row.pic}</td>
+                        <td>${row.fo}</td>
+                        <td>${row.account}</td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            }
+
             document.getElementById('fileInput').addEventListener('change', function (e) {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -201,18 +214,8 @@
                     const save2 = jsonData2.filter(row => row.type === 'K').sort((a, b) => a.pic - b.pic);
                     const savesheet2 = XLSX.utils.json_to_sheet(save2);
                     XLSX.utils.book_append_sheet(savebook, savesheet2, "自提（数量）");
-                    save2.forEach(row => {
-                        const newRow = document.createElement('tr');
-                        newRow.innerHTML = `
-                        <td><input type="checkbox"></td>
-                        <td>${row.name2}</td>
-                        <td>${row.pic}</td>
-                        <td>${row.fo}</td>
-                        <td>${row.account}</td>
-                    `;
-                        tableBody.appendChild(newRow);
-                    });
-                    searchData = save2
+                    searchData = [...save2];
+                    renderTableRows(searchData);
 
                     tableBody.addEventListener('change', function (event) {
                         const checkbox = event.target;
@@ -299,6 +302,34 @@
                             $(this).val('');
                         }
                     }
+                }
+            })
+
+            $('.name').on({
+                click: function () {
+                    if (!searchData.length) return;
+                    const asc = !$(this).data('asc');
+                    $(this).data('asc', asc);
+                    searchData = [...searchData].sort((a, b) => {
+                        const nameA = String(a.name2 || '').toUpperCase();
+                        const nameB = String(b.name2 || '').toUpperCase();
+                        if (nameA < nameB) return asc ? -1 : 1;
+                        if (nameA > nameB) return asc ? 1 : -1;
+                        return 0;
+                    });
+                    renderTableRows(searchData);
+                }
+            })
+
+            $('.quantity').on({
+                click: function () {
+                    if (!searchData.length) return;
+                    const asc = !$(this).data('asc');
+                    $(this).data('asc', asc);
+                    searchData = [...searchData].sort((a, b) => {
+                        return asc ? a.pic - b.pic : b.pic - a.pic;
+                    });
+                    renderTableRows(searchData);
                 }
             })
 
