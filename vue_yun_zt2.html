@@ -168,18 +168,17 @@
                             };
                         });
 
-                        const nameCountMap = {};
+                        const noCountMap = {};
                         rawData.forEach(row => {
-                            const name = String(row.name || '').trim();
-                            if (!name) return;
-                            nameCountMap[name] = (nameCountMap[name] || 0) + 1;
+                            const no = String(row.no || '').trim();
+                            if (!no) return;
+                            noCountMap[no] = (noCountMap[no] || 0) + 1;
                         });
 
                         excelData = rawData.filter(row => {
-                            const name = String(row.name || '').trim();
-                            return name && nameCountMap[name] > 1;
+                            const no = String(row.no || '').trim();
+                            return no && noCountMap[no] > 1;
                         });
-                        console.log(excelData);
                         app.excelData = excelData;
                     };
                     reader.readAsArrayBuffer(file);
