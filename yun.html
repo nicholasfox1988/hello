@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数据处理</title>
+    <title>韩国海/空运数据</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="./js/vue.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,6 +73,12 @@
             background-color: #f1f1f1;
         }
 
+        tr.row-checked td {
+            color: #777;
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
         .file-input {
             margin-bottom: 20px;
         }
@@ -82,173 +89,100 @@
             color: #666;
         }
 
-        html,
-        body {
-            overscroll-behavior-y: none;
-            overscroll-behavior-x: none;
-        }
-
-        tr.completed {
-            background-color: #f4f4f4;
-            color: #777;
-        }
-
-        tr.completed td {
-            text-decoration: line-through;
-            color: #777;
+        #showing {
+            padding: 20px;
+            width: 60%;
+            border: solid;
+            border-color: green;
+            border-radius: 30px;
+            margin: auto;
         }
     </style>
 </head>
 
 <body>
-    <div class="file-input">
-        <input type="file" id="fileInput" accept=".xlsx, .xls">
+    <div id="app">
+        <div>
+            <input type="file" id="fileInput" accept=".xlsx, .xls" @change="loadData($event)">
+        </div>
+        <div id="tableContainer">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th><button class="diaomao" @dblclick="showAll" @click="hide">点击</button></th>
+                        <th>name</th>
+                        <th>Pic</th>
+                        <th>fo</th>
+                        <th>No</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr v-for="(row,index) in excelData" :key="index" :class="{'row-checked': row.tick}"
+                        v-show="!row.hide">
+                        <td><input type="checkbox" v-model="row.tick"></td>
+                        <td>{{ row.name }}</td>
+                        <td>{{ row.pis }}</td>
+                        <td>{{ row.fo }}</td>
+                        <td>{{ row.no }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="display">
-        <table>
-            <thead>
-                <tr>
-                    <th>check</th>
-                    <th>Name1</th>
-                    <th>Pic</th>
-                    <th>FO</th>
-                    <th>Account</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
     <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                htmlContent: "查询结果",
+                inputValue: "",
+                excelData: [],
+                searchData: {},
+                currentResult: '',
+                total: {}
+            },
+            methods: {
+                loadData(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
 
-        const tableBody = document.getElementById('tableBody');
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
 
-        document.getElementById('fileInput').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (!file) return;
+                        // Get the last sheet
+                        const lastSheetName = workbook.SheetNames[workbook.SheetNames.length - 1];
+                        const worksheet = workbook.Sheets[lastSheetName];
 
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-
-                // Get the last sheet
-                const lastSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[lastSheetName];
-                const savebook = XLSX.utils.book_new();
-
-
-                // Convert to JSON
-                const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
-                const jsonData = jsonData1.map(row => {
-                    return {
-                        hold: row.hold,
-                        name1: row.name,
-                        pic: row.pieces,
-                        name2: row.name,
-                        account: row['account_no'],
-                        fo: row.fo,
-                        type: row['delivery type'],
-                        vol: row.volume
+                        // Convert to JSON
+                        const jsonData1 = XLSX.utils.sheet_to_json(worksheet);
+                        const excelData = jsonData1.map(row => {
+                            return {
+                                tick: false,
+                                hide: false,
+                                name: row.name,
+                                pis: row.pieces,
+                                fo: row.fo,
+                                no: row.account_no
+                            };
+                        });
+                        // sort by no
+                        excelData.sort((a, b) => a.no - b.no)
+                        app.excelData = excelData;
                     };
-                });
-
-                const jsonData2 = jsonData1.map(row => {
-                    return {
-                        pic: row.pieces,
-                        name2: row.name,
-                        account: row['account_no'],
-                        fo: row.fo,
-                        type: row['delivery type']
-                    };
-                });
-
-                const save1 = jsonData.filter(row => row.fo.includes('AION') || row.hold).sort((a, b) => {
-                    const nameA = a['fo'].toUpperCase(); // 忽略大小写
-                    const nameB = b['fo'].toUpperCase();
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                const savesheet1 = XLSX.utils.json_to_sheet(save1);
-                XLSX.utils.book_append_sheet(savebook, savesheet1, "hold");
-
-                const save2 = jsonData2.filter(row => row.type === 'K' && row.pic <= 7).sort((a, b) => a.pic - b.pic);
-                const savesheet2 = XLSX.utils.json_to_sheet(save2);
-                XLSX.utils.book_append_sheet(savebook, savesheet2, "自提（数量）");
-                save2.forEach(row => {
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td><input type="checkbox"></td>
-                        <td>${row.name2}</td>
-                        <td>${row.pic}</td>
-                        <td>${row.fo}</td>
-                        <td>${row.account}</td>
-                    `;
-                    tableBody.appendChild(newRow);
-                });
-
-                tableBody.addEventListener('change', function (event) {
-                    const checkbox = event.target;
-                    if (checkbox.matches('input[type="checkbox"]')) {
-                        const row = checkbox.closest('tr');
-                        if (row) {
-                            row.classList.toggle('completed', checkbox.checked);
-                        }
-                    }
-                });
-
-                const save5 = jsonData.filter(row => row.type === 'K').sort((a, b) => a.account_no - b.account_no);
-                const savesheet5 = XLSX.utils.json_to_sheet(save5);
-                XLSX.utils.book_append_sheet(savebook, savesheet5, "自提（名字）");
-
-                const save3 = jsonData.filter(row => row.fo.includes('AION') || row.pic >= 7 || row.hold
-                    || row.vol >= 1).sort((a, b) => {
-                        const nameA = a['fo'].toUpperCase(); // 忽略大小写
-                        const nameB = b['fo'].toUpperCase();
-                        if (nameA < nameB) {
-                            return -1;
-                        }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                        return 0;
+                    reader.readAsArrayBuffer(file);
+                },
+                hide() {
+                    this.excelData.forEach(element => {
+                        if (element.tick) element.hide = true;
                     });
-                const savesheet3 = XLSX.utils.json_to_sheet(save3);
-                XLSX.utils.book_append_sheet(savebook, savesheet3, "大货");
-
-                const save4 = jsonData.filter(row => row.type === 'C' || row.type === 'S' && !row.fo.includes('AION')).sort((a, b) => {
-                    const nameA = a['pic']; // 忽略大小写
-                    const nameB = b['pic'];
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                const savesheet4 = XLSX.utils.json_to_sheet(save4);
-                XLSX.utils.book_append_sheet(savebook, savesheet4, "CS");
-
-                // 保存工作簿为 Excel 文件
-                if (window.confirm('要保存吗？')) XLSX.writeFile(savebook, "done_" + file.name.slice(7, 12) + ".xlsx");
+                },
+                showAll() {
+                    this.excelData.forEach(element => element.hide = false);
+                }
             }
-            reader.readAsArrayBuffer(file);
         });
-
     </script>
 </body>
 
