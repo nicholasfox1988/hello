@@ -104,6 +104,7 @@
     <div id="app">
         <div>
             <input type="file" id="fileInput" accept=".xlsx, .xls" @change="loadData($event)">
+            <span v-html="hold">Hold Item: </span>
         </div>
         <div id="tableContainer">
             <table id="dataTable">
@@ -134,12 +135,8 @@
         const app = new Vue({
             el: '#app',
             data: {
-                htmlContent: "查询结果",
-                inputValue: "",
                 excelData: [],
-                searchData: {},
-                currentResult: '',
-                total: {}
+                hold: ''
             },
             methods: {
                 loadData(event) {
@@ -167,8 +164,36 @@
                                 no: row.account_no
                             };
                         });
+
+                        const save1 = jsonData1.filter(row => row.fo.includes('AION') || row.hold).sort((a, b) => {
+                            const nameA = a['fo'].toUpperCase(); // 忽略大小写
+                            const nameB = b['fo'].toUpperCase();
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                        const nameList = save1.map(item => item.name);
+
+                        const save4 = jsonData1.filter(row => row['delivery type'] === 'C' || row['delivery type'] === 'S' && !row.fo.includes('AION')).sort((a, b) => {
+                            const nameA = a['pic']; // 忽略大小写
+                            const nameB = b['pic'];
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                        // console.log(jsonData1);
+                        app.hold = `Hold Item: ${nameList.join(', ')},~~~~CS的数量:${save4.length}`;
+
                         // sort by no
-                        excelData.sort((a, b) => a.no - b.no)
+                        excelData.sort((a, b) => a.no - b.no);
                         app.excelData = excelData;
                     };
                     reader.readAsArrayBuffer(file);
