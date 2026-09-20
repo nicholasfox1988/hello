@@ -12,15 +12,25 @@
 
     body {
       margin: 0;
-      padding: 16px;
+      padding: 0px;
       background: #f4f7f4;
       font-family: Arial, "PingFang SC", "Microsoft Yahei", sans-serif;
       color: #222;
     }
 
     #app {
-      max-width: 720px;
-      margin: 0 auto;
+      display: flex;
+      /* 开启弹性盒模型 */
+      flex-direction: column;
+      /* 子元素纵向排列，可改行向 row */
+      justify-content: center;
+      /* 居中对齐 */
+      align-items: center;
+      /* 交叉轴居中 */
+      width: 100%;
+      /* 宽度占满父级 */
+      height: 100vh;
+      /* 高度占满整个屏幕视口 */
     }
 
     button {
@@ -85,7 +95,7 @@
       font-weight: 600;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       body {
         padding: 10px;
       }
@@ -99,7 +109,7 @@
       th,
       td {
         border-width: 1px;
-        padding: 8px 4px;
+        padding: 4px;
       }
 
       th,
