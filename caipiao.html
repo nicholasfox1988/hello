@@ -6,6 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    #app {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 30px 3px;
+    }
+
     table {
       border: 3px solid green;
       border-radius: 15px;
@@ -13,6 +23,27 @@
       width: 100%;
       align-items: center;
       text-align: center;
+    }
+
+    tr,
+    th,
+    td {
+      border: 3px solid black;
+      padding: 15px;
+    }
+
+    /* 奇数行背景色 */
+    tr:nth-child(odd) {
+      background-color: pink;
+    }
+
+    /* 偶数行背景色 */
+    tr:nth-child(even) {
+      background-color: #ffffff;
+    }
+
+    th {
+      background-color: green;
     }
   </style>
 </head>
@@ -23,7 +54,7 @@
     <table>
       <thead>
         <tr>
-          <th>Row</th>
+          <!-- <th>Row</th> -->
           <th>No1</th>
           <th>No2</th>
           <th>No3</th>
@@ -34,7 +65,7 @@
       </thead>
       <tbody>
         <tr v-for="(result, index) in results" :key="index">
-          <td>{{ index + 1 }}</td>
+          <!-- <td>{{ index + 1 }}</td> -->
           <td>{{ result[0] }}</td>
           <td>{{ result[1] }}</td>
           <td>{{ result[2] }}</td>
