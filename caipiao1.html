@@ -119,6 +119,12 @@
           [25,26,27,28,29,30,31,32],
           [33,34,35,36,37,38,39,40]
         ],
+        b:[
+          [1,2,3,4,5,6,7,8,9,10],
+          [11,12,13,14,15,16,17,18,19,20],
+          [21,22,23,24,25,26,27,28,29,30],
+          [31,32,33,34,35,36,37,38,39,40]
+        ],
         results: [],
         deleteItem: '',
         deleteList: []
@@ -143,8 +149,8 @@
           selected.sort((a, b) => a - b);
           return selected;
         },
-        abc() {
-          const results = this.a.map((row, index) => {
+        abc(arr1) {
+          const results = arr1.map((row, index) => {
             // console.log(midList);
             const result = this.getRandomElements(row)
             // console.log(result);
@@ -156,11 +162,9 @@
           alert('恭喜发财^_^');
           this.results = [];
           const list1 = this.getRandomElements(Array.from({ length:  15}, (_, i) => i + 26));
-          const list2 = this.getRandomElements(Array.from({ length:  15}, (_, i) => i + 26));
-          const list3 = this.getRandomElements(Array.from({ length:  15}, (_, i) => i + 1));
-          const list4 = this.getRandomElements(Array.from({ length:  15}, (_, i) => i + 1));
+          const list2 = this.getRandomElements(Array.from({ length:  15}, (_, i) => i + 1));
 
-          this.results.push( list1, list2, list3, list4,...this.abc());
+          this.results.push(...this.abc(this.a),...this.abc(this.b), list1, list2);
         }
       }
     })
